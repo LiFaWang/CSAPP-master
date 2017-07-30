@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+　　
+
+        <RelativeLayout
+            android:id="@+id/rl_map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+          >
+            <ImageView
+                android:id="@+id/iv_ar"
+                android:scaleType="centerCrop"
+                android:src="@drawable/zongtu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+            <TextView
+                android:id="@+id/cn"
+                android:textColor="#000"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="119dp"
+                android:layout_marginStart="119dp"
+                android:text="中国"/>
+
+            <TextView
+                android:id="@+id/tg"
+                android:textColor="#f0f"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+
+                android:layout_marginLeft="58dp"
+                android:layout_marginStart="58dp"
+                android:layout_marginTop="65dp"
+                android:text="泰国"/>
+
+            <TextView
+                android:id="@+id/yn"
+                android:textColor="#f0f"
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="110dp"
+                android:layout_marginTop="90dp"
+                android:text="越南"/>
+
+            <TextView
+                android:id="@+id/ml"
+                android:textColor="#f0f"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="160dp"
+                android:layout_marginLeft="78dp"
+                android:text="马来西亚"/>
+
+            <TextView
+                android:id="@+id/tw"
+                android:textColor="#f0f"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="88dp"
+                android:layout_marginStart="200dp"
+                android:layout_marginTop="30dp"
+                android:text="台湾"/>
+
+
+        </RelativeLayout>
+
+        <include layout="@layout/underline_black"></include>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+           <TextView
+               android:text="工厂"
+               style="@style/HomeFragment"/>
+            <TextView
+                android:text="区域"
+                style="@style/HomeFragment"/>
+            <TextView
+                android:text="设备数"
+                style="@style/HomeFragment"/>
+            <TextView
+                android:text="异常"
+                style="@style/HomeFragment" />
+        </LinearLayout>
+        <include layout="@layout/underline_black"></include>
+        <in.srain.cube.views.ptr.PtrFrameLayout
+            android:id="@+id/prtHome"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+        <ListView
+            android:id="@+id/homeListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
+
+        </ListView>
+        </in.srain.cube.views.ptr.PtrFrameLayout>
+    </LinearLayout>
+</layout>
+
