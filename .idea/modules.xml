@@ -5,8 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/CSAPP.iml" filepath="$PROJECT_DIR$/CSAPP.iml" />
       <module fileurl="file://$PROJECT_DIR$/CSAPP-master.iml" filepath="$PROJECT_DIR$/CSAPP-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/Hslibrary/Hslibrary.iml" filepath="$PROJECT_DIR$/Hslibrary/Hslibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Hslibrary/Hslibrary.iml" filepath="$PROJECT_DIR$/Hslibrary/Hslibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

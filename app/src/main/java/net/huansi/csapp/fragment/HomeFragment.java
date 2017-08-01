@@ -27,18 +27,21 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
 
-public class HomeFragment extends BaseFragment implements View.OnClickListener{
+public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
 
     private FragmentHomeBinding fragmentHomeBinding;
-    private static final String CN = "8";
-    private static final String TAIWAN = "9";
-    private static final String TAIGUO = "10";
     List<HomeInfoBean> data;
 
     private HomeFragmentAdapter adapter;
-    private String mCurrentSelectedId;
-    private List<HomeInfoBean> mFilterData;
+
+    private String CURRENTADTAID;//当前选择的国家ID
+    private static final String CNID = "8";//中国
+    private static final String TGID = "10";//泰国
+    private static final String TWID = "9";//台湾
+    private static final String MLID = "12";//马来西亚
+    private static final String YNID = "13";//越南
+    private List<HomeInfoBean> mFliterData;
 
 
     @Override
@@ -53,16 +56,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         fragmentHomeBinding = (FragmentHomeBinding) viewDataBinding;
 
         fragmentHomeBinding.homeListView.setAdapter(adapter);
-        OthersUtil.initRefresh(fragmentHomeBinding.prtHome,getActivity());
+        OthersUtil.initRefresh(fragmentHomeBinding.prtHome, getActivity());
         fragmentHomeBinding.prtHome.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 setData();
-                fragmentHomeBinding.ivAr.setImageResource(R.drawable.zongtu);
             }
         });
         fragmentHomeBinding.cn.setOnClickListener(HomeFragment.this);
-        fragmentHomeBinding.ml.setOnClickListener(HomeFragment.this);
+        fragmentHomeBinding.ml1.setOnClickListener(HomeFragment.this);
+        fragmentHomeBinding.ml2.setOnClickListener(HomeFragment.this);
         fragmentHomeBinding.tg.setOnClickListener(HomeFragment.this);
         fragmentHomeBinding.tw.setOnClickListener(HomeFragment.this);
         fragmentHomeBinding.yn.setOnClickListener(HomeFragment.this);
@@ -70,23 +73,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     }
 
-    private List<HomeInfoBean> getFilterData(String countryId) {
-        if (countryId == null) return data;
-        List<HomeInfoBean> result = new ArrayList<>();
-        for (HomeInfoBean bean: data) {
-            if (bean.ICOUNTRYID.equals(countryId)) {
-                result.add(bean);
-            }
 
-        }
-        return  result;
-    }
-
-    public void setData(){
+    public void setData() {
 
         //首页数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), HS_SERVICE,
-                "spappYunEquDistributionMap", "sMobileNo="+mMobileNo,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), HS_SERVICE,
+                "spappYunEquDistributionMap", "sMobileNo=" + mMobileNo,
                 HomeInfoBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
                     public void success(HsWebInfo hsWebInfo) {
@@ -96,8 +88,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                             HomeInfoBean homeInfoBean = (HomeInfoBean) entities.get(i);
                             data.add(homeInfoBean);
                         }
-                        mFilterData = getFilterData(mCurrentSelectedId);
-                        if (adapter == null) adapter= new HomeFragmentAdapter(mFilterData,getContext());
+                        mFliterData = getFliterData(CURRENTADTAID);
+                        if (adapter == null)
+                            adapter = new HomeFragmentAdapter(mFliterData, getContext());
                         fragmentHomeBinding.homeListView.setAdapter(adapter);
                         fragmentHomeBinding.prtHome.refreshComplete();
 
@@ -113,14 +106,29 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     }
 
+    private List<HomeInfoBean> getFliterData(String currentadtaId) {
+        if (currentadtaId == null) return data;
+        List<HomeInfoBean> fliterData = new ArrayList<>();
+        for (HomeInfoBean bean : data) {
+
+            if (bean.ICOUNTRYID.equals(currentadtaId)) {
+                fliterData.add(bean);
+            }
+
+        }
+        return fliterData;
+
+
+    }
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(EventBus.getDefault().isRegistered(getContext())){
+        if (EventBus.getDefault().isRegistered(getContext())) {
             EventBus.getDefault().unregister(getContext());
-        };
+        }
+        ;
     }
 
     @Override
@@ -128,31 +136,38 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.cn:
                 fragmentHomeBinding.ivAr.setImageResource(R.drawable.cn);
-                mCurrentSelectedId = CN;
+                CURRENTADTAID = CNID;
                 break;
-            case R.id.ml:
+            case R.id.ml1:
                 fragmentHomeBinding.ivAr.setImageResource(R.drawable.malaixiya);
+                CURRENTADTAID = MLID;
+                break;
+            case R.id.ml2:
+                fragmentHomeBinding.ivAr.setImageResource(R.drawable.malaixiya);
+                CURRENTADTAID = MLID;
                 break;
             case R.id.tg:
                 fragmentHomeBinding.ivAr.setImageResource(R.drawable.taiguo);
-                mCurrentSelectedId = TAIGUO;
+                CURRENTADTAID = TGID;
                 break;
             case R.id.tw:
                 fragmentHomeBinding.ivAr.setImageResource(R.drawable.taiwan);
-                mCurrentSelectedId = TAIWAN;
+                CURRENTADTAID = TWID;
                 break;
             case R.id.yn:
                 fragmentHomeBinding.ivAr.setImageResource(R.drawable.yuenan);
+                CURRENTADTAID = YNID;
                 break;
 
             default:
-                fragmentHomeBinding.ivAr.setImageResource(R.drawable.zongtu);
+//                fragmentHomeBinding.ivAr.setImageResource(R.drawable.zongtu);
+//                CURRENTADTAID = CNID;
                 break;
         }
-
-        mFilterData = getFilterData(mCurrentSelectedId);
-        adapter.setList(mFilterData);
+        mFliterData = getFliterData(CURRENTADTAID);
+        adapter.setList(mFliterData);
         adapter.notifyDataSetChanged();
+
 
     }
 }
