@@ -15,7 +15,6 @@
           >
             <ImageView
                 android:id="@+id/iv_ar"
-               android:scaleType="centerCrop"
                 android:src="@drawable/zongtu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
@@ -24,12 +23,11 @@
             <TextView
                 android:gravity="center"
                 android:id="@+id/cn"
-                android:textColor="#f00"
+                android:textColor="#0f00"
                 android:layout_width="240pt"
                 android:layout_height="90pt"
+                android:layout_marginTop="5pt"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginLeft="120pt"
                 android:layout_marginStart="120pt"
                 android:text="中国"/>
@@ -37,26 +35,26 @@
             <TextView
                 android:id="@+id/tg"
                 android:gravity="center"
-                android:textColor="#f0f"
+                android:textColor="#0f0f"
                 android:layout_width="60pt"
                 android:layout_height="60pt"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
 
-                android:layout_marginLeft="100pt"
-                android:layout_marginStart="100pt"
-                android:layout_marginTop="180pt"
+                android:layout_marginLeft="120pt"
+                android:layout_marginStart="120pt"
+                android:layout_marginTop="170pt"
                 android:text="泰国"/>
 
             <TextView
                 android:id="@+id/yn"
                 android:gravity="center"
-                android:textColor="#f0f"
+                android:textColor="#0f0f"
                 android:layout_width="40pt"
                 android:layout_height="60pt"
-                android:layout_marginLeft="65pt"
-                android:layout_marginStart="65pt"
-                android:layout_marginTop="60pt"
+                android:layout_marginLeft="50pt"
+                android:layout_marginStart="50pt"
+                android:layout_marginTop="40pt"
                 android:text="越南"
                 android:layout_alignTop="@+id/tg"
                 android:layout_toRightOf="@+id/tg"
@@ -65,11 +63,11 @@
             <TextView
                 android:id="@+id/ml1"
                 android:gravity="center"
-                android:textColor="#f0f"
+                android:textColor="#0f0f"
                 android:layout_width="60pt"
                 android:layout_height="70pt"
-                android:layout_marginTop="360pt"
-                android:layout_marginLeft="100pt"
+                android:layout_marginTop="340pt"
+                android:layout_marginLeft="120pt"
                 android:text="马来西亚"/>
             <TextView
                 android:id="@+id/ml2"
@@ -91,7 +89,7 @@
                 android:layout_height="40pt"
                 android:layout_marginLeft="400pt"
                 android:layout_marginStart="400pt"
-                android:layout_marginTop="70pt"
+                android:layout_marginTop="60pt"
                 android:text="台湾"/>
 
 

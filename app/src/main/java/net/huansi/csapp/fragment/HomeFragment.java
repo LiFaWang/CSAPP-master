@@ -63,6 +63,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 setData();
             }
         });
+//        fragmentHomeBinding.ml2.setRotation(-30);
         fragmentHomeBinding.cn.setOnClickListener(HomeFragment.this);
         fragmentHomeBinding.ml1.setOnClickListener(HomeFragment.this);
         fragmentHomeBinding.ml2.setOnClickListener(HomeFragment.this);
@@ -167,7 +168,5 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         mFliterData = getFliterData(CURRENTADTAID);
         adapter.setList(mFliterData);
         adapter.notifyDataSetChanged();
-
-
     }
 }
