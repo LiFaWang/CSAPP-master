@@ -2,7 +2,7 @@ package net.huansi.csapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,6 +43,11 @@ public class RealFragmentAdapter extends HsBaseAdapter<RealTimeMonitoringBean>{
         area.setText(mList.get(i).NCHANNELNUMBER);
         dvNum.setText(mList.get(i).NEXPNUMBER);
         state.setText(mList.get(i).SSTATUS);
+        if(mList.get(i).SSTATUS.equals("正常")){
+            state.setTextColor(Color.GREEN);
+        }else {
+            state.setTextColor(Color.RED);
+        }
         factory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -35,7 +35,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     private HomeFragmentAdapter adapter;
 
-    private String CURRENTADTAID;//当前选择的国家ID
+    private String CURRENTADTAID="8";//当前选择的国家ID
     private static final String CNID = "8";//中国
     private static final String TGID = "10";//泰国
     private static final String TWID = "9";//台湾
@@ -54,7 +54,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void init() {
         EventBus.getDefault().register(getContext());
         fragmentHomeBinding = (FragmentHomeBinding) viewDataBinding;
-
+        fragmentHomeBinding.ivAr.setImageResource(R.drawable.cn);
         fragmentHomeBinding.homeListView.setAdapter(adapter);
         OthersUtil.initRefresh(fragmentHomeBinding.prtHome, getActivity());
         fragmentHomeBinding.prtHome.setPtrHandler(new PtrDefaultHandler() {

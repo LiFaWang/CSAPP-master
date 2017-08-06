@@ -1,6 +1,7 @@
 package net.huansi.csapp.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -45,6 +46,11 @@ public class HomeFragmentAdapter extends HsBaseAdapter<HomeInfoBean> {
         area.setText(home.SCOUNTRYNAME);
         dvNum.setText(home.NEQUICOUNT);
         state.setText(home.SSTATUS);
+        if(home.SSTATUS.equals("正常")){
+            state.setTextColor(Color.GREEN);
+        }else {
+            state.setTextColor(Color.RED);
+        }
         factory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
