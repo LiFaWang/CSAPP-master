@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import net.huansi.csapp.R;
 import net.huansi.csapp.activity.EquRouletteActivity;
+import net.huansi.csapp.activity.UnusualActivity;
 import net.huansi.csapp.bean.RealTimeMonitoringBean;
 
 import java.util.List;
@@ -45,6 +46,13 @@ public class RealFragmentAdapter extends HsBaseAdapter<RealTimeMonitoringBean>{
         state.setText(mList.get(i).SSTATUS);
         if(mList.get(i).SSTATUS.equals("正常")){
             state.setTextColor(Color.GREEN);
+            state.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(RealFragmentAdapter.super.mContext,UnusualActivity.class);
+                    RealFragmentAdapter.super.mContext.startActivity(intent);
+                }
+            });
         }else {
             state.setTextColor(Color.RED);
         }

@@ -40,7 +40,13 @@ public class LoginActivity extends NotWebBaseActivity {
     @Override
     public void init() {
         activityLoginBinding = (ActivityLoginBinding) viewDataBinding;
-
+        activityLoginBinding.tvFindPSW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this,ConfirmPSWActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -67,6 +73,7 @@ public class LoginActivity extends NotWebBaseActivity {
             finish();
         }
     }
+
 
     private void getLoginMes() {
         RxjavaWebUtils.requestByGetJsonData(this, HS_SERVICE,

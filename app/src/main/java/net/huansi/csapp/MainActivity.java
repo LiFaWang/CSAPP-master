@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 import net.huansi.csapp.databinding.ActivityMainBinding;
 import net.huansi.csapp.event.HomeToRealEvent;
+import net.huansi.csapp.fragment.AbnormalFragment;
 import net.huansi.csapp.fragment.HistoryFragment;
 import net.huansi.csapp.fragment.HomeFragment;
 import net.huansi.csapp.fragment.MineFragment;
@@ -19,6 +20,7 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
     private HomeFragment homeFragment;
     private RealFragment realFragment;
     private HistoryFragment historyFragment;
+    private AbnormalFragment mAbnormalFragment;
     private MineFragment mineFragment;
 
     @Override
@@ -42,10 +44,12 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
         homeFragment = new HomeFragment();
         realFragment = new RealFragment();
         historyFragment = new HistoryFragment();
+        mAbnormalFragment=new AbnormalFragment();
         mineFragment = new MineFragment();
         ft.add(R.id.mainFrameLayout, homeFragment);
         ft.add(R.id.mainFrameLayout, realFragment);
         ft.add(R.id.mainFrameLayout, historyFragment);
+        ft.add(R.id.mainFrameLayout,mAbnormalFragment);
         ft.add(R.id.mainFrameLayout, mineFragment);
         ft.commitAllowingStateLoss();
         hideFragments(ft);
@@ -59,6 +63,7 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
         ft.hide(homeFragment);
         ft.hide(realFragment);
         ft.hide(historyFragment);
+        ft.hide(mAbnormalFragment);
         ft.hide(mineFragment);
     }
 
@@ -77,6 +82,9 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
                 break;
             case R.id.mainHistory:
                 ft.show(historyFragment);
+                break;
+            case R.id.mainErro:
+                ft.show(mAbnormalFragment);
                 break;
             case R.id.mainMy:
                 ft.show(mineFragment);

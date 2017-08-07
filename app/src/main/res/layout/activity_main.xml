@@ -35,6 +35,12 @@
             android:drawableTop="@drawable/history_select"
             android:text="历史数据"/>
         <RadioButton
+            android:id="@+id/mainErro"
+            style="@style/HomeRG"
+            android:drawableTop="@drawable/history_select"
+            android:text="历史异常"
+           />
+        <RadioButton
             android:id="@+id/mainMy"
             android:drawableTop="@drawable/mine_select"
             style="@style/HomeRG"
