@@ -12,7 +12,11 @@ import net.huansi.csapp.R;
 import net.huansi.csapp.activity.HistoryDetailActivity;
 import net.huansi.csapp.bean.EquRealTimeDataBean;
 import net.huansi.csapp.view.DashboardView1;
+
 import java.util.List;
+
+import huansi.net.qianjingapp.utils.OthersUtil;
+
 import static net.huansi.csapp.utils.Constants.CHANNEL_ID;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
 
@@ -36,10 +40,10 @@ public class EquRouletteAdapter extends RecyclerView.Adapter<EquRouletteAdapter.
     public EquViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (type){
-            case 1:
+            case 1://仪表盘
                 view=View.inflate(context,R.layout.item_roulette_adapter,null);
                 break;
-            case 2:
+            case 2://文本
                 view =View.inflate(context,R.layout.item_text_adapter,null);
                 break;
             default:
@@ -122,7 +126,7 @@ public class EquRouletteAdapter extends RecyclerView.Adapter<EquRouletteAdapter.
 
     }
 
-    private void setData(EquRealTimeDataBean equRealTimeDataBean, EquViewHolder holder) {
+    private void setData(EquRealTimeDataBean equRealTimeDataBean, final EquViewHolder holder) {
 
         String sValue = equRealTimeDataBean.NCHANNELREALTIMEVALUE;
         if(sValue.isEmpty()){
@@ -130,6 +134,14 @@ public class EquRouletteAdapter extends RecyclerView.Adapter<EquRouletteAdapter.
         }
         double content = Double.parseDouble(sValue);
         holder.title.setText(equRealTimeDataBean.SCHANNELNAME+"："+content+equRealTimeDataBean.SUNITNAME);
+        //增加文本点击事件
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OthersUtil.ToastMsg(context,holder.title.getText()+"被点击了");
+
+            }
+        });
     }
 
 

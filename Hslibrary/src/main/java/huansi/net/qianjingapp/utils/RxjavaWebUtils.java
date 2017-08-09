@@ -328,6 +328,7 @@ public class RxjavaWebUtils {
             if (errorBySearch == null || errorBySearch.isEmpty()) {
                 hsWebInfo.error.error = "";
                 hsWebInfo.success = false;
+
                 return hsWebInfo;
             } else {
                 json = errorBySearch;

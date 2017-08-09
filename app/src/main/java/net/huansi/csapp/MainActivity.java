@@ -3,6 +3,7 @@ package net.huansi.csapp;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
+
 import net.huansi.csapp.databinding.ActivityMainBinding;
 import net.huansi.csapp.event.HomeToRealEvent;
 import net.huansi.csapp.fragment.AbnormalFragment;
@@ -10,8 +11,10 @@ import net.huansi.csapp.fragment.HistoryFragment;
 import net.huansi.csapp.fragment.HomeFragment;
 import net.huansi.csapp.fragment.MineFragment;
 import net.huansi.csapp.fragment.RealFragment;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import huansi.net.qianjingapp.base.NotWebBaseActivity;
 
 public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnCheckedChangeListener{

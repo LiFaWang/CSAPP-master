@@ -94,7 +94,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                             adapter = new HomeFragmentAdapter(mFliterData, getContext());
                         fragmentHomeBinding.homeListView.setAdapter(adapter);
                         fragmentHomeBinding.prtHome.refreshComplete();
-
                     }
 
                     @Override

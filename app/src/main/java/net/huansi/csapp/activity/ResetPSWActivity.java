@@ -1,15 +1,39 @@
 package net.huansi.csapp.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import net.huansi.csapp.R;
+import net.huansi.csapp.databinding.ActivityResetPswBinding;
 
-public class ResetPSWActivity extends AppCompatActivity {
+import huansi.net.qianjingapp.base.NotWebBaseActivity;
+
+public class ResetPSWActivity extends NotWebBaseActivity {
+
+
+    private ActivityResetPswBinding mResetPswBinding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_psw);
+    protected int getLayoutId() {
+        return R.layout.activity_reset_psw;
+    }
+
+    @Override
+    public void init() {
+        mResetPswBinding = (ActivityResetPswBinding) viewDataBinding;
+        mResetPswBinding.tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+    }
+
+    /**
+     * 重置密码提交
+     */
+    public void reset(View v ){
+        finish();
+
     }
 }

@@ -50,7 +50,9 @@ public class RealFragmentAdapter extends HsBaseAdapter<RealTimeMonitoringBean>{
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(RealFragmentAdapter.super.mContext,UnusualActivity.class);
-                    RealFragmentAdapter.super.mContext.startActivity(intent);
+                    intent.putExtra(ITEM_EQU_NAME,mList.get(i).STERMINALNAME);
+                    intent.putExtra(FACTORY_NAME,mList.get(i).SFACTORYNAME);
+                   mContext.startActivity(intent);
                 }
             });
         }else {
