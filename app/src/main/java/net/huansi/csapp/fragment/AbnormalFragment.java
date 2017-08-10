@@ -1,11 +1,8 @@
 package net.huansi.csapp.fragment;
 
 
-
-
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -13,13 +10,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import net.huansi.csapp.R;
+import net.huansi.csapp.adapter.AbnormalAdapter;
 import net.huansi.csapp.adapter.HistoryFragmentAdapter;
 import net.huansi.csapp.adapter.PopAreaAdapter;
 import net.huansi.csapp.adapter.PopEquAdapter;
 import net.huansi.csapp.adapter.PopFactoryAdapter;
+import net.huansi.csapp.bean.AbnormalBean;
 import net.huansi.csapp.bean.CountryListBean;
 import net.huansi.csapp.bean.EquipmentListBean;
 import net.huansi.csapp.bean.FactoryListBean;
@@ -29,7 +29,7 @@ import net.huansi.csapp.databinding.FragmentAbnormalBinding;
 import net.huansi.csapp.utils.MyUtils;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +64,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
     private PopFactoryAdapter factoryAdapter;
     private PopEquAdapter equAdapter;
     private LoadProgressDialog dialog;
+    private AbnormalAdapter mAbnormalAdapter;
     private String iTerminalId="1";
     private String pageIndex="1";
     private String pageSize="10";
@@ -73,6 +74,10 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
     private List<Map<String,List<HistoryDataMapBean>>> historyData;//折线图
     private Map<String,List<HistoryDataMapBean>> mapDataMap;//存储设备名字和历史的折线图数据
     private List<HistoryDataMapBean> listDataMap;
+    private String mtStartTime="";//开始日期
+    private String mtEndTime="";//结束日期
+    private TimePickerView pvTime;//日历
+    private String mIYunTerminalId="1510";
 
     @Override
     public int getLayout() {
@@ -81,6 +86,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
 
     @Override
     public void init() {
+        initTimePickerView();
         dialog=new LoadProgressDialog(getActivity());
         data = new ArrayList<>();
         factoryData = new ArrayList<>();
@@ -92,45 +98,81 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
         listFactoryItem = new ArrayList<>();
         listEquipmentItem = new ArrayList<>();
         length = MyUtils.getScreenSize(getActivity());
-//        fragmentHistoryBinding = (FragmentHistoryBinding) viewDataBinding;
         mFragmentAbnormalBinding = (FragmentAbnormalBinding) viewDataBinding;
+        String curDate = MyUtils.getCurDate("--");
+        mFragmentAbnormalBinding.tvStart.setText(curDate);
+        mFragmentAbnormalBinding.tvEnd.setText(curDate);
+        mFragmentAbnormalBinding.tvStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pvTime.show(v);
+            }
+        });
+        mFragmentAbnormalBinding.tvEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pvTime.show(v);
+            }
+        });
+        mFragmentAbnormalBinding.ivStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pvTime.show(view);
+            }
+        });
+        mFragmentAbnormalBinding.ivEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pvTime.show(view);
+            }
+        });
+        mFragmentAbnormalBinding.tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mFragmentAbnormalBinding.tvStart.getText().toString().isEmpty() ||
+                        mFragmentAbnormalBinding.tvEnd.getText().toString().isEmpty()) {
+                    OthersUtil.ToastMsg(getContext(), "请选择日期");
+                } else {
+                    mtStartTime = mFragmentAbnormalBinding.tvStart.getText().toString();
+                    mtEndTime = mFragmentAbnormalBinding.tvEnd.getText().toString();
+                    getAbnormalData(mtStartTime, mtEndTime);
+                }
+            }});
         OthersUtil.initRefresh(mFragmentAbnormalBinding.prtError,getActivity());
         adapter = new HistoryFragmentAdapter(historyData,getContext());
-//        mFragmentAbnormalBinding.gvChart.setAdapter(adapter);
         setData();
-//        mFragmentAbnormalBinding.gvChart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(getActivity(), HistoryDetailActivity.class);
-//                getActivity().startActivity(intent);
-//            }
-//        });
-//        mFragmentAbnormalBinding.btnSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String factory = fragmentHistoryBinding.tvFactory.getText().toString();
-//                String country = fragmentHistoryBinding.tvArea.getText().toString();
-//                String equ = fragmentHistoryBinding.tvEquipment.getText().toString();
-//                if(factory.equals("无")||equ.equals("无")){
-//                    OthersUtil.ToastMsg(getContext(),"该区域无数据");
-//                }else if(country.equals("(区域)")){
-//                    OthersUtil.ToastMsg(getContext(),"请选择区域");
-//                }else if(factory.equals("(工厂)")){
-//                    OthersUtil.ToastMsg(getContext(),"请选择工厂");
-//                }else if(equ.equals("(设备)")){
-//                    OthersUtil.ToastMsg(getContext(),"请选择设备");
-//                }else{
-//                    getEquData();
-//                }
-//            }
-//        });
         mFragmentAbnormalBinding.prtError.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getEquData();
+//                getEquData();
             }
         });
 //        mFragmentAbnormalBinding.gvChart.setEmptyView(View.inflate(getContext(),R.layout.empty_view,null));
+    }
+    private void initTimePickerView() {
+        //时间选择器
+        //选中事件回调
+        pvTime = new TimePickerView.Builder(getContext(), new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                switch (v.getId()){
+                    case R.id.ivStart:
+                        mFragmentAbnormalBinding.tvStart.setText(MyUtils.getTime(date));
+                        break;
+                    case R.id.tvStart:
+                        mFragmentAbnormalBinding.tvStart.setText(MyUtils.getTime(date));
+                        break;
+                    case R.id.ivEnd:
+                        mFragmentAbnormalBinding.tvEnd.setText(MyUtils.getTime(date));
+                        break;
+                    case R.id.tvEnd:
+                        mFragmentAbnormalBinding.tvEnd.setText(MyUtils.getTime(date));
+                        break;
+                }
+
+            }
+        }).setType(new boolean[]{true, true, true, false, false, false})
+                .build();
     }
 
     private void setData() {
@@ -232,96 +274,45 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                 }else{
                     equAdapter = new PopEquAdapter(equipmentData,getContext());
                     showPop(view);
-                    getEquData();
+//                    getEquData();
+//                    getAbnormalData(mtStartTime,mtEndTime);
                 }
             }
         });
+    }
+//获取模块对应的异常数据
+    private void getAbnormalData(final String mtStartTime, final String mtEndTime) {
+        NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
+                .map(new Func1<String, HsWebInfo>() {
+                    @Override
+                    public HsWebInfo call(String s) {
+                        return NewRxjavaWebUtils.getJsonData(getContext(),
+                                "spappYunEquExpHistoryList"
+                                , "iYunTerminalId=" + mIYunTerminalId + ",tStartTime=" +mtStartTime + ",tEndTime=" + mtEndTime,
+                                AbnormalBean.class.getName(), true, "查询失败！！！");
+                    }
+                }), getContext(), dialog, new SimpleHsWeb() {
+            @Override
+            public void success(HsWebInfo hsWebInfo) {
+                List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
+                List<AbnormalBean>data=new ArrayList<>();
+                for (int i = 0; i <entities.size() ; i++) {
+                    AbnormalBean abnormalBean = (AbnormalBean) entities.get(i);
+                  data.add(abnormalBean);
+                }
+                if(mAbnormalAdapter==null){
+                    mAbnormalAdapter=new AbnormalAdapter(data,getContext());
+                }
+                mFragmentAbnormalBinding.errorListView.setAdapter(mAbnormalAdapter);
+            }
+            @Override
+            public void error(HsWebInfo hsWebInfo, Context context) {
+                super.error(hsWebInfo, context);
 
+            }
+        });
     }
 
-
-    //获取模块下数据和对应折线图
-   private void getEquData(){
-       OthersUtil.showLoadDialog(dialog);
-       //仪表盘
-       NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
-                       //
-                       .map(new Func1<String, HsWebInfo>() {
-                           @Override
-                           public HsWebInfo call(String string) {
-                               return NewRxjavaWebUtils.getJsonData(getContext(),
-                                       "spappYunEquChannelList",
-                                       "sMobileNo=" +mMobileNo+
-                                               ",iTerminalId="+iTerminalId,
-                                       HistoryListBean.class.getName(),
-                                       true,"查询失败！！");
-                           }
-                       })
-                       //
-                       .map(new Func1<HsWebInfo, HsWebInfo>() {
-                           @Override
-                           public HsWebInfo call(HsWebInfo hsWebInfo) {
-                               if(!hsWebInfo.success) return  hsWebInfo;
-                               List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
-                               Log.e("EquHistoryDataMap2",entities.size()+"");
-                               data.clear();
-                               for (int i = 0; i < entities.size(); i++) {
-                                   HistoryListBean historyListBean = (HistoryListBean) entities.get(i);
-                                   data.add(historyListBean);
-                               }
-
-                               return NewRxjavaWebUtils.getJsonData(getContext(),
-                                       "spappYunEquHistoryDataMap",
-                                       "sMobileNo=" +mMobileNo+
-                                               ",iTerminalId="+iTerminalId+",pageindex="+pageIndex+
-                                               ",pagesize="+pageSize,
-                                       HistoryDataMapBean.class.getName(),
-                                       true,"查询失败！！");
-                           }
-                       })
-               , getContext(), dialog, new SimpleHsWeb() {
-                   @Override
-                   public void success(HsWebInfo hsWebInfo) {
-                       historyData.clear();
-                       List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
-                       Log.e("EquHistoryDataMap",entities.size()+"");
-                       List<HistoryDataMapBean> historyDataMapBeanData = new ArrayList<>();
-                       historyDataMapBeanData.clear();
-                       for (int i = 0; i < entities.size(); i++) {
-                           HistoryDataMapBean historyDataMapBean = (HistoryDataMapBean) entities.get(i);
-                           historyDataMapBeanData.add(historyDataMapBean);
-                       }
-
-                       for (int i = 0; i < data.size(); i++) {
-                           mapDataMap = new LinkedHashMap<>();
-                           listDataMap = new ArrayList<>();
-                           HistoryListBean historyListBean = data.get(i);
-                           String iUserId = historyListBean.IUSERMODULECHANNELID;
-                           for (int j = 0; j < historyDataMapBeanData.size(); j++) {
-                               if(iUserId.equals(historyDataMapBeanData.get(j).IUSERMODULECHANNELID)){
-                                   listDataMap.add(historyDataMapBeanData.get(j));
-                                   mapDataMap.put(historyListBean.SCHANNELNAME,listDataMap);
-
-                               }
-                           }
-                           historyData.add(mapDataMap);
-                       }
-                       adapter.notifyDataSetChanged();
-                       mFragmentAbnormalBinding.prtError.refreshComplete();
-                       OthersUtil.dismissLoadDialog(dialog);
-
-
-                   }
-
-                   @Override
-                   public void error(HsWebInfo hsWebInfo, Context context) {
-                       super.error(hsWebInfo, context);
-                       mFragmentAbnormalBinding.prtError.refreshComplete();
-                       OthersUtil.dismissLoadDialog(dialog);
-                   }
-               });
-
-   }
 
     /**
      * popWindow

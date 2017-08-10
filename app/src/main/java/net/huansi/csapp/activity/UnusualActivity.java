@@ -144,7 +144,6 @@ public class UnusualActivity extends NotWebBaseActivity {
                             adapter=new UnusalActivityAdapter(data,UnusualActivity.this);
                         }
                         activityUnusualBinding.lvErrorInfo.setAdapter(adapter);
-
                     }
 
                     @Override
