@@ -31,7 +31,6 @@ import net.huansi.csapp.utils.MyUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import huansi.net.qianjingapp.entity.HsWebInfo;
 import huansi.net.qianjingapp.entity.WsEntity;
@@ -51,7 +50,6 @@ import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE
 public class AbnormalFragment extends BaseFragment implements AbsListView.OnScrollListener {
 
     private FragmentAbnormalBinding mFragmentAbnormalBinding;
-//    private FragmentHistoryBinding fragmentHistoryBinding;
     private int[] length;//屏幕长宽;
     private List<CountryListBean> countryData;//区域数据
     private List<FactoryListBean> factoryData;//工厂数据
@@ -71,8 +69,8 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
     private List<FactoryListBean> listFactoryItem;//筛选工厂的数据
     private List<EquipmentListBean> listEquipmentItem;//筛选设备的数据
     //折线图三层数据集合
-    private List<Map<String,List<HistoryDataMapBean>>> historyData;//折线图
-    private Map<String,List<HistoryDataMapBean>> mapDataMap;//存储设备名字和历史的折线图数据
+//    private List<Map<String,List<HistoryDataMapBean>>> historyData;//折线图
+//    private Map<String,List<HistoryDataMapBean>> mapDataMap;//存储设备名字和历史的折线图数据
     private List<HistoryDataMapBean> listDataMap;
     private String mtStartTime="";//开始日期
     private String mtEndTime="";//结束日期
@@ -93,7 +91,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
         factoryDataMemory = new ArrayList<>();
         equipmentData = new ArrayList<>();
         countryData = new ArrayList<>();
-        historyData = new ArrayList<>();
+//        historyData = new ArrayList<>();
         equipmentDataMemory  = new ArrayList<>();
         listFactoryItem = new ArrayList<>();
         listEquipmentItem = new ArrayList<>();
@@ -139,15 +137,15 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                 }
             }});
         OthersUtil.initRefresh(mFragmentAbnormalBinding.prtError,getActivity());
-        adapter = new HistoryFragmentAdapter(historyData,getContext());
+//        adapter = new HistoryFragmentAdapter(historyData,getContext());
         setData();
         mFragmentAbnormalBinding.prtError.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-//                getEquData();
+                getAbnormalData(mtStartTime, mtEndTime);
+
             }
         });
-//        mFragmentAbnormalBinding.gvChart.setEmptyView(View.inflate(getContext(),R.layout.empty_view,null));
     }
     private void initTimePickerView() {
         //时间选择器
@@ -274,8 +272,6 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                 }else{
                     equAdapter = new PopEquAdapter(equipmentData,getContext());
                     showPop(view);
-//                    getEquData();
-//                    getAbnormalData(mtStartTime,mtEndTime);
                 }
             }
         });
@@ -303,12 +299,19 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                 if(mAbnormalAdapter==null){
                     mAbnormalAdapter=new AbnormalAdapter(data,getContext());
                 }
+
                 mFragmentAbnormalBinding.errorListView.setAdapter(mAbnormalAdapter);
+                mAbnormalAdapter.notifyDataSetChanged();
+                mFragmentAbnormalBinding.prtError.refreshComplete();
+                OthersUtil.dismissLoadDialog(dialog);
             }
+
+
             @Override
             public void error(HsWebInfo hsWebInfo, Context context) {
                 super.error(hsWebInfo, context);
-
+                mFragmentAbnormalBinding.prtError.refreshComplete();
+                OthersUtil.dismissLoadDialog(dialog);
             }
         });
     }

@@ -22,11 +22,15 @@ import huansi.net.qianjingapp.entity.WsEntity;
 import huansi.net.qianjingapp.imp.SimpleHsWeb;
 import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
+import huansi.net.qianjingapp.view.LoadProgressDialog;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
 import static net.huansi.csapp.utils.Constants.FACTORY_NAME;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_NAME;
 
+/**
+ * 异常数据界面
+ */
 public class UnusualActivity extends NotWebBaseActivity {
     ActivityUnusualBinding activityUnusualBinding;
     private String mIChnnel="8";//通道
@@ -34,7 +38,7 @@ public class UnusualActivity extends NotWebBaseActivity {
     private String mTEndTime="";//结束日期
     private TimePickerView pvTime;//日历
     private UnusalActivityAdapter adapter;
-
+    private LoadProgressDialog dialog;
 
     @Override
     protected int getLayoutId() {
@@ -44,6 +48,7 @@ public class UnusualActivity extends NotWebBaseActivity {
     @Override
     public void init() {
         initTimePickerView();
+        dialog=new LoadProgressDialog(this);
         activityUnusualBinding = (ActivityUnusualBinding) viewDataBinding;
         Intent intent = getIntent();
         String equName = intent.getStringExtra(ITEM_EQU_NAME);
@@ -125,7 +130,7 @@ public class UnusualActivity extends NotWebBaseActivity {
     }
 
     private void setData(String mTStartTime,String mTEndTime) {
-//        OthersUtil.showLoadDialog(dialog);
+        OthersUtil.showLoadDialog(dialog);
         //区域数据
         RxjavaWebUtils.requestByGetJsonData( this, HS_SERVICE,
                 "spappYunEquExpCurveInfo", "iChnnel="+mIChnnel+
@@ -144,6 +149,9 @@ public class UnusualActivity extends NotWebBaseActivity {
                             adapter=new UnusalActivityAdapter(data,UnusualActivity.this);
                         }
                         activityUnusualBinding.lvErrorInfo.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        OthersUtil.dismissLoadDialog(dialog);
+
                     }
 
                     @Override

@@ -43,6 +43,8 @@
         <activity android:name=".activity.ResetPSWActivity"/>
         <activity android:name=".activity.UnusualActivity">
         </activity>
+        <activity android:name=".activity.HistoryCurveActivity">
+        </activity>
     </application>
 
 </manifest>
