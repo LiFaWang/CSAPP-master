@@ -17,5 +17,6 @@ public class Constants {
     public static final String USER_SECTION="userSection";//运营部
     public static  final  String USER_COMPANY="userCompany";//公司
     public static final String IS_LOGIN="isLogin";//是否第一次登陆
+    public static final String USER_PWD="passWord";//登录密码
 
 }

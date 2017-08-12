@@ -47,7 +47,7 @@ import huansi.net.qianjingapp.view.LoadProgressDialog;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
+import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 
 
 public class RealFragment extends BaseFragment {
@@ -149,7 +149,7 @@ public class RealFragment extends BaseFragment {
     private void setData() {
              OthersUtil.showLoadDialog(dialog);
         //区域数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), CUS_SERVICE,
                 "spappYunEquCountryList", "sMobileNo="+mMobileNo,
                 CountryListBean.class.getName(), true, "", new SimpleHsWeb() {
 
@@ -204,7 +204,7 @@ public class RealFragment extends BaseFragment {
      */
     private void setFactory() {
         //工厂数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), CUS_SERVICE,
                 "spappYunEquFactoryList", "sMobileNo="+mMobileNo,
                 FactoryListBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
@@ -238,7 +238,7 @@ public class RealFragment extends BaseFragment {
     private void setEquData(String iCountryId,String iFactoryId) {
         OthersUtil.showLoadDialog(dialog);
         //实时监控设备数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), CUS_SERVICE,
                 "spappYunEquRealtimeMonitoring", "sMobileNo=''" +mMobileNo+
                         ",iCountryId=" +iCountryId+
                         ",iFactoryId="+iFactoryId,

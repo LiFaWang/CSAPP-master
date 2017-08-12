@@ -12,7 +12,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import net.huansi.csapp.R;
-import net.huansi.csapp.adapter.UnusalActivityAdapter;
+import net.huansi.csapp.adapter.HistoryCurveAdapter;
 import net.huansi.csapp.bean.UnuaualBean;
 import net.huansi.csapp.databinding.ActivityHistoryExcCurveBinding;
 import net.huansi.csapp.utils.MyUtils;
@@ -29,17 +29,16 @@ import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 import huansi.net.qianjingapp.view.LoadProgressDialog;
 
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
+import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
 
 /**
  * 历史异常曲线界面
  */
-
 public class HistoryCurveActivity  extends NotWebBaseActivity {
     ActivityHistoryExcCurveBinding mHistoryExcCurveBinding;
     private LoadProgressDialog mDialog;
-    private UnusalActivityAdapter adapter;
+    private HistoryCurveAdapter adapter;
     private String mIChnnel="8";//通道
     private TimePickerView pvTime;//日历
     private String mTStartTime="1999-1-1";//开始日期
@@ -57,10 +56,17 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
 
     @Override
     public void init() {
+        initTimePickerView();
         mHistoryExcCurveBinding= (ActivityHistoryExcCurveBinding) viewDataBinding;
+        mHistoryExcCurveBinding.tvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         lineChart = mHistoryExcCurveBinding.lineChart;
         mHistoryExcCurveBinding.lineChart.setNoDataText("没有数据");
-        initTimePickerView();
+
         initLineChart();//初始化折线图
 
         mDialog=new LoadProgressDialog(this);
@@ -74,25 +80,25 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
         mHistoryExcCurveBinding.tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pvTime.show();
+                pvTime.show(v);
             }
         });
         mHistoryExcCurveBinding.ivStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pvTime.show();
+                pvTime.show(v);
             }
         });
         mHistoryExcCurveBinding.tvEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pvTime.show();
+                pvTime.show(v);
             }
         });
         mHistoryExcCurveBinding.ivEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pvTime.show();
+                pvTime.show(v);
             }
         });
         mHistoryExcCurveBinding.tvSearch.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +118,7 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
     private void setData(String mTStartTime,String mTEndTime) {
         OthersUtil.showLoadDialog(mDialog);
         //区域数据
-        RxjavaWebUtils.requestByGetJsonData( this, HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData( this, CUS_SERVICE,
                 "spappYunEquExpCurveInfo", "iChnnel="+mIChnnel+
                         ",tStartTime="+mTStartTime+",tEndTime="+mTEndTime,
                 UnuaualBean.class.getName(), true, "", new SimpleHsWeb() {
@@ -142,7 +148,7 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
                         lineChart.animateXY(3000,2000);
 
                         if(adapter==null){
-                            adapter=new UnusalActivityAdapter(data,HistoryCurveActivity.this);
+                            adapter=new HistoryCurveAdapter(data,HistoryCurveActivity.this);
                         }
                         mHistoryExcCurveBinding.lvErrorInfo.setAdapter(adapter);
                         adapter.notifyDataSetChanged();

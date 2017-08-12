@@ -27,7 +27,7 @@ import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 import huansi.net.qianjingapp.view.LoadProgressDialog;
 
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
+import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.FACTORY_NAME;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_ID;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_NAME;
@@ -91,7 +91,7 @@ public class EquRouletteActivity extends NotWebBaseActivity {
             OthersUtil.showLoadDialog(dialog);
         }
 
-        RxjavaWebUtils.requestByGetJsonData(this, HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
                 "spappYunEquRealtimeData"
                 , "sMobileNo=" + mMobileNo + ",iTerminalId=" + iTerminalId,
                 EquRealTimeDataBean.class.getName(), true, "", new SimpleHsWeb() {

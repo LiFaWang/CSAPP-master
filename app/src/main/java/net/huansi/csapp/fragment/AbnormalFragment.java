@@ -44,7 +44,7 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import rx.functions.Func1;
 
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
+import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 
 
 public class AbnormalFragment extends BaseFragment implements AbsListView.OnScrollListener {
@@ -175,7 +175,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
 
     private void setData() {
         //区域数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), CUS_SERVICE,
                 "spappYunEquCountryList", "sMobileNo="+mMobileNo,
                 CountryListBean.class.getName(), true, "", new SimpleHsWeb() {
 
@@ -198,7 +198,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                     }
                 });
         //工厂数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), CUS_SERVICE,
                 "spappYunEquFactoryList", "sMobileNo="+mMobileNo,
                 FactoryListBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
@@ -219,7 +219,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                     }
                 });
         //设备数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), CUS_SERVICE,
                 "spappYunEquTerminalList", "sMobileNo="+mMobileNo,
                 EquipmentListBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
@@ -282,7 +282,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                 .map(new Func1<String, HsWebInfo>() {
                     @Override
                     public HsWebInfo call(String s) {
-                        return NewRxjavaWebUtils.getJsonData(getContext(),
+                        return NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
                                 "spappYunEquExpHistoryList"
                                 , "iYunTerminalId=" + mIYunTerminalId + ",tStartTime=" +mtStartTime + ",tEndTime=" + mtEndTime,
                                 AbnormalBean.class.getName(), true, "查询失败！！！");

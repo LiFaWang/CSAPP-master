@@ -24,7 +24,7 @@ import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 import huansi.net.qianjingapp.view.LoadProgressDialog;
 
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
+import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.FACTORY_NAME;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_NAME;
 
@@ -132,7 +132,7 @@ public class UnusualActivity extends NotWebBaseActivity {
     private void setData(String mTStartTime,String mTEndTime) {
         OthersUtil.showLoadDialog(dialog);
         //区域数据
-        RxjavaWebUtils.requestByGetJsonData( this, HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData( this, CUS_SERVICE,
                 "spappYunEquExpCurveInfo", "iChnnel="+mIChnnel+
                 ",tStartTime="+mTStartTime+",tEndTime="+mTEndTime,
                 UnuaualBean.class.getName(), true, "", new SimpleHsWeb() {

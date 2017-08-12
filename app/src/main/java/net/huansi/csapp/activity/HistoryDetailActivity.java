@@ -1,8 +1,6 @@
 package net.huansi.csapp.activity;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 
 import com.bigkoo.pickerview.TimePickerView;
@@ -11,16 +9,13 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import net.huansi.csapp.R;
-import net.huansi.csapp.bean.EquipmentListBean;
 import net.huansi.csapp.bean.HistoryDetailBean;
 import net.huansi.csapp.databinding.ActivityHistoryDetailBinding;
 import net.huansi.csapp.utils.MyUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,9 +25,8 @@ import huansi.net.qianjingapp.entity.WsEntity;
 import huansi.net.qianjingapp.imp.SimpleHsWeb;
 import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
-import huansi.net.qianjingapp.view.LoadProgressDialog;
 
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
+import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.CHANNEL_ID;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
 
@@ -156,7 +150,7 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
     private void setData(String mStartDate,String mEndDate) {
         OthersUtil.showLoadDialog(mDialog);
         //设备数据
-        RxjavaWebUtils.requestByGetJsonData(this, HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
                 "spappYunEquTerminalModuleChannelLineData", "sMobileNo="+mMobileNo+",iUserModuleChannelId="
                 +channelId+",dStartDate="+mStartDate+",dEndDate="+mEndDate,
                 HistoryDetailBean.class.getName(), true, "", new SimpleHsWeb() {

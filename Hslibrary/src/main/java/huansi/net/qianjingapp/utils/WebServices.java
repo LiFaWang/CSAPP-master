@@ -1,8 +1,5 @@
 package huansi.net.qianjingapp.utils;
 
-import android.content.Context;
-import android.util.Log;
-
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -12,49 +9,39 @@ import java.util.Map;
 
 
 public class WebServices {
-	public static final String CUS_SERVICE_IP="";
-	public static final String CUS_SERVICE_CHECK_CODE="";
-    //本机
-   public static final String HS_SERVICE_IP="http://192.168.0.60/GU/APPWS.asmx";
-   //public static final String HS_SERVICE_IP="http://192.168.10.9:8011/GHIot/APPWS.asmx";
-	public static final String HS_SERVICE_CHECK_CODE="4A8D54D1-C7A1-48DC-AD7E-8CA1686FBF85";
+    public static final String CUSTOMER_SERVICE_IP="http://183.134.73.181:3082/HSIOTAPPWS/appws.asmx";
+    public static final String CUS_SERVICE_CHECK_CODE="4A8D54D1-C7A1-48DC-AD7E-8CA1686FBF85";
+    //环思的服务器ip
+
+    public static final String HS_SERVICE_IP="http://hsapp.huansi.net/hsappws.asmx";
+	public static final String HS_SERVICE_CHECK_CODE="APP008";//环思校验码
 
 	/**
 	 * 服务器的类型
 	 */
 	public enum WebServiceType{
-		HS_SERVICE,//环思服务器
 		CUS_SERVICE,//前进app服务器
-
+		HS_SERVICE_LATER,//环思码服务器  之前调用HS_SERVICE(已删除) 重新配置
 	}
 
 	public String FEndPoint = "";
 	public String FNameSpace ="http://tempuri.org/";
 	public String FCheckCode = "";
 
-	//---------------------------------------------------------------------------------------
-	public WebServices() {
-//		this(WebServiceType.CUS_SERVICE);
-	}
-
 	/**
 	 *
 	 * @param serviceTpe
      */
-	public WebServices(WebServiceType serviceTpe, Context context) {
+	public WebServices(WebServiceType serviceTpe) {
 		switch (serviceTpe){
 			//环思服务器
-			case HS_SERVICE:
-//				String ip = SPUtils.readMacIp(context);
-//				FEndPoint = "http://192.168.10.9:8011/GHIot/APPWS.asmx";
-				FEndPoint  = "http://183.134.73.181:3082/HSIOTAPPWS/appws.asmx";
-//				FEndPoint = HS_SERVICE_IP;
-				FCheckCode = HS_SERVICE_CHECK_CODE;
-				break;
-			//定制app服务器
 			case CUS_SERVICE:
-				FEndPoint = CUS_SERVICE_IP;
-				FCheckCode =CUS_SERVICE_CHECK_CODE;
+				FEndPoint  = CUSTOMER_SERVICE_IP;
+				FCheckCode = CUS_SERVICE_CHECK_CODE;
+				break;
+			case HS_SERVICE_LATER:
+				FEndPoint = HS_SERVICE_IP;
+				FCheckCode = HS_SERVICE_CHECK_CODE;
 				break;
 		}
 	}

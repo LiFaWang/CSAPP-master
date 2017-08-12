@@ -5,20 +5,18 @@ import android.content.Context;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
-
 import java.util.Map;
 
 import huansi.net.qianjingapp.R;
 import huansi.net.qianjingapp.entity.HsWebInfo;
 import huansi.net.qianjingapp.listener.WebListener;
+import huansi.net.qianjingapp.utils.WebServices.WebServiceType;
 import huansi.net.qianjingapp.view.LoadProgressDialog;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
 
 /**
  * Created by shanz on 2017/4/24.
@@ -118,13 +116,14 @@ public class NewRxjavaWebUtils {
      * @return
      */
     public static HsWebInfo getJsonData(Context context,
+                                        WebServiceType webServiceType,
                                         String str,
                                         String paraStr,
                                         String className,
                                         boolean isSearch,
                                         String errorBySearch) {
         HsWebInfo hsWebInfo = new HsWebInfo();
-        String json = WsUtil.getJsonDataAsync(context, str, paraStr, HS_SERVICE);
+        String json = WsUtil.getJsonDataAsync(context, str, paraStr, webServiceType);
 
         if (errorBySearch == null) errorBySearch = "";
         hsWebInfo.json = json;
@@ -154,6 +153,7 @@ public class NewRxjavaWebUtils {
         return hsWebInfo;
     }
     public static HsWebInfo getNormalFunction(Context context,
+                                              final WebServiceType webServiceType,
                                               String functionName,
                                               Map<String,String> paramMap,
                                               String className,
@@ -164,7 +164,7 @@ public class NewRxjavaWebUtils {
         if(!NetUtil.isNetworkAvailable(context)) {
             json=context.getResources().getString(R.string.net_no_active);
         }else {
-            WebServices webServices = new WebServices(HS_SERVICE,context);
+            WebServices webServices = new WebServices(webServiceType);
             json = webServices.getData(functionName, paramMap);
         }
         if (errorBySearch == null) errorBySearch = "";

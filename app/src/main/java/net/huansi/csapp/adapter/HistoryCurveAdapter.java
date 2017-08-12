@@ -14,20 +14,21 @@ import huansi.net.qianjingapp.adapter.HsBaseAdapter;
 import huansi.net.qianjingapp.utils.ViewHolder;
 
 /**
- * Created by Tony on 2017/8/9.
- * 异常数据界面
- * 14:18
+ * Created by Tony on 2017/8/11.
+ * 9:37
+ * 历史异常曲线
  */
 
-public class UnusalActivityAdapter extends HsBaseAdapter<UnuaualBean> {
-    public UnusalActivityAdapter(List<UnuaualBean> list, Context context) {
+public class HistoryCurveAdapter extends HsBaseAdapter<UnuaualBean> {
+
+    public HistoryCurveAdapter(List<UnuaualBean> list, Context context) {
         super(list, context);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView==null){
-            convertView=mInflater.inflate(R.layout.item_unusal_adapter,parent,false);
+            convertView=mInflater.inflate(R.layout.item_historycurve_adapter,parent,false);
         }
         TextView unusalPoint = ViewHolder.get(convertView, R.id.unusalPoint);
         TextView listStartTime = ViewHolder.get(convertView, R.id.listStartTime);
@@ -35,7 +36,6 @@ public class UnusalActivityAdapter extends HsBaseAdapter<UnuaualBean> {
         TextView unusalValue = ViewHolder.get(convertView, R.id.unusalValue);
         TextView unusalType = ViewHolder.get(convertView, R.id.unusalType);
         UnuaualBean unuaualBean = mList.get(position);
-        unusalPoint.setText(unuaualBean.SCHANNELNAME);
         listStartTime.setText(unuaualBean.TSTARTTIME);
         listEndTime.setText(unuaualBean.TENDTIME);
         unusalValue.setText(unuaualBean.SCURVALUE);

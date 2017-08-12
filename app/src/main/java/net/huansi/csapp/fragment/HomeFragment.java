@@ -25,7 +25,7 @@ import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
+import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
@@ -78,7 +78,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void setData() {
 
         //首页数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity) this.getActivity(), CUS_SERVICE,
                 "spappYunEquDistributionMap", "sMobileNo=" + mMobileNo,
                 HomeInfoBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override

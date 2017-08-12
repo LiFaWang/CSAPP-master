@@ -19,12 +19,13 @@ public class WsUtil {
     /**
      * 通过调用getJsonData的方法调用websrvice
      */
-    public static String  getJsonDataAsync(Context context, String str, String sParaStr, WebServiceType webServiceType){
-       if(context!=null){
-        if(!NetUtil.isNetworkAvailable(context)) {
-            return context.getResources().getString(R.string.net_no_active);
-        }}
-        WebServices webServices = new WebServices(webServiceType,context);
+    public static String  getJsonDataAsync(Context context, String str, String sParaStr, WebServiceType webServiceType) {
+        if (context != null) {
+            if (!NetUtil.isNetworkAvailable(context)) {
+                return context.getResources().getString(R.string.net_no_active);
+            }
+        }
+        WebServices webServices = new WebServices(webServiceType);
         Map<String, String> map = new HashMap<>();
         map.put("str", str);
         map.put("sParaStr", sParaStr);

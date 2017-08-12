@@ -155,9 +155,8 @@
 
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="异常值"
                 android:textColor="@color/colorTitle"/>
@@ -166,7 +165,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="异常类型"
                 android:textColor="@color/colorTitle"/>

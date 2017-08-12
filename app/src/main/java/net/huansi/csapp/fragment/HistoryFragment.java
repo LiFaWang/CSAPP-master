@@ -47,7 +47,7 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import rx.functions.Func1;
 
-import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.HS_SERVICE;
+import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 
 
 public class HistoryFragment extends BaseFragment implements AbsListView.OnScrollListener {
@@ -136,7 +136,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
 
     private void setData() {
         //区域数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), CUS_SERVICE,
                 "spappYunEquCountryList", "sMobileNo="+mMobileNo,
                 CountryListBean.class.getName(), true, "", new SimpleHsWeb() {
 
@@ -159,7 +159,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                     }
                 });
         //工厂数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), CUS_SERVICE,
                 "spappYunEquFactoryList", "sMobileNo="+mMobileNo,
                 FactoryListBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
@@ -180,7 +180,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                     }
                 });
         //设备数据
-        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), HS_SERVICE,
+        RxjavaWebUtils.requestByGetJsonData((RxAppCompatActivity)this.getActivity(), CUS_SERVICE,
                 "spappYunEquTerminalList", "sMobileNo="+mMobileNo,
                 EquipmentListBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
@@ -249,7 +249,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                        .map(new Func1<String, HsWebInfo>() {
                            @Override
                            public HsWebInfo call(String string) {
-                               return NewRxjavaWebUtils.getJsonData(getContext(),
+                               return NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
                                        "spappYunEquChannelList",
                                        "sMobileNo=" +mMobileNo+
                                                ",iTerminalId="+iTerminalId,
@@ -270,7 +270,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                                    data.add(historyListBean);
                                }
 
-                               return NewRxjavaWebUtils.getJsonData(getContext(),
+                               return NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
                                        "spappYunEquHistoryDataMap",
                                        "sMobileNo=" +mMobileNo+
                                                ",iTerminalId="+iTerminalId+",pageindex="+pageIndex+
