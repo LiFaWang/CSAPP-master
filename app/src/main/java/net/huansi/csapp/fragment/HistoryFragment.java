@@ -1,8 +1,6 @@
 package net.huansi.csapp.fragment;
 
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -43,7 +41,7 @@ import huansi.net.qianjingapp.utils.NewRxjavaWebUtils;
 import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 import huansi.net.qianjingapp.view.LoadProgressDialog;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import rx.functions.Func1;
 
@@ -67,8 +65,9 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
     private PopEquAdapter equAdapter;
     private LoadProgressDialog dialog;
     private String iTerminalId="1";
-    private String pageIndex="1";
+    private int pageIndex=1;
     private String pageSize="10";
+    private String pageSize1="6";
     private List<FactoryListBean> listFactoryItem;//筛选工厂的数据
     private List<EquipmentListBean> listEquipmentItem;//筛选设备的数据
     //折线图三层数据集合
@@ -121,14 +120,30 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                 }else if(equ.equals("(设备)")){
                     OthersUtil.ToastMsg(getContext(),"请选择设备");
                 }else{
-                    getEquData();
+                    pageIndex = 1;
+                    historyData.clear();
+                    getEquData(pageIndex);
                 }
             }
         });
-        fragmentHistoryBinding.prtHistory.setPtrHandler(new PtrDefaultHandler() {
+//        fragmentHistoryBinding.prtHistory.setPtrHandler(new PtrDefaultHandler() {
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                getEquData();
+//            }
+//
+//        });
+        fragmentHistoryBinding.prtHistory.setPtrHandler(new PtrDefaultHandler2() {
+            @Override
+            public void onLoadMoreBegin(PtrFrameLayout frame) {
+                getEquData(pageIndex++);
+            }
+
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getEquData();
+                pageIndex = 1;
+                historyData.clear();
+                getEquData(pageIndex);
             }
         });
         fragmentHistoryBinding.gvChart.setEmptyView(View.inflate(getContext(),R.layout.empty_view,null));
@@ -241,7 +256,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
 
 
     //获取模块下数据和对应折线图
-   private void getEquData(){
+   private void getEquData(final int pageIndex){
        OthersUtil.showLoadDialog(dialog);
        //仪表盘
        NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
@@ -252,7 +267,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                                return NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
                                        "spappYunEquChannelList",
                                        "sMobileNo=" +mMobileNo+
-                                               ",iTerminalId="+iTerminalId,
+                                               ",iTerminalId="+iTerminalId+",iPageIndex="+pageIndex+ ",iPageSize="+pageSize1,
                                        HistoryListBean.class.getName(),
                                        true,"查询失败！！");
                            }
@@ -282,7 +297,8 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                , getContext(), dialog, new SimpleHsWeb() {
                    @Override
                    public void success(HsWebInfo hsWebInfo) {
-                       historyData.clear();
+                       List<Map<String,List<HistoryDataMapBean>>> tempHistoryData = new ArrayList<Map<String, List<HistoryDataMapBean>>>();
+
                        List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
                        Log.e("EquHistoryDataMap",entities.size()+"");
                        List<HistoryDataMapBean> historyDataMapBeanData = new ArrayList<>();
@@ -304,8 +320,9 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
 
                                }
                            }
-                           historyData.add(mapDataMap);
+                           tempHistoryData.add(mapDataMap);
                        }
+                       historyData.addAll(tempHistoryData);
                        adapter.notifyDataSetChanged();
                        fragmentHistoryBinding.prtHistory.refreshComplete();
                        OthersUtil.dismissLoadDialog(dialog);
@@ -443,4 +460,5 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
     }
+
 }

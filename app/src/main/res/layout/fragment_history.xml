@@ -55,11 +55,12 @@
             android:textColor="@color/colorTitle"
             android:layout_height="wrap_content" />
         <include layout="@layout/underline_black"></include>
-    <in.srain.cube.views.ptr.PtrFrameLayout
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/prtHistory"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <GridView
             android:id="@+id/gvChart"
             android:focusable="true"
@@ -67,7 +68,7 @@
             android:layout_height="match_parent"
             android:numColumns="2">
         </GridView>
-        </in.srain.cube.views.ptr.PtrFrameLayout>
+        </in.srain.cube.views.ptr.PtrClassicFrameLayout>
     </LinearLayout>
 </layout>
 
