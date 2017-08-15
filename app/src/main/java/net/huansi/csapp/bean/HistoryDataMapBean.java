@@ -14,10 +14,11 @@ public class HistoryDataMapBean extends WsData {
      * NCHANNELVALUE : 12.00
      */
 
-    public String IUSERMODULECHANNELID;
-    public String COLLECTTIME;
+    public String IUSERMODULECHANNELID="";
+    public String COLLECTTIME="";
     public String NCHANNELVALUE="";
 
+    public String showName="";
 
 
 }

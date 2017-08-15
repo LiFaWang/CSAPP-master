@@ -2,6 +2,7 @@ package net.huansi.csapp.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,8 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import net.huansi.csapp.R;
+import net.huansi.csapp.activity.HistoryCurveActivity;
 import net.huansi.csapp.adapter.AbnormalAdapter;
-import net.huansi.csapp.adapter.HistoryFragmentAdapter;
 import net.huansi.csapp.adapter.PopAreaAdapter;
 import net.huansi.csapp.adapter.PopEquAdapter;
 import net.huansi.csapp.adapter.PopFactoryAdapter;
@@ -24,7 +25,6 @@ import net.huansi.csapp.bean.CountryListBean;
 import net.huansi.csapp.bean.EquipmentListBean;
 import net.huansi.csapp.bean.FactoryListBean;
 import net.huansi.csapp.bean.HistoryDataMapBean;
-import net.huansi.csapp.bean.HistoryListBean;
 import net.huansi.csapp.databinding.FragmentAbnormalBinding;
 import net.huansi.csapp.utils.MyUtils;
 
@@ -45,6 +45,9 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import rx.functions.Func1;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
+import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
+import static net.huansi.csapp.utils.Constants.ENDTIME;
+import static net.huansi.csapp.utils.Constants.STARTTIME;
 
 
 public class AbnormalFragment extends BaseFragment implements AbsListView.OnScrollListener {
@@ -56,26 +59,24 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
     private List<FactoryListBean> factoryDataMemory;//工厂数据
     private List<EquipmentListBean> equipmentData;//设备数据
     private  List<EquipmentListBean> equipmentDataMemory;
-    private HistoryFragmentAdapter adapter;
-    private List<HistoryListBean> data;//历史数据
+//    private HistoryFragmentAdapter adapter;
+//    private List<HistoryListBean> data;//历史数据
     private PopAreaAdapter areaAdapter;
     private PopFactoryAdapter factoryAdapter;
     private PopEquAdapter equAdapter;
     private LoadProgressDialog dialog;
     private AbnormalAdapter mAbnormalAdapter;
-    private String iTerminalId="1";
-    private String pageIndex="1";
-    private String pageSize="10";
+//    private String iTerminalId="1";
+//    private String pageIndex="1";
+//    private String pageSize="10";
     private List<FactoryListBean> listFactoryItem;//筛选工厂的数据
     private List<EquipmentListBean> listEquipmentItem;//筛选设备的数据
-    //折线图三层数据集合
-//    private List<Map<String,List<HistoryDataMapBean>>> historyData;//折线图
-//    private Map<String,List<HistoryDataMapBean>> mapDataMap;//存储设备名字和历史的折线图数据
     private List<HistoryDataMapBean> listDataMap;
     private String mtStartTime="";//开始日期
     private String mtEndTime="";//结束日期
     private TimePickerView pvTime;//日历
     private String mIYunTerminalId="1510";
+    private List<AbnormalBean> data;
 
     @Override
     public int getLayout() {
@@ -91,7 +92,6 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
         factoryDataMemory = new ArrayList<>();
         equipmentData = new ArrayList<>();
         countryData = new ArrayList<>();
-//        historyData = new ArrayList<>();
         equipmentDataMemory  = new ArrayList<>();
         listFactoryItem = new ArrayList<>();
         listEquipmentItem = new ArrayList<>();
@@ -100,6 +100,8 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
         String curDate = MyUtils.getCurDate("--");
         mFragmentAbnormalBinding.tvStart.setText(curDate);
         mFragmentAbnormalBinding.tvEnd.setText(curDate);
+        mAbnormalAdapter=new AbnormalAdapter(data,getContext());
+        mFragmentAbnormalBinding.errorListView.setAdapter(mAbnormalAdapter);
         mFragmentAbnormalBinding.tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,19 +135,30 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                 } else {
                     mtStartTime = mFragmentAbnormalBinding.tvStart.getText().toString();
                     mtEndTime = mFragmentAbnormalBinding.tvEnd.getText().toString();
-                    getAbnormalData(mtStartTime, mtEndTime);
+                    getAbnormalData();
                 }
             }});
-        OthersUtil.initRefresh(mFragmentAbnormalBinding.prtError,getActivity());
-//        adapter = new HistoryFragmentAdapter(historyData,getContext());
+        OthersUtil.initRefresh(mFragmentAbnormalBinding.prtError,getContext());
         setData();
         mFragmentAbnormalBinding.prtError.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getAbnormalData(mtStartTime, mtEndTime);
-
+                getAbnormalData();
             }
         });
+
+        mFragmentAbnormalBinding.errorListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AbnormalBean abnormalBean=data.get(position);
+                Intent intent=new Intent(getActivity(),HistoryCurveActivity.class);
+                intent.putExtra(CHANNEL_NAME,abnormalBean.SCHANNELNAME);
+                intent.putExtra(STARTTIME,mtStartTime);
+                intent.putExtra(ENDTIME,mtEndTime);
+                startActivity(intent);
+            }
+        });
+
     }
     private void initTimePickerView() {
         //时间选择器
@@ -277,7 +290,9 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
         });
     }
 //获取模块对应的异常数据
-    private void getAbnormalData(final String mtStartTime, final String mtEndTime) {
+    private void getAbnormalData() {
+        OthersUtil.showLoadDialog(dialog);
+        data.clear();
         NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
                 .map(new Func1<String, HsWebInfo>() {
                     @Override
@@ -291,25 +306,20 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
             @Override
             public void success(HsWebInfo hsWebInfo) {
                 List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
-                List<AbnormalBean>data=new ArrayList<>();
                 for (int i = 0; i <entities.size() ; i++) {
                     AbnormalBean abnormalBean = (AbnormalBean) entities.get(i);
-                  data.add(abnormalBean);
+                    data.add(abnormalBean);
                 }
-                if(mAbnormalAdapter==null){
-                    mAbnormalAdapter=new AbnormalAdapter(data,getContext());
-                }
-
-                mFragmentAbnormalBinding.errorListView.setAdapter(mAbnormalAdapter);
                 mAbnormalAdapter.notifyDataSetChanged();
                 mFragmentAbnormalBinding.prtError.refreshComplete();
-                OthersUtil.dismissLoadDialog(dialog);
             }
+
 
 
             @Override
             public void error(HsWebInfo hsWebInfo, Context context) {
                 super.error(hsWebInfo, context);
+                mAbnormalAdapter.notifyDataSetChanged();
                 mFragmentAbnormalBinding.prtError.refreshComplete();
                 OthersUtil.dismissLoadDialog(dialog);
             }
@@ -317,15 +327,14 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
     }
 
 
+
     /**
      * popWindow
      * @param view
      */
     private void showPop(final View view) {
-        View contentView = LayoutInflater.from(getContext()).inflate(
-                R.layout.pop_list, null);
-        final PopupWindow popupWindow = new PopupWindow(contentView,
-                length[0]/4-10, length[1]/4, true);
+        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.pop_list, null);
+        final PopupWindow popupWindow = new PopupWindow(contentView, length[0]/4-10, length[1]/4, true);
         final ListView popListView = (ListView) contentView.findViewById(R.id.lv_pop_clothlist);
         switch (view.getId()){
             case R.id.tvArea:
@@ -384,7 +393,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                                 equipmentData.clear();
                                 equipmentData.addAll(listEquipmentItem);
                                 mFragmentAbnormalBinding.tvEquipment.setText(listEquipmentItem.get(0).STERMINALNAME);
-                                iTerminalId = listEquipmentItem.get(0).ITERMINALID;
+//                                iTerminalId = listEquipmentItem.get(0).ITERMINALID;
                             }
 
                         }
@@ -408,14 +417,14 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                             equipmentData.clear();
                             equipmentData.addAll(listEquipmentItem);
                             mFragmentAbnormalBinding.tvEquipment.setText(listEquipmentItem.get(0).STERMINALNAME);
-                            iTerminalId = listEquipmentItem.get(0).ITERMINALID;
+//                            iTerminalId = listEquipmentItem.get(0).ITERMINALID;
                         }
 
                         break;
                     case R.id.tvEquipment:
                         EquipmentListBean itemEquipment= (EquipmentListBean) parent.getItemAtPosition(position);
                         mFragmentAbnormalBinding.tvEquipment.setText(itemEquipment.STERMINALNAME);
-                        iTerminalId = itemEquipment.ITERMINALID;
+//                        iTerminalId = itemEquipment.ITERMINALID;
                         break;
                 }
                 popupWindow.dismiss();

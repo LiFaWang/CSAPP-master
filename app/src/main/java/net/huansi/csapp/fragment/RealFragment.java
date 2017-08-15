@@ -263,7 +263,6 @@ public class RealFragment extends BaseFragment {
                             allPoints.add(new BarEntry(Integer.valueOf(data.get(i).NCHANNELNUMBER),i));
                             errorPoints.add(new BarEntry(Integer.valueOf(data.get(i).NEXPNUMBER),i));
                             xData[i] = data.get(i).STERMINALNAME;
-                            System.out.println("0000111111:"+xData);
                         }
 
                         allPointsName = new BarDataSet(allPoints, "采集总点数");

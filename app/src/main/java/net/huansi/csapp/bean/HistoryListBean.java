@@ -20,14 +20,14 @@ public class HistoryListBean extends WsData{
      * SUNITNAME :
      */
 
-    public String IUSERMODULECHANNELID;
-    public String IUSERMODULEID;
-    public String SUSERMODULENAME;
-    public String ICHANNEL;
-    public String SCHANNELNAME;
-    public String NUPLIMITVALUE;
-    public String NDOWNLIMITVALUE;
-    public String SUNITNAME;
+    public String IUSERMODULECHANNELID="";
+    public String IUSERMODULEID="0";
+    public String SUSERMODULENAME="";
+    public String ICHANNEL="0";
+    public String SCHANNELNAME="";
+    public String NUPLIMITVALUE="0";
+    public String NDOWNLIMITVALUE="0";
+    public String SUNITNAME="";
 
 
 }

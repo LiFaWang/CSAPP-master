@@ -4,7 +4,6 @@ package net.huansi.csapp.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -29,7 +28,7 @@ import net.huansi.csapp.databinding.FragmentHistoryBinding;
 import net.huansi.csapp.utils.MyUtils;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,21 +58,20 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
     private List<EquipmentListBean> equipmentData;//设备数据
     private  List<EquipmentListBean> equipmentDataMemory;
     private HistoryFragmentAdapter adapter;
-    private List<HistoryListBean> data;//历史数据
+//    private List<HistoryListBean> data;//历史数据
     private PopAreaAdapter areaAdapter;
     private PopFactoryAdapter factoryAdapter;
     private PopEquAdapter equAdapter;
     private LoadProgressDialog dialog;
     private String iTerminalId="1";
-    private int pageIndex=1;
-    private String pageSize="10";
-    private String pageSize1="6";
+//    private int pageIndex=1;
+//    private String pageSize="10";
+//    private String pageSize1="6";
     private List<FactoryListBean> listFactoryItem;//筛选工厂的数据
     private List<EquipmentListBean> listEquipmentItem;//筛选设备的数据
     //折线图三层数据集合
-    private List<Map<String,List<HistoryDataMapBean>>> historyData;//折线图
-    private Map<String,List<HistoryDataMapBean>> mapDataMap;//存储设备名字和历史的折线图数据
-    private List<HistoryDataMapBean> listDataMap;
+    private List<List<HistoryDataMapBean>> data;//折线图
+
 
     @Override
     public int getLayout() {
@@ -83,19 +81,19 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
     @Override
     public void init() {
         dialog=new LoadProgressDialog(getActivity());
-        data = new ArrayList<>();
+//        data = new ArrayList<>();
         factoryData = new ArrayList<>();
         factoryDataMemory = new ArrayList<>();
         equipmentData = new ArrayList<>();
         countryData = new ArrayList<>();
-        historyData = new ArrayList<>();
+        data = new ArrayList<>();
         equipmentDataMemory  = new ArrayList<>();
         listFactoryItem = new ArrayList<>();
         listEquipmentItem = new ArrayList<>();
         length = MyUtils.getScreenSize(getActivity());
         fragmentHistoryBinding = (FragmentHistoryBinding) viewDataBinding;
         OthersUtil.initRefresh(fragmentHistoryBinding.prtHistory,getActivity());
-        adapter = new HistoryFragmentAdapter(historyData,getContext());
+        adapter = new HistoryFragmentAdapter(data,getContext());
         fragmentHistoryBinding.gvChart.setAdapter(adapter);
         setData();
         fragmentHistoryBinding.gvChart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,30 +118,19 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                 }else if(equ.equals("(设备)")){
                     OthersUtil.ToastMsg(getContext(),"请选择设备");
                 }else{
-                    pageIndex = 1;
-                    historyData.clear();
-                    getEquData(pageIndex);
+                    getEquData(true);
                 }
             }
         });
-//        fragmentHistoryBinding.prtHistory.setPtrHandler(new PtrDefaultHandler() {
-//            @Override
-//            public void onRefreshBegin(PtrFrameLayout frame) {
-//                getEquData();
-//            }
-//
-//        });
         fragmentHistoryBinding.prtHistory.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
-                getEquData(pageIndex++);
+                getEquData(false);
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                pageIndex = 1;
-                historyData.clear();
-                getEquData(pageIndex);
+                getEquData(true);
             }
         });
         fragmentHistoryBinding.gvChart.setEmptyView(View.inflate(getContext(),R.layout.empty_view,null));
@@ -211,8 +198,6 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                     @Override
                     public void error(HsWebInfo hsWebInfo, Context context) {
                         super.error(hsWebInfo, context);
-
-
                     }
                 });
 
@@ -256,7 +241,8 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
 
 
     //获取模块下数据和对应折线图
-   private void getEquData(final int pageIndex){
+   private void getEquData(boolean isRefresh){
+       if(isRefresh) data.clear();
        OthersUtil.showLoadDialog(dialog);
        //仪表盘
        NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
@@ -267,7 +253,9 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                                return NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
                                        "spappYunEquChannelList",
                                        "sMobileNo=" +mMobileNo+
-                                               ",iTerminalId="+iTerminalId+",iPageIndex="+pageIndex+ ",iPageSize="+pageSize1,
+                                               ",iTerminalId="+iTerminalId+
+                                               ",iPageIndex="+getPage()+
+                                               ",iPageSize=6",
                                        HistoryListBean.class.getName(),
                                        true,"查询失败！！");
                            }
@@ -278,61 +266,51 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                            public HsWebInfo call(HsWebInfo hsWebInfo) {
                                if(!hsWebInfo.success) return  hsWebInfo;
                                List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
-                               Log.e("EquHistoryDataMap2",entities.size()+"");
-                               data.clear();
-                               for (int i = 0; i < entities.size(); i++) {
-                                   HistoryListBean historyListBean = (HistoryListBean) entities.get(i);
-                                   data.add(historyListBean);
-                               }
-
-                               return NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
+                               hsWebInfo=NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
                                        "spappYunEquHistoryDataMap",
                                        "sMobileNo=" +mMobileNo+
-                                               ",iTerminalId="+iTerminalId+",pageindex="+pageIndex+
-                                               ",pagesize="+pageSize,
+                                               ",iTerminalId="+iTerminalId+
+                                               ",pageindex="+getPage()+
+                                               ",pagesize=10",
                                        HistoryDataMapBean.class.getName(),
                                        true,"查询失败！！");
+                               if(!hsWebInfo.success) return hsWebInfo;
+                               hsWebInfo.object=entities;
+                               return hsWebInfo;
                            }
                        })
                , getContext(), dialog, new SimpleHsWeb() {
                    @Override
+                   @SuppressWarnings("unchecked")
                    public void success(HsWebInfo hsWebInfo) {
-                       List<Map<String,List<HistoryDataMapBean>>> tempHistoryData = new ArrayList<Map<String, List<HistoryDataMapBean>>>();
-
-                       List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
-                       Log.e("EquHistoryDataMap",entities.size()+"");
-                       List<HistoryDataMapBean> historyDataMapBeanData = new ArrayList<>();
-                       historyDataMapBeanData.clear();
-                       for (int i = 0; i < entities.size(); i++) {
-                           HistoryDataMapBean historyDataMapBean = (HistoryDataMapBean) entities.get(i);
-                           historyDataMapBeanData.add(historyDataMapBean);
+                       List<WsEntity> dataMapEntities = hsWebInfo.wsData.LISTWSDATA;//每个Item的折线图数据
+                       List<WsEntity> listEntities= (List<WsEntity>) hsWebInfo.object;//列表数据
+                       Map<String,List<HistoryDataMapBean>> newDataMap = new HashMap<>();//防止获取和之前同样内容
+                       for (int i = 0; i < dataMapEntities.size(); i++) {
+                           HistoryDataMapBean historyDataMapBean = (HistoryDataMapBean) dataMapEntities.get(i);
+                           List<HistoryDataMapBean> list=newDataMap.get(historyDataMapBean.IUSERMODULECHANNELID);
+                           if(list==null)list=new ArrayList<>();
+                           list.add(historyDataMapBean);
+                           newDataMap.put(historyDataMapBean.IUSERMODULECHANNELID,list);
                        }
-
-                       for (int i = 0; i < data.size(); i++) {
-                           mapDataMap = new LinkedHashMap<>();
-                           listDataMap = new ArrayList<>();
-                           HistoryListBean historyListBean = data.get(i);
-                           String iUserId = historyListBean.IUSERMODULECHANNELID;
-                           for (int j = 0; j < historyDataMapBeanData.size(); j++) {
-                               if(iUserId.equals(historyDataMapBeanData.get(j).IUSERMODULECHANNELID)){
-                                   listDataMap.add(historyDataMapBeanData.get(j));
-                                   mapDataMap.put(historyListBean.SCHANNELNAME,listDataMap);
-
-                               }
+                       for (int i = 0; i < listEntities.size(); i++) {
+                           HistoryListBean historyListBean = (HistoryListBean) listEntities.get(i);
+                           List<HistoryDataMapBean> subList=newDataMap.get(historyListBean.IUSERMODULECHANNELID);
+                           if(subList==null||subList.isEmpty())continue;
+                           for(HistoryDataMapBean bean:subList){
+                               bean.showName=historyListBean.SCHANNELNAME;
                            }
-                           tempHistoryData.add(mapDataMap);
+                           data.add(subList);
                        }
-                       historyData.addAll(tempHistoryData);
                        adapter.notifyDataSetChanged();
                        fragmentHistoryBinding.prtHistory.refreshComplete();
                        OthersUtil.dismissLoadDialog(dialog);
-
-
                    }
 
                    @Override
                    public void error(HsWebInfo hsWebInfo, Context context) {
                        super.error(hsWebInfo, context);
+                       adapter.notifyDataSetChanged();
                        fragmentHistoryBinding.prtHistory.refreshComplete();
                        OthersUtil.dismissLoadDialog(dialog);
                    }
@@ -444,7 +422,6 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                 popupWindow.dismiss();
             }
         });
-
     }
 
     /**
@@ -459,6 +436,14 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
     @Override
     public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
+    }
+
+    /**
+     * 获取页数
+     * @return
+     */
+    private int getPage(){
+        return (data.size()%6==0?(data.size()/6):(data.size()/6+1))+1;
     }
 
 }

@@ -31,6 +31,8 @@ import huansi.net.qianjingapp.view.LoadProgressDialog;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
+import static net.huansi.csapp.utils.Constants.ENDTIME;
+import static net.huansi.csapp.utils.Constants.STARTTIME;
 
 /**
  * 历史异常曲线界面
@@ -41,8 +43,9 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
     private HistoryCurveAdapter adapter;
     private String mIChnnel="8";//通道
     private TimePickerView pvTime;//日历
-    private String mTStartTime="1999-1-1";//开始日期
-    private String mTEndTime="2020-1-1";//结束日期
+    private String mTStartTime;//开始日期
+    private String mTEndTime;//结束日期
+
     private LineChart lineChart;
     private ArrayList<String> xValues;//x轴数据
     private ArrayList<Entry> yValues;//y轴数据
@@ -53,7 +56,9 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
     protected int getLayoutId() {
         return R.layout.activity_history_exc_curve;
     }
-
+    /**
+     * 拿到异常点的开始和停止时间
+     */
     @Override
     public void init() {
         initTimePickerView();
@@ -72,11 +77,13 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
         mDialog=new LoadProgressDialog(this);
         Intent intent = getIntent();
         mChannelname = intent.getStringExtra(CHANNEL_NAME);
+        mTStartTime = intent.getStringExtra(STARTTIME);
+        mTEndTime = intent.getStringExtra(ENDTIME);
 
-        String curDate = MyUtils.getCurDate("--");
         mHistoryExcCurveBinding.tvTitle.setText(mChannelname);
-        mHistoryExcCurveBinding.tvStart.setText(curDate);
-        mHistoryExcCurveBinding.tvEnd.setText(curDate);
+        mHistoryExcCurveBinding.tvStart.setText(mTStartTime);
+
+        mHistoryExcCurveBinding.tvEnd.setText(mTEndTime);
         mHistoryExcCurveBinding.tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +122,7 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
         });
         setData(mTStartTime,mTEndTime);
     }
+
     private void setData(String mTStartTime,String mTEndTime) {
         OthersUtil.showLoadDialog(mDialog);
         //区域数据

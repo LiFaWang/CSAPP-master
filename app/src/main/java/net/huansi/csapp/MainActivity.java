@@ -1,5 +1,6 @@
 package net.huansi.csapp;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
@@ -17,6 +18,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import huansi.net.qianjingapp.base.NotWebBaseActivity;
 
+import static net.huansi.csapp.utils.Constants.MAINHOME;
+
 public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnCheckedChangeListener{
 
     private ActivityMainBinding activityMainBinding;
@@ -33,9 +36,13 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
 
     @Override
     public void init() {
+
         activityMainBinding = (ActivityMainBinding) viewDataBinding;
         activityMainBinding.mainRG.setOnCheckedChangeListener(this);
+
+
         initFragments();
+
     }
 
 
@@ -43,6 +50,7 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
      * 初始化fragment
      */
     private void initFragments() {
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         homeFragment = new HomeFragment();
         realFragment = new RealFragment();
@@ -56,7 +64,21 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
         ft.add(R.id.mainFrameLayout, mineFragment);
         ft.commitAllowingStateLoss();
         hideFragments(ft);
+        changeFragment(ft);
         ft.show(homeFragment);
+    }
+
+    private void changeFragment(FragmentTransaction ft) {
+        Intent intent = getIntent();
+        intent.getStringExtra(MAINHOME);
+        switch (intent) {
+            case intent.getStringExtra(MAINHOME):
+
+                break;
+
+            default:
+                break;
+        }
     }
 
     /**
@@ -106,5 +128,6 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
          ft.show(realFragment);
          activityMainBinding.mainReal.setChecked(true);
     }
+
 
 }

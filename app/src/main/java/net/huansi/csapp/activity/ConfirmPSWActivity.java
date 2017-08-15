@@ -9,7 +9,6 @@ import net.huansi.csapp.bean.AuthCodeBean;
 import net.huansi.csapp.databinding.ActivityConfirmPswBinding;
 import net.huansi.csapp.utils.CountDownTimerUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +29,12 @@ public class ConfirmPSWActivity extends NotWebBaseActivity {
 
 
     private ActivityConfirmPswBinding mConfirmPswBinding;
-    private Map<String, String> authCodeMap=new HashMap<>();
-    private String mPhoneNub;
+//    private Map<String, String> authCodeMap=new HashMap<>();
+//    private String mPhoneNub;
     private LoadProgressDialog mDialog;
-    private String mSsmcheckno1;
-
+//    private String mSsmcheckno1;
+    private AuthCodeBean authCodeBean;
+    private long mAuthCodeTimeMillis;
 
 
     @Override
@@ -48,14 +48,13 @@ public class ConfirmPSWActivity extends NotWebBaseActivity {
     public void init() {
         mDialog=new LoadProgressDialog(this);
         mConfirmPswBinding = (ActivityConfirmPswBinding) viewDataBinding;
-        mPhoneNub = mConfirmPswBinding.etPhoneNum.getText().toString();
-        if (mPhoneNub.isEmpty()){
-            OthersUtil.ToastMsg(ConfirmPSWActivity.this,"手机号不能为空");
-
-        }else {
-            authCodeMap.put("sDestNo", mPhoneNub);
-            authCodeMap.put("sSourceIP", DeviceUtil.getPhoneDrivceNo(getApplicationContext()));
-        }
+//        mPhoneNub = mConfirmPswBinding.etPhoneNum.getText().toString();
+//        if (mPhoneNub.isEmpty()){
+//            OthersUtil.ToastMsg(ConfirmPSWActivity.this,"手机号不能为空");
+//        }else {
+//            authCodeMap.put("sDestNo", mPhoneNub);
+//            authCodeMap.put("sSourceIP", DeviceUtil.getPhoneDrivceNo(getApplicationContext()));
+//        }
 
 
 
@@ -70,39 +69,41 @@ public class ConfirmPSWActivity extends NotWebBaseActivity {
             @Override
             public void onClick(View v) {
 
-                getAuthCode(authCodeMap);
+                getAuthCode();
                 CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(mConfirmPswBinding.tvAuthCode, 60000, 1000);
                 mCountDownTimerUtils.start();
+
             }
         });
 
     }
 
 
-    private void getAuthCode(Map<String,String> phoneNub) {
-        String sDestNo = phoneNub.get("sDestNo");
-        System.out.println(sDestNo);
+    private void getAuthCode() {
         OthersUtil.showLoadDialog(mDialog);
-        NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, phoneNub)
-                .map(new Func1<Map<String, String>, HsWebInfo>() {
+        NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
+                .map(new Func1<String, HsWebInfo>() {
                     @Override
-                    public HsWebInfo call(Map<String, String> stringStringMap) {
-                        return NewRxjavaWebUtils.getNormalFunction(getApplicationContext(), HS_SERVICE_LATER, "SendShortMessage", stringStringMap,
+                    public HsWebInfo call(String s) {
+                        String phoneNub=mConfirmPswBinding.etPhoneNum.getText().toString();
+                        Map<String,String>map=new HashMap<>();
+                        map.put("sDestNo", phoneNub);
+                        map.put("sSourceIP", DeviceUtil.getPhoneDrivceNo(getApplicationContext()));
+                        return NewRxjavaWebUtils.getNormalFunction(getApplicationContext(), HS_SERVICE_LATER, "SendShortMessage", map,
                                 AuthCodeBean.class.getName(), true, "输入有错误");
                     }
                 }), getApplicationContext(), mDialog, new SimpleHsWeb() {
             @Override
             public void success(HsWebInfo hsWebInfo) {
                 List<WsEntity> entities=hsWebInfo.wsData.LISTWSDATA;
-                List<AuthCodeBean> datas=new ArrayList<>();
-                for (int i = 0; i < entities.size(); i++) {
-                    AuthCodeBean authCodeBean = (AuthCodeBean) entities.get(i);
-                    mSsmcheckno1 = authCodeBean.SSMCHECKNO1;
-                    datas.add(authCodeBean);
-                }
-                OthersUtil.dismissLoadDialog(mDialog);
-                OthersUtil.ToastMsg(ConfirmPSWActivity.this,mSsmcheckno1);
-                System.out.println(hsWebInfo.json);
+//                List<AuthCodeBean> datas=new ArrayList<>();
+                authCodeBean= (AuthCodeBean) entities.get(0);
+//                for (int i = 0; i < entities.size(); i++) {
+//                    AuthCodeBean authCodeBean = (AuthCodeBean) entities.get(i);
+//                    mSsmcheckno1 = authCodeBean.SSMCHECKNO1;
+//                    datas.add(authCodeBean);
+//                }
+                mAuthCodeTimeMillis = System.currentTimeMillis();
 
 
             }
@@ -110,8 +111,6 @@ public class ConfirmPSWActivity extends NotWebBaseActivity {
             @Override
             public void error(HsWebInfo hsWebInfo, Context context) {
                 super.error(hsWebInfo, context);
-                OthersUtil.ToastMsg(ConfirmPSWActivity.this,hsWebInfo.json);
-                System.out.println(hsWebInfo.json);
             }
         });
 
@@ -139,12 +138,20 @@ public class ConfirmPSWActivity extends NotWebBaseActivity {
 
     public void commit(View v){
         String authCode = mConfirmPswBinding.etAuthCode.getText().toString();
-        OthersUtil.ToastMsg(ConfirmPSWActivity.this,authCode+"="+mSsmcheckno1);
-        if (authCode.equals(mSsmcheckno1)){
-            OthersUtil.ToastMsg(ConfirmPSWActivity.this,"成功");
-            Intent intent=new Intent(this,ResetPSWActivity.class);
-            startActivity(intent);
-            finish();
+        if(authCodeBean==null){
+            OthersUtil.ToastMsg(getApplicationContext(),"请发送验证码！");
+            return;
+        }
+        if(!authCode.equals(authCodeBean.SSMCHECKNO1)){
+            OthersUtil.ToastMsg(getApplicationContext(),"验证码错误！");
+            return;
+        }
+
+        //TODO 判断时间是否过时
+        long commitTimeMillis = System.currentTimeMillis();
+        if (commitTimeMillis-mAuthCodeTimeMillis>3000){
+            OthersUtil.ToastMsg(getApplicationContext(),"验证码已超时，请重新获取！");
+            return;
         }
         Intent intent=new Intent(this,ResetPSWActivity.class);
         startActivity(intent);

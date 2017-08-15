@@ -2,9 +2,12 @@ package net.huansi.csapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
+import android.widget.RadioGroup;
 
+import net.huansi.csapp.MainActivity;
 import net.huansi.csapp.R;
 import net.huansi.csapp.adapter.EquRouletteAdapter;
 import net.huansi.csapp.bean.EquRealTimeDataBean;
@@ -28,11 +31,19 @@ import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 import huansi.net.qianjingapp.view.LoadProgressDialog;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
+import static net.huansi.csapp.R.id.mainErro;
+import static net.huansi.csapp.R.id.mainHistory;
+import static net.huansi.csapp.R.id.mainMy;
 import static net.huansi.csapp.utils.Constants.FACTORY_NAME;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_ID;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_NAME;
+import static net.huansi.csapp.utils.Constants.MAINERRO;
+import static net.huansi.csapp.utils.Constants.MAINHISTORY;
+import static net.huansi.csapp.utils.Constants.MAINHOME;
+import static net.huansi.csapp.utils.Constants.MAINMY;
+import static net.huansi.csapp.utils.Constants.MAINREAL;
 
-public class EquRouletteActivity extends NotWebBaseActivity {
+public class EquRouletteActivity extends NotWebBaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     private ActivityEquRouletteBinding activityEquRouletteBinding;
     private List<EquRealTimeDataBean> data;//仪表盘数据
@@ -47,6 +58,7 @@ public class EquRouletteActivity extends NotWebBaseActivity {
     protected int getLayoutId() {
         return R.layout.activity_equ_roulette;
     }
+
 
     @Override
     public void init() {
@@ -133,5 +145,32 @@ public class EquRouletteActivity extends NotWebBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        Intent intent=new Intent(this, MainActivity.class);
+        switch (checkedId){
+            case R.id.mainHome:
+                intent.putExtra(MAINHOME,R.id.mainHome);
+                startActivity(intent);
+                break;
+            case R.id.mainReal:
+                intent.putExtra(MAINREAL,R.id.mainHome);
+                startActivity(intent);
+                break;
+            case mainHistory:
+                intent.putExtra(MAINHISTORY,R.id.mainHome);
+                startActivity(intent);
+                break;
+            case mainErro:
+                intent.putExtra(MAINERRO,R.id.mainHome);
+                startActivity(intent);
+                break;
+            case mainMy:
+                intent.putExtra(MAINMY,R.id.mainHome);
+                startActivity(intent);
+                break;
+        }
     }
 }

@@ -18,5 +18,16 @@ public class Constants {
     public static  final  String USER_COMPANY="userCompany";//公司
     public static final String IS_LOGIN="isLogin";//是否第一次登陆
     public static final String USER_PWD="passWord";//登录密码
+    public static final String STARTTIME="start";//登录密码
+    public static final String ENDTIME="end";//登录密码
+    /**
+     * EquRouletteActivity跳转到MainActivity intent key
+     *
+     */
+    public static final String MAINHOME="mainhome";
+    public static final String MAINREAL="mainreal";
+    public static final String MAINHISTORY="mainhistory";
+    public static final String MAINERRO="mainerro";
+    public static final String MAINMY="mainmy";
 
 }

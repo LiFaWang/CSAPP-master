@@ -15,8 +15,6 @@ import net.huansi.csapp.view.DashboardView1;
 
 import java.util.List;
 
-import huansi.net.qianjingapp.utils.OthersUtil;
-
 import static net.huansi.csapp.utils.Constants.CHANNEL_ID;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
 
@@ -116,17 +114,18 @@ public class EquRouletteAdapter extends RecyclerView.Adapter<EquRouletteAdapter.
 
                 break;
             case 2:
-                setData(equRealTimeDataBean,holder);
+                setData(equRealTimeDataBean,holder,position);
+
                 break;
             default:
-                setData(equRealTimeDataBean,holder);
+                setData(equRealTimeDataBean,holder,position);
                 break;
         }
 
 
     }
 
-    private void setData(EquRealTimeDataBean equRealTimeDataBean, final EquViewHolder holder) {
+    private void setData(EquRealTimeDataBean equRealTimeDataBean, final EquViewHolder holder, final int position) {
 
         String sValue = equRealTimeDataBean.NCHANNELREALTIMEVALUE;
         if(sValue.isEmpty()){
@@ -138,7 +137,11 @@ public class EquRouletteAdapter extends RecyclerView.Adapter<EquRouletteAdapter.
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OthersUtil.ToastMsg(context,holder.title.getText()+"被点击了");
+                Intent intent = new Intent(context, HistoryDetailActivity.class);
+                EquRealTimeDataBean equRealTimeDataBean1 = list.get(position);
+                intent.putExtra(CHANNEL_NAME,equRealTimeDataBean1.SCHANNELNAME);
+                intent.putExtra(CHANNEL_ID,equRealTimeDataBean1.IUSERMODULECHANNELID);
+                context.startActivity(intent);
 
             }
         });

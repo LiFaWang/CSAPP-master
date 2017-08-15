@@ -63,6 +63,44 @@
             android:layout_weight="1">
 
         </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:id="@+id/mainRG"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="50dp">
+                <RadioButton
+                    android:id="@+id/mainHome"
+                    style="@style/HomeRG"
+                    android:drawableTop="@drawable/home_select"
+                    android:text="设备分布"/>
+                <RadioButton
+                    android:id="@+id/mainReal"
+                    style="@style/HomeRG"
+                    android:drawableTop="@drawable/real_select"
+                    android:text="实时监控"/>
+                <RadioButton
+                    android:id="@+id/mainHistory"
+                    style="@style/HomeRG"
+                    android:drawableTop="@drawable/history_select"
+                    android:text="历史数据"/>
+                <RadioButton
+                    android:id="@+id/mainErro"
+                    style="@style/HomeRG"
+                    android:drawableTop="@drawable/history_select"
+                    android:text="历史异常"
+                    />
+                <RadioButton
+                    android:id="@+id/mainMy"
+                    android:drawableTop="@drawable/mine_select"
+                    style="@style/HomeRG"
+                    android:text="我的"/>
+            </RadioGroup>
+        </LinearLayout>
     </LinearLayout>
 
 </layout>

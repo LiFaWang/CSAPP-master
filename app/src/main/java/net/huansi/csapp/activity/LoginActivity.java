@@ -30,7 +30,6 @@ import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVIC
 import static net.huansi.csapp.utils.Constants.IS_LOGIN;
 import static net.huansi.csapp.utils.Constants.USER_COMPANY;
 import static net.huansi.csapp.utils.Constants.USER_NAME;
-import static net.huansi.csapp.utils.Constants.USER_PWD;
 import static net.huansi.csapp.utils.Constants.USER_SECTION;
 
 public class LoginActivity extends NotWebBaseActivity {
@@ -115,18 +114,21 @@ public class LoginActivity extends NotWebBaseActivity {
         String password = activityLoginBinding.etPassword.getText().toString();
         String phoneNum = activityLoginBinding.etPhoneNum.getText().toString();
         //测试
-         if(phoneNum.equals("18063396908")&& password.equals(SpUtils.getSpData(this,USER_PWD,"8"))){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }else if(isLogin.equals("false")){
-             getLoginMes();
-
-         }else{
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+//         if(phoneNum.equals("18063396908")&& password.equals(SpUtils.getSpData(this,USER_PWD,"8"))){
+//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }else if(isLogin.equals("false")){
+//             getLoginMes();
+//
+//         }else{
+//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
