@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import net.huansi.csapp.MainActivity;
 import net.huansi.csapp.R;
 import net.huansi.csapp.activity.EquRouletteActivity;
 import net.huansi.csapp.activity.UnusualActivity;
@@ -65,7 +66,7 @@ public class RealFragmentAdapter extends HsBaseAdapter<RealTimeMonitoringBean>{
                 intent.putExtra(ITEM_EQU_ID,mList.get(i).ITERMINALID);
                 intent.putExtra(ITEM_EQU_NAME,mList.get(i).STERMINALNAME);
                 intent.putExtra(FACTORY_NAME,mList.get(i).SFACTORYNAME);
-                mContext.startActivity(intent);
+                ((MainActivity) mContext).startActivityForResult(intent, 0);
             }
         });
         return view;

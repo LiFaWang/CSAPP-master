@@ -18,8 +18,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import huansi.net.qianjingapp.base.NotWebBaseActivity;
 
-import static net.huansi.csapp.utils.Constants.MAINHOME;
-
 public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnCheckedChangeListener{
 
     private ActivityMainBinding activityMainBinding;
@@ -40,9 +38,7 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
         activityMainBinding = (ActivityMainBinding) viewDataBinding;
         activityMainBinding.mainRG.setOnCheckedChangeListener(this);
 
-
         initFragments();
-
     }
 
 
@@ -64,22 +60,9 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
         ft.add(R.id.mainFrameLayout, mineFragment);
         ft.commitAllowingStateLoss();
         hideFragments(ft);
-        changeFragment(ft);
         ft.show(homeFragment);
     }
 
-    private void changeFragment(FragmentTransaction ft) {
-        Intent intent = getIntent();
-        intent.getStringExtra(MAINHOME);
-        switch (intent) {
-            case intent.getStringExtra(MAINHOME):
-
-                break;
-
-            default:
-                break;
-        }
-    }
 
     /**
      * 隐藏fragment
@@ -96,6 +79,10 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+        changeFragment(i);
+    }
+
+    private void changeFragment(@IdRes int i) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         hideFragments(ft);
         switch (i){
@@ -115,7 +102,7 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
                 ft.show(mineFragment);
                 break;
         }
-       ft.commitAllowingStateLoss();
+        ft.commitAllowingStateLoss();
     }
 
     /**
@@ -129,5 +116,20 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
          activityMainBinding.mainReal.setChecked(true);
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) { //resultCode为回传的标记，我在B中回传的是RESULT_OK
+            case RESULT_OK:
+                int idFt = data.getIntExtra("id_ft", R.id.mainHome);
+                activityMainBinding.mainHome.setChecked(idFt == R.id.mainHome);
+                activityMainBinding.mainReal.setChecked(idFt == R.id.mainReal);
+                activityMainBinding.mainHistory.setChecked(idFt == R.id.mainHistory);
+                activityMainBinding.mainErro.setChecked(idFt == R.id.mainErro);
+                activityMainBinding.mainMy.setChecked(idFt == R.id.mainMy);
+                break;
+            default:
+                break;
+        }
+    }
 }

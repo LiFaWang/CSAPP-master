@@ -7,7 +7,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.RadioGroup;
 
-import net.huansi.csapp.MainActivity;
 import net.huansi.csapp.R;
 import net.huansi.csapp.adapter.EquRouletteAdapter;
 import net.huansi.csapp.bean.EquRealTimeDataBean;
@@ -37,11 +36,6 @@ import static net.huansi.csapp.R.id.mainMy;
 import static net.huansi.csapp.utils.Constants.FACTORY_NAME;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_ID;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_NAME;
-import static net.huansi.csapp.utils.Constants.MAINERRO;
-import static net.huansi.csapp.utils.Constants.MAINHISTORY;
-import static net.huansi.csapp.utils.Constants.MAINHOME;
-import static net.huansi.csapp.utils.Constants.MAINMY;
-import static net.huansi.csapp.utils.Constants.MAINREAL;
 
 public class EquRouletteActivity extends NotWebBaseActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -96,6 +90,8 @@ public class EquRouletteActivity extends NotWebBaseActivity implements RadioGrou
             }
         });
 
+        activityEquRouletteBinding.mainRG.setOnCheckedChangeListener(this);
+
     }
 
     private void setData(int i) {
@@ -149,28 +145,25 @@ public class EquRouletteActivity extends NotWebBaseActivity implements RadioGrou
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-        Intent intent=new Intent(this, MainActivity.class);
+        Intent intent=new Intent();
         switch (checkedId){
             case R.id.mainHome:
-                intent.putExtra(MAINHOME,R.id.mainHome);
-                startActivity(intent);
+                intent.putExtra("id_ft",R.id.mainHome);
                 break;
             case R.id.mainReal:
-                intent.putExtra(MAINREAL,R.id.mainHome);
-                startActivity(intent);
+                intent.putExtra("id_ft",R.id.mainReal);
                 break;
             case mainHistory:
-                intent.putExtra(MAINHISTORY,R.id.mainHome);
-                startActivity(intent);
+                intent.putExtra("id_ft",R.id.mainHistory);
                 break;
             case mainErro:
-                intent.putExtra(MAINERRO,R.id.mainHome);
-                startActivity(intent);
+                intent.putExtra("id_ft",R.id.mainErro);
                 break;
             case mainMy:
-                intent.putExtra(MAINMY,R.id.mainHome);
-                startActivity(intent);
+                intent.putExtra("id_ft",R.id.mainMy);
                 break;
         }
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

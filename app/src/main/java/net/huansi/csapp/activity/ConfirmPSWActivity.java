@@ -149,7 +149,7 @@ public class ConfirmPSWActivity extends NotWebBaseActivity {
 
         //TODO 判断时间是否过时
         long commitTimeMillis = System.currentTimeMillis();
-        if (commitTimeMillis-mAuthCodeTimeMillis>3000){
+        if (commitTimeMillis-mAuthCodeTimeMillis>3*60*1000){
             OthersUtil.ToastMsg(getApplicationContext(),"验证码已超时，请重新获取！");
             return;
         }

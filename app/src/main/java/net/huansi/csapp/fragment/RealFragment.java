@@ -102,7 +102,7 @@ public class RealFragment extends BaseFragment {
         EventBus.getDefault().register(this);
         fragmentRealBinding = (FragmentRealBinding) viewDataBinding;
         OthersUtil.initRefresh(fragmentRealBinding.prtReal,getActivity());
-        adapter = new RealFragmentAdapter(data, getContext());
+        adapter = new RealFragmentAdapter(data, getActivity());
         fragmentRealBinding.realListView.setAdapter(adapter);
         initChart();
         setData();
