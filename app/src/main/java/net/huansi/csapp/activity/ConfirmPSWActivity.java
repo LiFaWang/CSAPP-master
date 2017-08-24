@@ -96,30 +96,17 @@ public class ConfirmPSWActivity extends NotWebBaseActivity {
             @Override
             public void success(HsWebInfo hsWebInfo) {
                 List<WsEntity> entities=hsWebInfo.wsData.LISTWSDATA;
-//                List<AuthCodeBean> datas=new ArrayList<>();
                 authCodeBean= (AuthCodeBean) entities.get(0);
-//                for (int i = 0; i < entities.size(); i++) {
-//                    AuthCodeBean authCodeBean = (AuthCodeBean) entities.get(i);
-//                    mSsmcheckno1 = authCodeBean.SSMCHECKNO1;
-//                    datas.add(authCodeBean);
-//                }
                 mAuthCodeTimeMillis = System.currentTimeMillis();
-
-
             }
 
             @Override
             public void error(HsWebInfo hsWebInfo, Context context) {
                 super.error(hsWebInfo, context);
+                OthersUtil.dismissLoadDialog(mDialog);
             }
         });
 
-//        List<WsEntity> entities = webInfo.wsData.LISTWSDATA;
-//        List<WsData>datas=new ArrayList<>();
-//        for (int i = 0; i < entities.size(); i++) {
-//            WsData wsData = (WsData) entities.get(i);
-//            datas.add(wsData);
-//            mConfirmPswBinding.etAuthCode.setText(wsData.SMESSAGE);
         }
 
 

@@ -144,6 +144,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 getAbnormalData();
+                mAbnormalAdapter.notifyDataSetChanged();
             }
         });
 

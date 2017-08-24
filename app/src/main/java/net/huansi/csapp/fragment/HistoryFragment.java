@@ -244,7 +244,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
    private void getEquData(boolean isRefresh){
        if(isRefresh) data.clear();
        OthersUtil.showLoadDialog(dialog);
-       //仪表盘
+
        NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
                        //
                        .map(new Func1<String, HsWebInfo>() {
@@ -257,7 +257,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                                                ",iPageIndex="+getPage()+
                                                ",iPageSize=6",
                                        HistoryListBean.class.getName(),
-                                       true,"查询失败！！");
+                                       true,"");
                            }
                        })
                        //
@@ -273,7 +273,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                                                ",pageindex="+getPage()+
                                                ",pagesize=10",
                                        HistoryDataMapBean.class.getName(),
-                                       true,"查询失败！！");
+                                       true,"");
                                if(!hsWebInfo.success) return hsWebInfo;
                                hsWebInfo.object=entities;
                                return hsWebInfo;

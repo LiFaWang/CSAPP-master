@@ -52,6 +52,7 @@ public class HistoryFragmentAdapter extends HsBaseAdapter<List<HistoryDataMapBea
         chart.setDescription("");
         chart.setPinchZoom(false);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getXAxis().setEnabled(true);//横坐标显示值
         chart.getAxisRight().setEnabled(false); //横坐标右边没有值
         chart.getAxisLeft().setValueFormatter(new YAxisValueFormatter() {
             @Override
@@ -79,7 +80,8 @@ public class HistoryFragmentAdapter extends HsBaseAdapter<List<HistoryDataMapBea
         } else {
             channelName=subList.get(0).showName;
             for (int j = 0; j < subList.size(); j++) {
-                xValues.add("");
+
+                xValues.add(subList.get(j).COLLECTTIME);
                 String value = subList.get(j).NCHANNELVALUE;
                 float v=0;
                 try {
