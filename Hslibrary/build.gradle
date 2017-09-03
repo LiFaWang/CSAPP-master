@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '25.0.3'
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 25
@@ -50,5 +50,5 @@ dependencies {
     //    compile 'com.kcode.github:autoScrollViewPager:1.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     //下拉刷新
-    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    compile 'in.srain.cube:ptr-load-more:1.0.6'
 }

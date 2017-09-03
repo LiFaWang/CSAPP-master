@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '25.0.3'
     dataBinding {
         enabled = true
     }
@@ -33,16 +33,14 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':Hslibrary')
-
-    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
-    compile 'org.greenrobot:eventbus:3.0.0'
+//    compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.github.arcadefire:nice-spinner:1.2'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     testCompile 'junit:junit:4.12'
-    compile 'in.srain.cube:ptr-load-more:1.0.6'
+//    compile 'in.srain.cube:ptr-load-more:1.0.6'
 }

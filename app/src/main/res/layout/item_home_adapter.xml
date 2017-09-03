@@ -14,9 +14,10 @@
         <TextView
             android:id="@+id/listDVNum"
             style="@style/HomeFragment"/>
+
         <TextView
             android:id="@+id/listState"
-            style="@style/HomeFragment" />
+            style="@style/HomeFragment"/>
 
     </LinearLayout>
 
