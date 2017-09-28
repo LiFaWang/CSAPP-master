@@ -48,7 +48,6 @@ public class ConfirmPSWActivity extends NotWebBaseActivity {
     public void init() {
         mDialog=new LoadProgressDialog(this);
         mConfirmPswBinding = (ActivityConfirmPswBinding) viewDataBinding;
-//        mPhoneNub = mConfirmPswBinding.etPhoneNum.getText().toString();
 //        if (mPhoneNub.isEmpty()){
 //            OthersUtil.ToastMsg(ConfirmPSWActivity.this,"手机号不能为空");
 //        }else {

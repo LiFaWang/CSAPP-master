@@ -14,6 +14,7 @@ import net.huansi.csapp.R;
 import net.huansi.csapp.bean.HistoryDetailBean;
 import net.huansi.csapp.databinding.ActivityHistoryDetailBinding;
 import net.huansi.csapp.utils.MyUtils;
+import net.huansi.csapp.utils.SpUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,13 +30,14 @@ import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.CHANNEL_ID;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
+import static net.huansi.csapp.utils.Constants.PHONE_NO;
 
 public class HistoryDetailActivity extends NotWebBaseActivity {
     private String channelName = "";//频道名字
-    private String channelId="1";//频道id
-    private String mStartDate="1900-1-1";//开始日期
-    private String mEndDate="2020-1-1";//结束日期
-    private String mMobileNo="1";//手机号码
+    private String channelId="";//频道id
+    private String mStartDate="";//开始日期
+    private String mEndDate="";//结束日期
+    private String mMobileNo="";//手机号码
     private ActivityHistoryDetailBinding detailBinding;
     private TimePickerView pvTime;
     private LineChart lineChart;
@@ -51,12 +53,14 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
 
     @Override
     public void init() {
+        detailBinding = (ActivityHistoryDetailBinding) viewDataBinding;
         channelName = getIntent().getStringExtra(CHANNEL_NAME);
         channelId = getIntent().getStringExtra(CHANNEL_ID);
-        detailBinding = (ActivityHistoryDetailBinding) viewDataBinding;
+
         String curDate = MyUtils.getCurDate("--");
         detailBinding.tvStart.setText(curDate);
         detailBinding.tvEnd.setText(curDate);
+        mMobileNo = SpUtils.getSpData(this, PHONE_NO, "8");
         lineChart = detailBinding.lineChart;
         detailBinding.tvChannelName.setText(channelName);
         detailBinding.lineChart.setNoDataText("没有数据");
@@ -92,7 +96,7 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
                 pvTime.show(view);
             }
         });
-        setData(mStartDate,mEndDate);
+//        setData(mStartDate,mEndDate);
         detailBinding.ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

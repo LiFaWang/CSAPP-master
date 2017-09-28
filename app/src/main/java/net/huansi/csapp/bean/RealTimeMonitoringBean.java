@@ -9,6 +9,7 @@ import huansi.net.qianjingapp.entity.WsData;
 public class RealTimeMonitoringBean extends WsData{
 
     /**
+     * iterminalid
      * ITERMINALID : 1
      * STERMINALNAME : 印花1
      * NCHANNELNUMBER : 2

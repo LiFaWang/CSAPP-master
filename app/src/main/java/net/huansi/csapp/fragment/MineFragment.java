@@ -20,6 +20,7 @@ import java.util.List;
 import huansi.net.qianjingapp.fragment.BaseFragment;
 
 import static net.huansi.csapp.utils.Constants.IS_LOGIN;
+import static net.huansi.csapp.utils.Constants.PHONE_NO;
 import static net.huansi.csapp.utils.Constants.USER_COMPANY;
 import static net.huansi.csapp.utils.Constants.USER_NAME;
 import static net.huansi.csapp.utils.Constants.USER_SECTION;
@@ -37,7 +38,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void init() {
-        String mobileNo = SpUtils.getMobileNo(getActivity());
+        String mobileNo = SpUtils.getSpData(getActivity(), PHONE_NO, "");
         String userName = SpUtils.getSpData(getActivity(), USER_NAME, "张三");
         String userSection = SpUtils.getSpData(getActivity(), USER_SECTION, "运营部");
         String userCompany = SpUtils.getSpData(getActivity(), USER_COMPANY, "环思智慧");

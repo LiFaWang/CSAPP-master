@@ -21,6 +21,7 @@ import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.IS_LOGIN;
+import static net.huansi.csapp.utils.Constants.PHONE_NO;
 import static net.huansi.csapp.utils.Constants.USER_PWD;
 
 public class ResetPSWActivity extends NotWebBaseActivity {
@@ -52,14 +53,13 @@ public class ResetPSWActivity extends NotWebBaseActivity {
      * 重置密码提交
      */
     public void reset(View v ){
-        String isLogin = SpUtils.getSpData(ResetPSWActivity.this, IS_LOGIN, "false");
         mPhoneNum = mResetPswBinding.etPhoneNum.getText().toString();
         mPassWord = mResetPswBinding.etPassword.getText().toString();
         getLoginMes(mPhoneNum,mPassWord);
     }
 
 
-    private void getLoginMes(String mPhoneNum, final String mPassWord) {
+    private void getLoginMes(final String mPhoneNum, final String mPassWord) {
         RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
                 "spappYunEquUpdatePwd"
                 , "sMobileNo="+mPhoneNum+",sPassword="+mPassWord,
@@ -79,7 +79,8 @@ public class ResetPSWActivity extends NotWebBaseActivity {
                         if(mSmessage!=null&&mSmessage.equals("OK")){
 
                             SpUtils.saveSpData(ResetPSWActivity.this,USER_PWD,mPassWord);
-
+                            SpUtils.saveSpData(ResetPSWActivity.this,PHONE_NO,mPhoneNum);
+                           SpUtils.saveSpData(ResetPSWActivity.this, IS_LOGIN, "true");
                             OthersUtil.ToastMsg(ResetPSWActivity.this,mSmessage);
                             Intent intent = new Intent(ResetPSWActivity.this, MainActivity.class);
                             startActivity(intent);

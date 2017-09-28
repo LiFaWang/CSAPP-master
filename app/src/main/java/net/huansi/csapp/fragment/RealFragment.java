@@ -213,7 +213,6 @@ public class RealFragment extends BaseFragment {
                         factoryDataMemory.clear();
                         for (int i = 0; i < entities.size(); i++) {
                             FactoryListBean factory = (FactoryListBean) entities.get(i);
-//                            factoryData.add(factory);
                             factoryDataMemory.add(factory);
                             itemMapFactory.put(factory.IFACTORYID,factory.SFACTORYNAME);
                             mapFactory.put(factory.ICOUNTRYID,factoryDataMemory);

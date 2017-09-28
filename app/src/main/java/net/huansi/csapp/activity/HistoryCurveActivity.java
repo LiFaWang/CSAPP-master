@@ -7,6 +7,7 @@ import android.view.View;
 import com.bigkoo.pickerview.TimePickerView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -32,6 +33,7 @@ import huansi.net.qianjingapp.view.LoadProgressDialog;
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
 import static net.huansi.csapp.utils.Constants.ENDTIME;
+import static net.huansi.csapp.utils.Constants.ICHANNEL;
 import static net.huansi.csapp.utils.Constants.STARTTIME;
 
 /**
@@ -41,7 +43,7 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
     ActivityHistoryExcCurveBinding mHistoryExcCurveBinding;
     private LoadProgressDialog mDialog;
     private HistoryCurveAdapter adapter;
-    private String mIChnnel="8";//通道
+    private String mIChnnel;//通道
     private TimePickerView pvTime;//日历
     private String mTStartTime;//开始日期
     private String mTEndTime;//结束日期
@@ -79,7 +81,7 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
         mChannelname = intent.getStringExtra(CHANNEL_NAME);
         mTStartTime = intent.getStringExtra(STARTTIME);
         mTEndTime = intent.getStringExtra(ENDTIME);
-
+        mIChnnel=intent.getStringExtra(ICHANNEL);
         mHistoryExcCurveBinding.tvTitle.setText(mChannelname);
         mHistoryExcCurveBinding.tvStart.setText(mTStartTime);
 
@@ -180,6 +182,9 @@ public class HistoryCurveActivity  extends NotWebBaseActivity {
         lineChart.getXAxis().setTextSize(5f);
         lineChart.getAxisLeft().setTextSize(5f);
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        YAxis leftAxis = lineChart.getAxisLeft();
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(30f);//设置y轴最大值距离y轴顶端的百分比
         lineChart.setNoDataText("没有数据");
         lineChart.setDescription(mChannelname);
     }

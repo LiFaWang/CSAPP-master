@@ -15,10 +15,10 @@ import huansi.net.qianjingapp.entity.WsData;
  */
 
 public class AbnormalBean extends WsData {
-    public String IYUNTERMINALID;
-    public String IYUNUSERMODULEID;
-    public String ICHANNEL;
-    public String SCHANNELNAME;
-    public String EXPMAXVALUE;
-    public String EXPCOUNT;
+    public String IYUNTERMINALID="";
+    public String IYUNUSERMODULEID="";
+    public String ICHANNEL="";
+    public String SCHANNELNAME="";
+    public String EXPMAXVALUE="";
+    public String EXPCOUNT="";
 }

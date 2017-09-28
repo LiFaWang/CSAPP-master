@@ -27,13 +27,14 @@ import huansi.net.qianjingapp.view.LoadProgressDialog;
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.FACTORY_NAME;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_NAME;
+import static net.huansi.csapp.utils.Constants.ITERMINAL_ID;
 
 /**
  * 异常数据界面
  */
 public class UnusualActivity extends NotWebBaseActivity {
     ActivityUnusualBinding activityUnusualBinding;
-    private String mIChnnel="8";//通道
+    private String iYunTerminalId;//终端id
     private String mTStartTime="";//开始日期
     private String mTEndTime="";//结束日期
     private TimePickerView pvTime;//日历
@@ -53,6 +54,7 @@ public class UnusualActivity extends NotWebBaseActivity {
         Intent intent = getIntent();
         String equName = intent.getStringExtra(ITEM_EQU_NAME);
         String factoryName = intent.getStringExtra(FACTORY_NAME);
+        iYunTerminalId = intent.getStringExtra(ITERMINAL_ID);
         String curDate = MyUtils.getCurDate("--");
         activityUnusualBinding.tvStart.setText(curDate);
         activityUnusualBinding.tvEnd.setText(curDate);
@@ -129,11 +131,11 @@ public class UnusualActivity extends NotWebBaseActivity {
                 .build();
     }
 
-    private void setData(String mTStartTime,String mTEndTime) {
+    private void setData(final String mTStartTime, final String mTEndTime) {
         OthersUtil.showLoadDialog(dialog);
-        //区域数据
+
         RxjavaWebUtils.requestByGetJsonData( this, CUS_SERVICE,
-                "spappYunEquExpCurveInfo", "iChnnel="+mIChnnel+
+                "spappYunEquExpInfo", "iYunTerminalId ="+iYunTerminalId +
                 ",tStartTime="+mTStartTime+",tEndTime="+mTEndTime,
                 UnuaualBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
@@ -142,6 +144,8 @@ public class UnusualActivity extends NotWebBaseActivity {
                         List<UnuaualBean> data =  new ArrayList<>();
                         for (int i = 0; i < entities.size(); i++) {
                             UnuaualBean unuaualBean = (UnuaualBean) entities.get(i);
+                            unuaualBean.TSTARTTIME=mTStartTime;
+                            unuaualBean.TENDTIME=mTEndTime;
                             data.add(unuaualBean);
                         }
 

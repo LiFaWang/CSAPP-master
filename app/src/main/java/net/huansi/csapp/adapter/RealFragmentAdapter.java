@@ -21,6 +21,7 @@ import huansi.net.qianjingapp.utils.ViewHolder;
 import static net.huansi.csapp.utils.Constants.FACTORY_NAME;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_ID;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_NAME;
+import static net.huansi.csapp.utils.Constants.ITERMINAL_ID;
 
 /**
  * Created by WB on 2017/7/5 0005.
@@ -45,19 +46,20 @@ public class RealFragmentAdapter extends HsBaseAdapter<RealTimeMonitoringBean>{
         area.setText(mList.get(i).NCHANNELNUMBER);
         dvNum.setText(mList.get(i).NEXPNUMBER);
         state.setText(mList.get(i).SSTATUS);
-        if(mList.get(i).SSTATUS.equals("正常")){
-            state.setTextColor(Color.GREEN);
+        if(mList.get(i).SSTATUS.equals("异常")){
+            state.setTextColor(Color.RED);
             state.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(RealFragmentAdapter.super.mContext,UnusualActivity.class);
                     intent.putExtra(ITEM_EQU_NAME,mList.get(i).STERMINALNAME);
                     intent.putExtra(FACTORY_NAME,mList.get(i).SFACTORYNAME);
+                    intent.putExtra(ITERMINAL_ID,mList.get(i).ITERMINALID);
                    mContext.startActivity(intent);
                 }
             });
         }else {
-            state.setTextColor(Color.RED);
+            state.setTextColor(Color.GREEN);
         }
         factory.setOnClickListener(new View.OnClickListener() {
             @Override

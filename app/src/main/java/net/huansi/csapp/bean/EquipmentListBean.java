@@ -13,9 +13,9 @@ public class EquipmentListBean extends WsData{
      * STERMINALNAME : 印花1
      */
 
-    public String ITERMINALID;
+    public String ITERMINALID="";
     public String IFACTORYID="";
-    public String STERMINALNAME;
+    public String STERMINALNAME="";
 
 
 }

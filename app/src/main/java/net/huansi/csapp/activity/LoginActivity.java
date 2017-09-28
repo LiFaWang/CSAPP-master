@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,21 +29,24 @@ import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.IS_LOGIN;
+import static net.huansi.csapp.utils.Constants.PHONE_NO;
 import static net.huansi.csapp.utils.Constants.USER_COMPANY;
 import static net.huansi.csapp.utils.Constants.USER_NAME;
+import static net.huansi.csapp.utils.Constants.USER_PWD;
 import static net.huansi.csapp.utils.Constants.USER_SECTION;
 
 public class LoginActivity extends NotWebBaseActivity {
 
-     private String phoneNum="";//电话号码
-     private String sPassword="";//密码
     private ActivityLoginBinding activityLoginBinding;
-    private int REQUECT_READ_PHONE_STATE=2;
+    private int REQUECT_READ_PHONE_STATE = 2;
+    private String mPassword;
+    private String mPhoneNum;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -50,6 +54,7 @@ public class LoginActivity extends NotWebBaseActivity {
         doNext(requestCode, grantResults);
 
     }
+
     private void doNext(int requestCode, int[] grantResults) {
         if (requestCode == REQUECT_READ_PHONE_STATE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -61,6 +66,7 @@ public class LoginActivity extends NotWebBaseActivity {
             }
         }
     }
+
     @Override
     public void init() {
         checkPhonePermission();
@@ -68,13 +74,13 @@ public class LoginActivity extends NotWebBaseActivity {
         activityLoginBinding.tvFindPSW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent=new Intent(LoginActivity.this,ConfirmPSWActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ConfirmPSWActivity.class);
                 startActivity(intent);
             }
         });
 
     }
+
     /*
      校验手机状态权限
     */
@@ -96,65 +102,71 @@ public class LoginActivity extends NotWebBaseActivity {
             readPhoneState();
         }
     }
+
     private void denyPermission() {
-        Toast.makeText(this,"读取手机状态权限已经拒绝！",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "读取手机状态权限已经拒绝！", Toast.LENGTH_SHORT).show();
     }
 
     private void readPhoneState() {
-        Toast.makeText(this,"读取手机状态成功！",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "读取手机状态成功！", Toast.LENGTH_SHORT).show();
     }
 
 
     /**
      * 登陆按钮监听
+     *
      * @param view
      */
-    public void login(View view){
+    public void login(View view) {
         String isLogin = SpUtils.getSpData(LoginActivity.this, IS_LOGIN, "false");
-        String password = activityLoginBinding.etPassword.getText().toString();
-        String phoneNum = activityLoginBinding.etPhoneNum.getText().toString();
+        mPassword = activityLoginBinding.etPassword.getText().toString();
+        mPhoneNum = activityLoginBinding.etPhoneNum.getText().toString();
+        String mobileNo = SpUtils.getSpData(this, PHONE_NO, "8");
+        String psw = SpUtils.getSpData(this, USER_PWD, "8");
+        if (TextUtils.isEmpty(mPassword) || TextUtils.isEmpty(mPhoneNum)) {
+            OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不能为空！");
+        } else if (mPhoneNum.equals(mobileNo) && mPassword.equals(psw) && isLogin.equals("true")) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (isLogin.equals("false")) {
+            getLoginMes();
+
+        } else {
+            OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不正确！");
+
+        }
         //测试
-//         if(phoneNum.equals("18063396908")&& password.equals(SpUtils.getSpData(this,USER_PWD,"8"))){
-//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }else if(isLogin.equals("false")){
-//             getLoginMes();
-//
-//         }else{
-//            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
     }
 
 
     private void getLoginMes() {
         RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
                 "spappYunEquUserLogin"
-                , "sMobileNo="+phoneNum+",sPassword="+sPassword,
+                , "sMobileNo=" + mPhoneNum + ",sPassword=" + mPassword,
                 LoginBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
                     public void success(HsWebInfo hsWebInfo) {
                         List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
-                        LoginBean loginBean=null;
+                        LoginBean loginBean = null;
                         for (int i = 0; i < entities.size(); i++) {
-                             loginBean = (LoginBean) entities.get(i);
+                            loginBean = (LoginBean) entities.get(i);
                         }
-                        if(loginBean!=null&&!loginBean.SMOBILENO.isEmpty()){
-                            SpUtils.saveMobileNo(LoginActivity.this,loginBean.SMOBILENO);
-                            SpUtils.saveSpData(LoginActivity.this,USER_NAME,loginBean.SUSERNAME);
-                            SpUtils.saveSpData(LoginActivity.this,USER_SECTION,loginBean.SDEPTNAME);
-                            SpUtils.saveSpData(LoginActivity.this,USER_COMPANY,loginBean.SCOMPANYNAME);
-                            SpUtils.saveSpData(LoginActivity.this,IS_LOGIN,"true");
+                        if (loginBean != null && !loginBean.SMOBILENO.isEmpty()) {
+                            SpUtils.saveSpData(LoginActivity.this, PHONE_NO, loginBean.SMOBILENO);
+                            SpUtils.saveSpData(LoginActivity.this, USER_PWD, mPassword);
+                            SpUtils.saveSpData(LoginActivity.this, USER_NAME, loginBean.SUSERNAME);
+                            SpUtils.saveSpData(LoginActivity.this, USER_SECTION, loginBean.SDEPTNAME);
+                            SpUtils.saveSpData(LoginActivity.this, USER_COMPANY, loginBean.SCOMPANYNAME);
+                            SpUtils.saveSpData(LoginActivity.this, IS_LOGIN, "true");
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
-                        }else{
-                            OthersUtil.ToastMsg(LoginActivity.this,"账号或者密码不正确！");
+                        } else {
+                            OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不正确！");
                         }
 
                     }
@@ -164,8 +176,6 @@ public class LoginActivity extends NotWebBaseActivity {
                         super.error(hsWebInfo, context);
                     }
                 });
-
     }
-
 
 }

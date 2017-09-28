@@ -47,6 +47,7 @@ import rx.functions.Func1;
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
 import static net.huansi.csapp.utils.Constants.ENDTIME;
+import static net.huansi.csapp.utils.Constants.ICHANNEL;
 import static net.huansi.csapp.utils.Constants.STARTTIME;
 
 
@@ -75,7 +76,8 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
     private String mtStartTime="";//开始日期
     private String mtEndTime="";//结束日期
     private TimePickerView pvTime;//日历
-    private String mIYunTerminalId="1510";
+//    private String mIYunTerminalId="1510";
+    private String mIYunTerminalId;
     private List<AbnormalBean> data;
 
     @Override
@@ -156,6 +158,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                 intent.putExtra(CHANNEL_NAME,abnormalBean.SCHANNELNAME);
                 intent.putExtra(STARTTIME,mtStartTime);
                 intent.putExtra(ENDTIME,mtEndTime);
+                intent.putExtra(ICHANNEL,abnormalBean.ICHANNEL);
                 startActivity(intent);
             }
         });
@@ -301,7 +304,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                         return NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
                                 "spappYunEquExpHistoryList"
                                 , "iYunTerminalId=" + mIYunTerminalId + ",tStartTime=" +mtStartTime + ",tEndTime=" + mtEndTime,
-                                AbnormalBean.class.getName(), true, "查询失败！！！");
+                                AbnormalBean.class.getName(), true, "没有发现异常信息！");
                     }
                 }), getContext(), dialog, new SimpleHsWeb() {
             @Override
@@ -394,7 +397,7 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                                 equipmentData.clear();
                                 equipmentData.addAll(listEquipmentItem);
                                 mFragmentAbnormalBinding.tvEquipment.setText(listEquipmentItem.get(0).STERMINALNAME);
-//                                iTerminalId = listEquipmentItem.get(0).ITERMINALID;
+                                mIYunTerminalId = listEquipmentItem.get(0).ITERMINALID;
                             }
 
                         }
@@ -418,14 +421,14 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
                             equipmentData.clear();
                             equipmentData.addAll(listEquipmentItem);
                             mFragmentAbnormalBinding.tvEquipment.setText(listEquipmentItem.get(0).STERMINALNAME);
-//                            iTerminalId = listEquipmentItem.get(0).ITERMINALID;
+                            mIYunTerminalId = listEquipmentItem.get(0).ITERMINALID;
                         }
 
                         break;
                     case R.id.tvEquipment:
                         EquipmentListBean itemEquipment= (EquipmentListBean) parent.getItemAtPosition(position);
                         mFragmentAbnormalBinding.tvEquipment.setText(itemEquipment.STERMINALNAME);
-//                        iTerminalId = itemEquipment.ITERMINALID;
+                        mIYunTerminalId = itemEquipment.ITERMINALID;
                         break;
                 }
                 popupWindow.dismiss();

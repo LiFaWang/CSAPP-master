@@ -15,11 +15,24 @@ public class UnuaualBean extends WsData{
          tEndTime:结束时间
         sCurValue：异常值
         sType：异常值类型
+     {
+     "STATUS": "0",
+     "DATA": [
+     {
+     "IYUNTERMINALID": "1510",
+     "IYUNUSERMODULEID": "2151",
+     "ICHANNEL": "8",
+     "SCHANNELNAME": "8色伺服报警",
+     "EXPMAXVALUE": "1",
+     "EXPCOUNT": "4"
+     }
+     ]
+     }
      */
 
-    public String SCHANNELNAME;
-    public String TSTARTTIME;
-    public String TENDTIME;
-    public String SCURVALUE;
-    public String STYPE;
+    public String SCHANNELNAME="";
+    public String TSTARTTIME="";
+    public String TENDTIME="";
+    public String SCURVALUE="";
+    public String STYPE="";
 }
