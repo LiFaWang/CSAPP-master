@@ -33,6 +33,7 @@ import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVIC
 import static net.huansi.csapp.R.id.mainErro;
 import static net.huansi.csapp.R.id.mainHistory;
 import static net.huansi.csapp.R.id.mainMy;
+import static net.huansi.csapp.R.id.mainProduction;
 import static net.huansi.csapp.utils.Constants.FACTORY_NAME;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_ID;
 import static net.huansi.csapp.utils.Constants.ITEM_EQU_NAME;
@@ -158,6 +159,9 @@ public class EquRouletteActivity extends NotWebBaseActivity implements RadioGrou
                 break;
             case mainErro:
                 intent.putExtra("id_ft",R.id.mainErro);
+                break;
+            case mainProduction:
+                intent.putExtra("id_ft",R.id.mainProduction);
                 break;
             case mainMy:
                 intent.putExtra("id_ft",R.id.mainMy);

@@ -16,8 +16,9 @@ import net.huansi.csapp.MainActivity;
 import net.huansi.csapp.R;
 import net.huansi.csapp.bean.LoginBean;
 import net.huansi.csapp.databinding.ActivityLoginBinding;
-import net.huansi.csapp.utils.SpUtils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import huansi.net.qianjingapp.base.NotWebBaseActivity;
@@ -26,10 +27,10 @@ import huansi.net.qianjingapp.entity.WsEntity;
 import huansi.net.qianjingapp.imp.SimpleHsWeb;
 import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
+import huansi.net.qianjingapp.utils.SPUtils;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.IS_LOGIN;
-import static net.huansi.csapp.utils.Constants.PHONE_NO;
 import static net.huansi.csapp.utils.Constants.USER_COMPANY;
 import static net.huansi.csapp.utils.Constants.USER_NAME;
 import static net.huansi.csapp.utils.Constants.USER_PWD;
@@ -39,8 +40,6 @@ public class LoginActivity extends NotWebBaseActivity {
 
     private ActivityLoginBinding activityLoginBinding;
     private int REQUECT_READ_PHONE_STATE = 2;
-    private String mPassword;
-    private String mPhoneNum;
 
     @Override
     protected int getLayoutId() {
@@ -78,6 +77,11 @@ public class LoginActivity extends NotWebBaseActivity {
                 startActivity(intent);
             }
         });
+        String mobileNo = SPUtils.getMobileNo(this);
+        String psw = SPUtils.getSpData(this, USER_PWD, "8");
+
+        activityLoginBinding.etPhoneNum.setText(mobileNo);
+        activityLoginBinding.etPassword.setText(psw);
 
     }
 
@@ -118,23 +122,22 @@ public class LoginActivity extends NotWebBaseActivity {
      * @param view
      */
     public void login(View view) {
-        String isLogin = SpUtils.getSpData(LoginActivity.this, IS_LOGIN, "false");
-        mPassword = activityLoginBinding.etPassword.getText().toString();
-        mPhoneNum = activityLoginBinding.etPhoneNum.getText().toString();
-        String mobileNo = SpUtils.getSpData(this, PHONE_NO, "8");
-        String psw = SpUtils.getSpData(this, USER_PWD, "8");
-        if (TextUtils.isEmpty(mPassword) || TextUtils.isEmpty(mPhoneNum)) {
+        String isLogin = SPUtils.getSpData(LoginActivity.this, IS_LOGIN, "false");
+        String phoneNum = activityLoginBinding.etPhoneNum.getText().toString();
+        String password = activityLoginBinding.etPassword.getText().toString();
+        String mobileNo = SPUtils.getMobileNo(this);
+        String psw = SPUtils.getSpData(this, USER_PWD, "8");
+        if (TextUtils.isEmpty(password) || TextUtils.isEmpty(phoneNum)) {
             OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不能为空！");
-        } else if (mPhoneNum.equals(mobileNo) && mPassword.equals(psw) && isLogin.equals("true")) {
+        } else if ( phoneNum.equals(mobileNo)&&psw.equals(password)&&isLogin.equals("true")) {
+            getLogin(phoneNum,md5(password));
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         } else if (isLogin.equals("false")) {
-            getLoginMes();
-
+            getLogin(phoneNum,md5(password));
         } else {
             OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不正确！");
-
         }
         //测试
 //        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -142,40 +145,73 @@ public class LoginActivity extends NotWebBaseActivity {
 //        finish();
     }
 
-
-    private void getLoginMes() {
-        RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
-                "spappYunEquUserLogin"
-                , "sMobileNo=" + mPhoneNum + ",sPassword=" + mPassword,
-                LoginBean.class.getName(), true, "", new SimpleHsWeb() {
-                    @Override
-                    public void success(HsWebInfo hsWebInfo) {
-                        List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
-                        LoginBean loginBean = null;
-                        for (int i = 0; i < entities.size(); i++) {
-                            loginBean = (LoginBean) entities.get(i);
-                        }
-                        if (loginBean != null && !loginBean.SMOBILENO.isEmpty()) {
-                            SpUtils.saveSpData(LoginActivity.this, PHONE_NO, loginBean.SMOBILENO);
-                            SpUtils.saveSpData(LoginActivity.this, USER_PWD, mPassword);
-                            SpUtils.saveSpData(LoginActivity.this, USER_NAME, loginBean.SUSERNAME);
-                            SpUtils.saveSpData(LoginActivity.this, USER_SECTION, loginBean.SDEPTNAME);
-                            SpUtils.saveSpData(LoginActivity.this, USER_COMPANY, loginBean.SCOMPANYNAME);
-                            SpUtils.saveSpData(LoginActivity.this, IS_LOGIN, "true");
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不正确！");
-                        }
-
-                    }
-
-                    @Override
-                    public void error(HsWebInfo hsWebInfo, Context context) {
-                        super.error(hsWebInfo, context);
-                    }
-                });
+    /**
+     * md5加密
+     * @param string
+     * @return
+     */
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        }
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            String result = "";
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result += temp;
+            }
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
+
+
+    private void getLogin(final String phoneNum, final String password){
+
+    RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
+            "spappYunEquUserLogin"
+            , "sMobileNo=" + phoneNum + ",sPassword=" + password,
+            LoginBean.class.getName(), true, "", new SimpleHsWeb() {
+                @Override
+                public void success(HsWebInfo hsWebInfo) {
+                    List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
+                    LoginBean loginBean = null;
+                    for (int i = 0; i < entities.size(); i++) {
+                        loginBean = (LoginBean) entities.get(i);
+                    }
+                    if (loginBean != null && !loginBean.SMOBILENO.isEmpty()) {
+                        SPUtils.saveMobileNo(LoginActivity.this,phoneNum);
+                        SPUtils.saveSpData(LoginActivity.this,USER_PWD,password);
+                        SPUtils.saveSpData(LoginActivity.this, USER_NAME, loginBean.SUSERNAME);
+                        SPUtils.saveSpData(LoginActivity.this, USER_SECTION, loginBean.SDEPTNAME);
+                        SPUtils.saveSpData(LoginActivity.this, USER_COMPANY, loginBean.SCOMPANYNAME);
+                        SPUtils.saveSpData(LoginActivity.this, IS_LOGIN, "true");
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不正确！");
+                    }
+
+                }
+
+                @Override
+                public void error(HsWebInfo hsWebInfo, Context context) {
+                    super.error(hsWebInfo, context);
+                }
+            });
+
+
+}
+
+
 
 }

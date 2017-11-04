@@ -1,7 +1,6 @@
 package net.huansi.csapp.fragment;
 
 
-
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,17 +11,17 @@ import net.huansi.csapp.adapter.MineFragmentAdapter;
 import net.huansi.csapp.bean.MineBean;
 import net.huansi.csapp.databinding.FragmentMineBinding;
 import net.huansi.csapp.utils.MyUtils;
-import net.huansi.csapp.utils.SpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import huansi.net.qianjingapp.fragment.BaseFragment;
+import huansi.net.qianjingapp.utils.SPUtils;
 
 import static net.huansi.csapp.utils.Constants.IS_LOGIN;
-import static net.huansi.csapp.utils.Constants.PHONE_NO;
 import static net.huansi.csapp.utils.Constants.USER_COMPANY;
 import static net.huansi.csapp.utils.Constants.USER_NAME;
+import static net.huansi.csapp.utils.Constants.USER_PWD;
 import static net.huansi.csapp.utils.Constants.USER_SECTION;
 
 
@@ -38,10 +37,10 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void init() {
-        String mobileNo = SpUtils.getSpData(getActivity(), PHONE_NO, "");
-        String userName = SpUtils.getSpData(getActivity(), USER_NAME, "张三");
-        String userSection = SpUtils.getSpData(getActivity(), USER_SECTION, "运营部");
-        String userCompany = SpUtils.getSpData(getActivity(), USER_COMPANY, "环思智慧");
+        String mobileNo = SPUtils.getMobileNo(getActivity());
+        String userName = SPUtils.getSpData(getActivity(), USER_NAME, "张思");
+        String userSection = SPUtils.getSpData(getActivity(), USER_SECTION, "运营部");
+        String userCompany = SPUtils.getSpData(getActivity(), USER_COMPANY, "环思智慧");
         String versionNum = MyUtils.getVersionName(getActivity());
         int ima[] = {R.drawable.account,R.drawable.user,R.drawable.state,R.drawable.company,
         R.drawable.section,R.drawable.updata,R.drawable.end};
@@ -59,7 +58,13 @@ public class MineFragment extends BaseFragment {
            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
               MineBean mine = (MineBean) adapterView.getItemAtPosition(i);
                if(mine.name.equals("注销")){
-                   SpUtils.saveSpData(getActivity(),IS_LOGIN,"false");
+                   SPUtils.saveSpData(getActivity(),IS_LOGIN,"false");
+                   SPUtils.saveMobileNo(getActivity(),"");
+                   SPUtils.saveSpData(getActivity(),USER_PWD,"");
+                   SPUtils.saveSpData(getActivity(), USER_NAME, "");
+                   SPUtils.saveSpData(getActivity(), USER_SECTION, "");
+                   SPUtils.saveSpData(getActivity(), USER_COMPANY, "");
+
                    startActivity(new Intent(getActivity(), LoginActivity.class));
                    getActivity().finish();
                }

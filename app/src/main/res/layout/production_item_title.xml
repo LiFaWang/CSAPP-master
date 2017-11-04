@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/ProductionStyle"
+                android:text="机台"/>
+
+            <TextView
+                style="@style/ProductionStyle"
+                android:text="产量"/>
+
+            <TextView
+                style="@style/ProductionStyle"
+                android:text="操作人员"/>
+
+            <TextView
+                style="@style/ProductionStyle"
+                android:text="开始时间"/>
+
+            <TextView
+                style="@style/ProductionStyle"
+                android:text="结束时间"/>
+
+            <TextView
+                style="@style/ProductionStyle"
+
+                android:text="计划日期"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lvProduction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+
+
+</LinearLayout>

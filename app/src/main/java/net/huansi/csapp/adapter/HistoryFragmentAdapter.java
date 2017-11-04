@@ -81,7 +81,7 @@ public class HistoryFragmentAdapter extends HsBaseAdapter<List<HistoryDataMapBea
             channelName=subList.get(0).showName;
             for (int j = 0; j < subList.size(); j++) {
 
-                xValues.add(subList.get(j).COLLECTTIME);
+                xValues.add(subList.get(j).COLLECTTIME);//设置横坐标的值（测量时间）
                 String value = subList.get(j).NCHANNELVALUE;
                 float v=0;
                 try {

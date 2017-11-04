@@ -58,15 +58,28 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
     private List<EquipmentListBean> equipmentData;//设备数据
     private  List<EquipmentListBean> equipmentDataMemory;
     private HistoryFragmentAdapter adapter;
-//    private List<HistoryListBean> data;//历史数据
     private PopAreaAdapter areaAdapter;
     private PopFactoryAdapter factoryAdapter;
     private PopEquAdapter equAdapter;
     private LoadProgressDialog dialog;
+
+    public void setiTerminalId(String iTerminalId) {
+        this.iTerminalId = iTerminalId;
+    }
+
     private String iTerminalId="1";
-//    private int pageIndex=1;
-//    private String pageSize="10";
-//    private String pageSize1="6";
+
+    public void setMtStartTime(String mtStartTime) {
+        this.mtStartTime = mtStartTime;
+    }
+
+    private String mtStartTime="";
+
+    public void setMtEndTime(String mtEndTime) {
+        this.mtEndTime = mtEndTime;
+    }
+
+    private String mtEndTime="";
     private List<FactoryListBean> listFactoryItem;//筛选工厂的数据
     private List<EquipmentListBean> listEquipmentItem;//筛选设备的数据
     //折线图三层数据集合
@@ -81,7 +94,6 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
     @Override
     public void init() {
         dialog=new LoadProgressDialog(getActivity());
-//        data = new ArrayList<>();
         factoryData = new ArrayList<>();
         factoryDataMemory = new ArrayList<>();
         equipmentData = new ArrayList<>();
@@ -93,9 +105,10 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
         length = MyUtils.getScreenSize(getActivity());
         fragmentHistoryBinding = (FragmentHistoryBinding) viewDataBinding;
         OthersUtil.initRefresh(fragmentHistoryBinding.prtHistory,getActivity());
+
+        setData();
         adapter = new HistoryFragmentAdapter(data,getContext());
         fragmentHistoryBinding.gvChart.setAdapter(adapter);
-        setData();
         fragmentHistoryBinding.gvChart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -241,12 +254,12 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
 
 
     //获取模块下数据和对应折线图
-   private void getEquData(boolean isRefresh){
+   public void getEquData(boolean isRefresh){
        if(isRefresh) data.clear();
        OthersUtil.showLoadDialog(dialog);
 
        NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
-                       //
+                       //列表数据
                        .map(new Func1<String, HsWebInfo>() {
                            @Override
                            public HsWebInfo call(String string) {
@@ -260,7 +273,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                                        true,"");
                            }
                        })
-                       //
+                       //每个Item的折线图数据
                        .map(new Func1<HsWebInfo, HsWebInfo>() {
                            @Override
                            public HsWebInfo call(HsWebInfo hsWebInfo) {
@@ -271,7 +284,8 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
                                        "sMobileNo=" +mMobileNo+
                                                ",iTerminalId="+iTerminalId+
                                                ",pageindex="+getPage()+
-                                               ",pagesize=10",
+                                               ",pagesize=6"+",tStartTime="+mtStartTime+
+                                       ",tEndTime="+mtEndTime,
                                        HistoryDataMapBean.class.getName(),
                                        true,"");
                                if(!hsWebInfo.success) return hsWebInfo;
@@ -443,7 +457,9 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
      * @return
      */
     private int getPage(){
+
         return (data.size()%6==0?(data.size()/6):(data.size()/6+1))+1;
     }
+
 
 }

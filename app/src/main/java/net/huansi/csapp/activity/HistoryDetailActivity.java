@@ -14,7 +14,6 @@ import net.huansi.csapp.R;
 import net.huansi.csapp.bean.HistoryDetailBean;
 import net.huansi.csapp.databinding.ActivityHistoryDetailBinding;
 import net.huansi.csapp.utils.MyUtils;
-import net.huansi.csapp.utils.SpUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,11 +25,11 @@ import huansi.net.qianjingapp.entity.WsEntity;
 import huansi.net.qianjingapp.imp.SimpleHsWeb;
 import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
+import huansi.net.qianjingapp.utils.SPUtils;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.CHANNEL_ID;
 import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
-import static net.huansi.csapp.utils.Constants.PHONE_NO;
 
 public class HistoryDetailActivity extends NotWebBaseActivity {
     private String channelName = "";//频道名字
@@ -60,7 +59,7 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
         String curDate = MyUtils.getCurDate("--");
         detailBinding.tvStart.setText(curDate);
         detailBinding.tvEnd.setText(curDate);
-        mMobileNo = SpUtils.getSpData(this, PHONE_NO, "8");
+        mMobileNo=SPUtils.getMobileNo(this);
         lineChart = detailBinding.lineChart;
         detailBinding.tvChannelName.setText(channelName);
         detailBinding.lineChart.setNoDataText("没有数据");

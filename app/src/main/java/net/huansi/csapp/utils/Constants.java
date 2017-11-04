@@ -18,11 +18,15 @@ public class Constants {
     public static  final  String USER_COMPANY="userCompany";//公司
     public static final String IS_LOGIN="isLogin";//是否第一次登陆
     public static final String USER_PWD="passWord";//登录密码
-    public static final String PHONE_NO="phoneNO";//登录手机号
     public static final String STARTTIME="start";//
     public static final String ENDTIME="end";//
     public static final String ICHANNEL="channel";//历史异常的通道
     public static final String ITERMINAL_ID="ITERMINALID";//终端的id
+
+//    public static final String STERMINALNAME="sterminalname";//
+//    public static final String STERMINALNAME="sterminalname";//机台名称
+//    public static final String STERMINALNAME="sterminalname";//机台名称
+//    public static final String STERMINALNAME="sterminalname";//机台名称
 
 
 

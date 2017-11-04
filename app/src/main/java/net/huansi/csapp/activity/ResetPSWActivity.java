@@ -8,7 +8,6 @@ import net.huansi.csapp.MainActivity;
 import net.huansi.csapp.R;
 import net.huansi.csapp.bean.ResetPSWBean;
 import net.huansi.csapp.databinding.ActivityResetPswBinding;
-import net.huansi.csapp.utils.SpUtils;
 
 import java.util.List;
 
@@ -18,10 +17,10 @@ import huansi.net.qianjingapp.entity.WsEntity;
 import huansi.net.qianjingapp.imp.SimpleHsWeb;
 import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
+import huansi.net.qianjingapp.utils.SPUtils;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
 import static net.huansi.csapp.utils.Constants.IS_LOGIN;
-import static net.huansi.csapp.utils.Constants.PHONE_NO;
 import static net.huansi.csapp.utils.Constants.USER_PWD;
 
 public class ResetPSWActivity extends NotWebBaseActivity {
@@ -78,9 +77,9 @@ public class ResetPSWActivity extends NotWebBaseActivity {
 
                         if(mSmessage!=null&&mSmessage.equals("OK")){
 
-                            SpUtils.saveSpData(ResetPSWActivity.this,USER_PWD,mPassWord);
-                            SpUtils.saveSpData(ResetPSWActivity.this,PHONE_NO,mPhoneNum);
-                           SpUtils.saveSpData(ResetPSWActivity.this, IS_LOGIN, "true");
+                            SPUtils.saveSpData(ResetPSWActivity.this,USER_PWD,mPassWord);
+                            SPUtils.saveMobileNo(ResetPSWActivity.this,mPhoneNum);
+                           SPUtils.saveSpData(ResetPSWActivity.this, IS_LOGIN, "true");
                             OthersUtil.ToastMsg(ResetPSWActivity.this,mSmessage);
                             Intent intent = new Intent(ResetPSWActivity.this, MainActivity.class);
                             startActivity(intent);

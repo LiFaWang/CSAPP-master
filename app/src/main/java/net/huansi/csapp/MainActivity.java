@@ -2,15 +2,20 @@ package net.huansi.csapp;
 
 import android.content.Intent;
 import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
+import net.huansi.csapp.bean.ProductionBean;
 import net.huansi.csapp.databinding.ActivityMainBinding;
 import net.huansi.csapp.event.HomeToRealEvent;
+import net.huansi.csapp.factory.FragmentFactory;
 import net.huansi.csapp.fragment.AbnormalFragment;
 import net.huansi.csapp.fragment.HistoryFragment;
 import net.huansi.csapp.fragment.HomeFragment;
 import net.huansi.csapp.fragment.MineFragment;
+import net.huansi.csapp.fragment.ProductionFragment;
 import net.huansi.csapp.fragment.RealFragment;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -20,12 +25,23 @@ import huansi.net.qianjingapp.base.NotWebBaseActivity;
 
 public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnCheckedChangeListener{
 
-    private ActivityMainBinding activityMainBinding;
+    public ActivityMainBinding activityMainBinding;
     private HomeFragment homeFragment;
     private RealFragment realFragment;
     private HistoryFragment historyFragment;
     private AbnormalFragment mAbnormalFragment;
     private MineFragment mineFragment;
+    private ProductionFragment mProductionFragment;
+
+    public ProductionBean getProductionBean() {
+        return mProductionBean;
+    }
+
+    public void setProductionBean(ProductionBean productionBean) {
+        mProductionBean = productionBean;
+    }
+
+    private ProductionBean mProductionBean;
 
     @Override
     protected int getLayoutId() {
@@ -48,15 +64,17 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
     private void initFragments() {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        homeFragment = new HomeFragment();
-        realFragment = new RealFragment();
-        historyFragment = new HistoryFragment();
-        mAbnormalFragment=new AbnormalFragment();
-        mineFragment = new MineFragment();
+        homeFragment = (HomeFragment) FragmentFactory.createFragment(0);
+        realFragment = ( RealFragment)FragmentFactory.createFragment(1);
+        historyFragment = (HistoryFragment)FragmentFactory.createFragment(2);
+        mAbnormalFragment= (AbnormalFragment)FragmentFactory.createFragment(3);
+        mProductionFragment= (ProductionFragment)FragmentFactory.createFragment(4);
+        mineFragment =  (MineFragment)FragmentFactory.createFragment(5);
         ft.add(R.id.mainFrameLayout, homeFragment);
         ft.add(R.id.mainFrameLayout, realFragment);
         ft.add(R.id.mainFrameLayout, historyFragment);
         ft.add(R.id.mainFrameLayout,mAbnormalFragment);
+        ft.add(R.id.mainFrameLayout, mProductionFragment);
         ft.add(R.id.mainFrameLayout, mineFragment);
         ft.commitAllowingStateLoss();
         hideFragments(ft);
@@ -73,6 +91,15 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
         ft.hide(historyFragment);
         ft.hide(mAbnormalFragment);
         ft.hide(mineFragment);
+        ft.hide(mProductionFragment);
+    }
+    public void gotoHistoryFragment() {
+
+        FragmentManager fm =  getSupportFragmentManager();
+        //注意v4包的配套使用
+        Fragment fragment = new HistoryFragment();
+        fm.beginTransaction().replace(R.id.mainFrameLayout,fragment).commit();
+        activityMainBinding.mainHistory.setChecked(true);
     }
 
 
@@ -101,6 +128,9 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
             case R.id.mainMy:
                 ft.show(mineFragment);
                 break;
+            case R.id.mainProduction:
+                ft.show(mProductionFragment);
+                break;
         }
         ft.commitAllowingStateLoss();
     }
@@ -126,6 +156,7 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
                 activityMainBinding.mainReal.setChecked(idFt == R.id.mainReal);
                 activityMainBinding.mainHistory.setChecked(idFt == R.id.mainHistory);
                 activityMainBinding.mainErro.setChecked(idFt == R.id.mainErro);
+                activityMainBinding.mainProduction.setChecked(idFt == R.id.mainProduction);
                 activityMainBinding.mainMy.setChecked(idFt == R.id.mainMy);
                 break;
             default:
