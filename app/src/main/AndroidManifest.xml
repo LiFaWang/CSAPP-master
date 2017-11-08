@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="net.huansi.csapp"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="net.huansi.csapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <application
         xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
@@ -44,6 +46,8 @@
         <activity android:name=".activity.UnusualActivity">
         </activity>
         <activity android:name=".activity.HistoryCurveActivity">
+        </activity>
+        <activity android:name=".activity.ProductionActivity">
         </activity>
     </application>
 

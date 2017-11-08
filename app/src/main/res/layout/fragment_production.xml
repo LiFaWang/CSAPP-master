@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--<HorizontalScrollView-->
-        <!--android:id="@+id/hs"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
 <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -37,97 +32,153 @@
 
     </LinearLayout>
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="开始日期:"
+                android:textColor="@color/colorTitle"
+                android:textSize="12sp"/>
+
+            <ImageView
+                android:id="@+id/ivStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@drawable/date2"
+                android:textColor="@color/colorTitle"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tvStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textColor="@color/colorTitle"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="截止日期:"
+                android:textColor="@color/colorTitle"
+                android:textSize="12sp"/>
+
+            <ImageView
+                android:id="@+id/ivEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@drawable/date2"
+                android:textColor="@color/colorTitle"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tvEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textColor="@color/colorTitle"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:text="查询"
+            android:textColor="@color/colorTitle"/>
+    </LinearLayout>
+    <include layout="@layout/underline_black"></include>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:text="订单号"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:textColor="@color/colorTitle"
+            android:gravity="center"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="客户"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/colorTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="产品"
+            android:textColor="@color/colorTitle"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="生产数量"
+            android:gravity="center"
+            android:textColor="@color/colorTitle"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="当前机台"
+            android:textColor="@color/colorTitle"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
 
-        <TextView
-            android:text="订单号:"
-            android:id="@+id/tvOrder"
-            android:background="@drawable/spinner_drawable"
-            style="@style/HomeFragment"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp" />
-        <EditText
-            android:id="@+id/etOrder"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            style="@style/HomeFragment"/>
-        <TextView
-            android:text="卡号:"
-            android:background="@drawable/spinner_drawable"
-            android:id="@+id/tvCard"
-            style="@style/HomeFragment"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp" />
-        <EditText
-            android:id="@+id/etCard"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            style="@style/HomeFragment"/>
-        <Button
-            android:id="@+id/btnSearch"
-            style="@style/HomeFragment"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/button_seclect"
-            android:text="查询" />
     </LinearLayout>
 
-
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/ll"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                    <!--style="@style/ProductionStyle"-->
-                    <!--android:text="机台"/>-->
-
-                <!--<TextView-->
-                    <!--style="@style/ProductionStyle"-->
-                    <!--android:text="产量"/>-->
-
-                <!--<TextView-->
-                    <!--style="@style/ProductionStyle"-->
-                    <!--android:text="操作人员"/>-->
-
-                <!--<TextView-->
-                    <!--style="@style/ProductionStyle"-->
-                    <!--android:text="开始时间"/>-->
-
-                <!--<TextView-->
-                    <!--style="@style/ProductionStyle"-->
-                    <!--android:text="结束时间"/>-->
-
-                <!--<TextView-->
-                    <!--style="@style/ProductionStyle"-->
-                    <!--android:text="计划日期"/>-->
-            <!--</LinearLayout>-->
-
-            <!--<ListView-->
-                <!--android:id="@+id/lvProduction"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent">-->
-            <!--</ListView>-->
-
-        <!--</LinearLayout>-->
-    <HorizontalScrollView
-        android:id="@+id/hsProduction"
+    <include layout="@layout/underline_black"></include>
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:id="@+id/prtProduction"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    </HorizontalScrollView>
+        <ListView
+            android:layout_marginTop="5dp"
+            android:id="@+id/productListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </ListView>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
 
 </LinearLayout>
-    <!--</HorizontalScrollView>-->
 </layout>

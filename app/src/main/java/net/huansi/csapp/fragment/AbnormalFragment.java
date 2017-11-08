@@ -67,16 +67,12 @@ public class AbnormalFragment extends BaseFragment implements AbsListView.OnScro
     private PopEquAdapter equAdapter;
     private LoadProgressDialog dialog;
     private AbnormalAdapter mAbnormalAdapter;
-//    private String iTerminalId="1";
-//    private String pageIndex="1";
-//    private String pageSize="10";
     private List<FactoryListBean> listFactoryItem;//筛选工厂的数据
     private List<EquipmentListBean> listEquipmentItem;//筛选设备的数据
     private List<HistoryDataMapBean> listDataMap;
     private String mtStartTime="";//开始日期
     private String mtEndTime="";//结束日期
     private TimePickerView pvTime;//日历
-//    private String mIYunTerminalId="1510";
     private String mIYunTerminalId;
     private List<AbnormalBean> data;
 

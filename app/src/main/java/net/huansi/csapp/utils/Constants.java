@@ -22,6 +22,7 @@ public class Constants {
     public static final String ENDTIME="end";//
     public static final String ICHANNEL="channel";//历史异常的通道
     public static final String ITERMINAL_ID="ITERMINALID";//终端的id
+    public static final int RESULT_PRODUCTION = 2;
 
 //    public static final String STERMINALNAME="sterminalname";//
 //    public static final String STERMINALNAME="sterminalname";//机台名称

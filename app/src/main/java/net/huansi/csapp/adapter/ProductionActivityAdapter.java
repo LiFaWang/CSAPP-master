@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.huansi.csapp.R;
-import net.huansi.csapp.bean.ProductionBean;
+import net.huansi.csapp.bean.ProductionActivityBean;
 
 import java.util.List;
 
@@ -18,24 +18,24 @@ import huansi.net.qianjingapp.utils.ViewHolder;
  * Created by Tony on 2017/11/3.
  */
 
-public class ProductionAdapter extends HsBaseAdapter<ProductionBean> {
+public class ProductionActivityAdapter extends HsBaseAdapter<ProductionActivityBean> {
     public void setOnCabinetNameClickListener(OnCabinetNameClickListener onCabinetNameClickListener) {
         mOnCabinetNameClickListener = onCabinetNameClickListener;
     }
 
     private OnCabinetNameClickListener mOnCabinetNameClickListener;
 
-    public ProductionAdapter(List<ProductionBean> list, Context context) {
+    public ProductionActivityAdapter(List<ProductionActivityBean> list, Context context) {
         super(list, context);
     }
     public interface OnCabinetNameClickListener{
-        void onCabinetNameClick(ProductionBean bean);
+        void onCabinetNameClick(ProductionActivityBean bean);
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView==null){
-            convertView=mInflater.inflate(R.layout.item_production,null);
+            convertView=mInflater.inflate(R.layout.item_production_activity,null);
         }
         final TextView tvCabinet =  ViewHolder.get(convertView,R.id.tvCabinet);//机台
         TextView tvProduction = ViewHolder.get(convertView,R.id.tvProduction);

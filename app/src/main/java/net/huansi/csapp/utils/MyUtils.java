@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import static huansi.net.qianjingapp.utils.TimeUtils.TIME_FORMATE_MINUS;
@@ -64,7 +65,31 @@ public class MyUtils {
         String sCurDate = dateFormat.format(now);
         return sCurDate;
     }
-   //获取版本号
+    //得到当前操作时间的前一天
+    public static String getPreDate(String timeType) {
+        Date now = new Date();
+        SimpleDateFormat dateFormat = null;
+        if (timeType.equals("-")) {
+            dateFormat = new SimpleDateFormat(TIME_FORMATE_MINUS);
+        }else if(timeType.equals("--")){
+            dateFormat = new SimpleDateFormat(TIME_FORMATE_MINUS2);
+        } else if(timeType.equals("mm")) {
+            dateFormat = new SimpleDateFormat(TIME_FORMATE_MINUS3);
+        } else
+        {
+            dateFormat = new SimpleDateFormat(TIME_FORMATE_SLASH);
+        }
+        String sCurDate = dateFormat.format(getPreviousDate(now));
+        return sCurDate;
+    }
+    private static Date getPreviousDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, -1); //今天的时间加一天
+        date = calendar.getTime();
+        return date;
+    }
+    //获取版本号
     public static String getVersionName(Context context) {
         try {
             PackageManager packageManager = context.getPackageManager();

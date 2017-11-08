@@ -1,29 +1,35 @@
 package net.huansi.csapp.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.text.TextUtils;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import net.huansi.csapp.MainActivity;
 import net.huansi.csapp.R;
+import net.huansi.csapp.activity.ProductionActivity;
 import net.huansi.csapp.adapter.PopAreaAdapter;
 import net.huansi.csapp.adapter.PopFactoryAdapter;
-import net.huansi.csapp.adapter.ProductionAdapter;
+import net.huansi.csapp.adapter.ProductionActivityAdapter;
+import net.huansi.csapp.adapter.ProductionFragmentAdapter;
 import net.huansi.csapp.bean.CountryListBean;
 import net.huansi.csapp.bean.FactoryListBean;
-import net.huansi.csapp.bean.ProductionBean;
+import net.huansi.csapp.bean.ProductionActivityBean;
+import net.huansi.csapp.bean.ProductionFragmentBean;
 import net.huansi.csapp.databinding.FragmentProductionBinding;
 import net.huansi.csapp.factory.FragmentFactory;
 import net.huansi.csapp.utils.MyUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import huansi.net.qianjingapp.entity.HsWebInfo;
@@ -34,9 +40,12 @@ import huansi.net.qianjingapp.utils.NewRxjavaWebUtils;
 import huansi.net.qianjingapp.utils.OthersUtil;
 import huansi.net.qianjingapp.utils.RxjavaWebUtils;
 import huansi.net.qianjingapp.view.LoadProgressDialog;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import rx.functions.Func1;
 
 import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVICE;
+import static net.huansi.csapp.utils.Constants.RESULT_PRODUCTION;
 
 /**
  *
@@ -55,8 +64,13 @@ public class ProductionFragment extends BaseFragment {
     private int[] length;//屏幕长宽;
     private String mFactoryId;//工厂的id
     private LoadProgressDialog dialog;
-    private List<ProductionBean> mProductionBeanList;
-    private ProductionAdapter adapter;
+    private List<ProductionActivityBean> mProductionActivityBeanList;
+    private ProductionActivityAdapter adapter;
+    private TimePickerView pvTime;//日历
+    private List<ProductionFragmentBean> mProductionFragmentBeanList;
+    private ProductionFragmentAdapter mProductionFragmentAdapter;
+    private String mTStartTime;
+    private String mTEndTime;
 
 
     @Override
@@ -67,86 +81,147 @@ public class ProductionFragment extends BaseFragment {
     @Override
     public void init() {
         mFragmentProductionBinding = (FragmentProductionBinding) viewDataBinding;
+        initTimePickerView();
         dialog=new LoadProgressDialog(getActivity());
         countryData = new ArrayList<>();
         factoryDataMemory = new ArrayList<>();
         factoryData = new ArrayList<>();
         listFactoryItem = new ArrayList<>();
         length = MyUtils.getScreenSize(getActivity());
-        mProductionBeanList = new ArrayList<>();
+        mProductionActivityBeanList = new ArrayList<>();
+        mProductionFragmentBeanList = new ArrayList<>();
+        String curDate = MyUtils.getCurDate("--");
+        String preDate = MyUtils.getPreDate("--");
+        mFragmentProductionBinding.tvStart.setText(preDate);
+        mFragmentProductionBinding.tvEnd.setText(curDate);
+        OthersUtil.initRefresh(mFragmentProductionBinding.prtProduction,getContext());
         setData();
-        mFragmentProductionBinding.btnSearch.setOnClickListener(new View.OnClickListener() {
+        mFragmentProductionBinding.prtProduction.setPtrHandler(new PtrDefaultHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                obtainProductionList(mFactoryId,mTStartTime,mTEndTime);
+                mProductionFragmentAdapter.notifyDataSetChanged();
+            }
+        });
+        mFragmentProductionBinding.tvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String orderNo = mFragmentProductionBinding.etOrder.getText().toString();
-                String cardNo = mFragmentProductionBinding.etCard.getText().toString();
-                if (TextUtils.isEmpty(orderNo)&&TextUtils.isEmpty(cardNo)){
-                    OthersUtil.ToastMsg(getContext(),"订单号和卡号不能都为空");
-                    return;
+                pvTime.show(v);
+            }
+        });
+        mFragmentProductionBinding.tvEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pvTime.show(v);
+            }
+        });
+        mFragmentProductionBinding.ivStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pvTime.show(view);
+            }
+        });
+        mFragmentProductionBinding.ivEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pvTime.show(view);
+            }
+        });
+        mFragmentProductionBinding.tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFragmentProductionBinding.tvStart.getText().toString().isEmpty() ||
+                        mFragmentProductionBinding.tvEnd.getText().toString().isEmpty()) {
+                    OthersUtil.ToastMsg(getContext(), "请选择日期");
+                } else {
+                    mTStartTime = mFragmentProductionBinding.tvStart.getText().toString();
+                    mTEndTime = mFragmentProductionBinding.tvEnd.getText().toString();
+                    obtainProductionList(mFactoryId, mTStartTime, mTEndTime);
                 }
-                obtainProductionData(mFactoryId,orderNo,cardNo);
+            }
+        });
+        mProductionFragmentAdapter = new ProductionFragmentAdapter(mProductionFragmentBeanList,getContext());
+        mFragmentProductionBinding.productListView.setAdapter(mProductionFragmentAdapter);
+        mProductionFragmentAdapter.setOnOrderNumberClickListener(new ProductionFragmentAdapter.OnOrderNumberClickListener() {
+            @Override
+            public void onOrderNumberClick(ProductionFragmentBean bean) {
+                Intent intent=new Intent(getContext(),ProductionActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("SORDERNO",bean.SORDERNO);
+                bundle.putString("SORDERNO",bean.SORDERNO);
+                bundle.putString("mFactoryId",mFactoryId);
+                bundle.putString("mTStartTime",mTStartTime);
+                bundle.putString("mTEndTime",mTEndTime);
+                intent.putExtras(bundle);
+               startActivityForResult(intent,1);
+
             }
         });
     }
+    private void initTimePickerView() {
+        //时间选择器
+        //选中事件回调
+        pvTime = new TimePickerView.Builder(getContext(), new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                switch (v.getId()){
+                    case R.id.ivStart:
+                        mFragmentProductionBinding.tvStart.setText(MyUtils.getTime(date));
+                        break;
+                    case R.id.tvStart:
+                        mFragmentProductionBinding.tvStart.setText(MyUtils.getTime(date));
+                        break;
+                    case R.id.ivEnd:
+                        mFragmentProductionBinding.tvEnd.setText(MyUtils.getTime(date));
+                        break;
+                    case R.id.tvEnd:
+                        mFragmentProductionBinding.tvEnd.setText(MyUtils.getTime(date));
+                        break;
+                }
 
-    /**
-     * 获取产量数据
-     * @param factoryId
-     * @param orderNo
-     * @param cardNo
-     */
-    private void obtainProductionData(final String factoryId, final String orderNo, final String cardNo) {
+            }
+        }).setType(new boolean[]{true, true, true, false, false, false})
+                .build();
+    }
+    //获取产量的列表数据
+    private void obtainProductionList(final String factoryId, final String tStartTime, final String tEndTime) {
         OthersUtil.showLoadDialog(dialog);
+        mProductionFragmentBeanList.clear();
         NewRxjavaWebUtils.getUIThread(NewRxjavaWebUtils.getObservable(this, "")
                 .map(new Func1<String, HsWebInfo>() {
                     @Override
                     public HsWebInfo call(String s) {
-                        return NewRxjavaWebUtils.getJsonData(getContext(), CUS_SERVICE, "spappYunGetProductInfo",
-                                "iFactoryId="+factoryId+",sOrderNo="+orderNo+
-                                ",sCardNo="+cardNo,
-                                ProductionBean.class.getName(), true, "");
+                        return NewRxjavaWebUtils.getJsonData(getContext(),CUS_SERVICE,
+                                "spappYunGetProductSum"
+                                , "iFactoryId=" + factoryId + ",tStartTime=" +tStartTime + ",tEndTime=" + tEndTime,
+                                ProductionFragmentBean.class.getName(), true, "没有发现异常信息！");
                     }
                 }), getContext(), dialog, new SimpleHsWeb() {
             @Override
             public void success(HsWebInfo hsWebInfo) {
-                List<WsEntity> listwsdata = hsWebInfo.wsData.LISTWSDATA;
-                for (int i = 0; i < listwsdata.size(); i++) {
-                    ProductionBean productionBean = (ProductionBean) listwsdata.get(i);
-                    mProductionBeanList.add(productionBean);
+                List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
+                for (int i = 0; i <entities.size() ; i++) {
+                    ProductionFragmentBean productionFragmentBean = (ProductionFragmentBean) entities.get(i);
+                    mProductionFragmentBeanList.add(productionFragmentBean);
                 }
-                //设置展示数据
-                showProductionData(mProductionBeanList);
+                mFragmentProductionBinding.prtProduction.refreshComplete();
+                mProductionFragmentAdapter.notifyDataSetChanged();
+
             }
-        });
 
-    }
 
-    /**
-     * 展示产量数据
-     * @param productionBeanList
-     */
-    private void showProductionData(final List<ProductionBean> productionBeanList) {
-        adapter=new ProductionAdapter(productionBeanList,getActivity());
-        View view = View.inflate(getContext(), R.layout.production_item_title, null);
-        ListView lvProduction = (ListView) view.findViewById(R.id.lvProduction);
-        lvProduction.setAdapter(adapter);
-        adapter.setOnCabinetNameClickListener(new ProductionAdapter.OnCabinetNameClickListener() {
+
             @Override
-            public void onCabinetNameClick(ProductionBean bean) {
-                MainActivity activity = (MainActivity) getActivity();
-                activity.activityMainBinding.mainHistory.setChecked(true);
-
-
-                HistoryFragment historyFragment = (HistoryFragment) FragmentFactory.createFragment(2);
-                historyFragment.setiTerminalId(bean.ITERMINAL);
-                historyFragment.setMtStartTime(bean.TSTARTTIME);
-                historyFragment.setMtEndTime(bean.TENDTIME);
-                historyFragment.getEquData(true);
-
+            public void error(HsWebInfo hsWebInfo, Context context) {
+                super.error(hsWebInfo, context);
+               mProductionFragmentAdapter.notifyDataSetChanged();
+                mFragmentProductionBinding.prtProduction.refreshComplete();
+                OthersUtil.dismissLoadDialog(dialog);
             }
         });
-        mFragmentProductionBinding.hsProduction.addView(view);
     }
+
+
 
     /**
      * 设置选择菜单数据
@@ -272,5 +347,31 @@ public class ProductionFragment extends BaseFragment {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_PRODUCTION:
+                Bundle b=data.getExtras();  //data为B中回传的Intent
+                String sorderno = b.getString("SORDERNO");
+                String mTStartTime = b.getString("mTStartTime");
+                String mTEndTime = b.getString("mTEndTime");
+                String ITERMINAL = b.getString("ITERMINAL");
+                String sterminalname = b.getString("STERMINALNAME");
+
+                MainActivity activity = (MainActivity) getActivity();
+                activity.activityMainBinding.mainHistory.setChecked(true);
+                HistoryFragment historyFragment = (HistoryFragment) FragmentFactory.createFragment(2);
+                historyFragment.fragmentHistoryBinding.tvArea.setText( mFragmentProductionBinding.tvArea.getText());
+                historyFragment.fragmentHistoryBinding.tvFactory.setText(mFragmentProductionBinding.tvFactory.getText());
+                historyFragment.fragmentHistoryBinding.tvEquipment.setText(sterminalname);
+                historyFragment.setiTerminalId(ITERMINAL);
+                historyFragment.setMtStartTime(mTStartTime);
+                historyFragment.setMtEndTime(mTEndTime);
+                historyFragment.getEquData(true);
+                break;
+        }
     }
 }

@@ -50,7 +50,7 @@ import static huansi.net.qianjingapp.utils.WebServices.WebServiceType.CUS_SERVIC
 public class HistoryFragment extends BaseFragment implements AbsListView.OnScrollListener {
 
 
-    private FragmentHistoryBinding fragmentHistoryBinding;
+    public FragmentHistoryBinding fragmentHistoryBinding;
     private int[] length;//屏幕长宽;
     private List<CountryListBean> countryData;//区域数据
     private List<FactoryListBean> factoryData;//工厂数据

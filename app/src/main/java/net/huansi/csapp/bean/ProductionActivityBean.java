@@ -14,7 +14,7 @@ import huansi.net.qianjingapp.entity.WsData;
         "TENDTIME": "2017/11/2 11:00:00"
  */
 
-public class ProductionBean extends WsData {
+public class ProductionActivityBean extends WsData {
     public String ITERMINAL="";
     public String STERMINALNAME="";
     public String NQTY="";
@@ -24,7 +24,7 @@ public class ProductionBean extends WsData {
 
     @Override
     public String toString() {
-        return "ProductionBean{" +
+        return "ProductionActivityBean{" +
                 "ITERMINAL='" + ITERMINAL + '\'' +
                 ", STERMINALNAME='" + STERMINALNAME + '\'' +
                 ", NQTY='" + NQTY + '\'' +

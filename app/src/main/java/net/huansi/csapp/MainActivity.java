@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
-import net.huansi.csapp.bean.ProductionBean;
+import net.huansi.csapp.bean.ProductionActivityBean;
 import net.huansi.csapp.databinding.ActivityMainBinding;
 import net.huansi.csapp.event.HomeToRealEvent;
 import net.huansi.csapp.factory.FragmentFactory;
@@ -33,15 +33,15 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
     private MineFragment mineFragment;
     private ProductionFragment mProductionFragment;
 
-    public ProductionBean getProductionBean() {
-        return mProductionBean;
+    public ProductionActivityBean getProductionActivityBean() {
+        return mProductionActivityBean;
     }
 
-    public void setProductionBean(ProductionBean productionBean) {
-        mProductionBean = productionBean;
+    public void setProductionActivityBean(ProductionActivityBean productionActivityBean) {
+        mProductionActivityBean = productionActivityBean;
     }
 
-    private ProductionBean mProductionBean;
+    private ProductionActivityBean mProductionActivityBean;
 
     @Override
     protected int getLayoutId() {
@@ -159,6 +159,7 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
                 activityMainBinding.mainProduction.setChecked(idFt == R.id.mainProduction);
                 activityMainBinding.mainMy.setChecked(idFt == R.id.mainMy);
                 break;
+
             default:
                 break;
         }

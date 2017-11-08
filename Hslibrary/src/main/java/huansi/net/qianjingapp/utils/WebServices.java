@@ -9,7 +9,7 @@ import java.util.Map;
 
 
 public class WebServices {
-    public static final String CUSTOMER_SERVICE_IP="http://183.134.73.181:3082/HSIOTAPPWS/appws.asmx";
+    public static final String CUSTOMER_SERVICE_IP="http://47.52.158.146/HSIOTAPPWS/appws.asmx";
     public static final String CUS_SERVICE_CHECK_CODE="4A8D54D1-C7A1-48DC-AD7E-8CA1686FBF85";
     //环思的服务器ip
 
