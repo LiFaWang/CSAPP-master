@@ -1,6 +1,7 @@
 package net.huansi.csapp.activity;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.bigkoo.pickerview.TimePickerView;
@@ -33,10 +34,10 @@ import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
 
 public class HistoryDetailActivity extends NotWebBaseActivity {
     private String channelName = "";//频道名字
-    private String channelId="";//频道id
-    private String mStartDate="";//开始日期
-    private String mEndDate="";//结束日期
-    private String mMobileNo="";//手机号码
+    private String channelId = "";//频道id
+    private String mStartDate = "";//开始日期
+    private String mEndDate = "";//结束日期
+    private String mMobileNo = "";//手机号码
     private ActivityHistoryDetailBinding detailBinding;
     private TimePickerView pvTime;
     private LineChart lineChart;
@@ -55,11 +56,9 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
         detailBinding = (ActivityHistoryDetailBinding) viewDataBinding;
         channelName = getIntent().getStringExtra(CHANNEL_NAME);
         channelId = getIntent().getStringExtra(CHANNEL_ID);
-
         String curDate = MyUtils.getCurDate("--");
-        detailBinding.tvStart.setText(curDate);
-        detailBinding.tvEnd.setText(curDate);
-        mMobileNo=SPUtils.getMobileNo(this);
+
+        mMobileNo = SPUtils.getMobileNo(this);
         lineChart = detailBinding.lineChart;
         detailBinding.tvChannelName.setText(channelName);
         detailBinding.lineChart.setNoDataText("没有数据");
@@ -95,18 +94,30 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
                 pvTime.show(view);
             }
         });
-//        setData(mStartDate,mEndDate);
+        String mTStartTime = SPUtils.getSpData(this, "mTStartTime", null);
+        String mTEndTime = SPUtils.getSpData(this, "mTEndTime", null);
+        if (!TextUtils.isEmpty(mTStartTime) && !TextUtils.isEmpty(mTEndTime)) {
+            detailBinding.tvStart.setText(mTStartTime);
+            detailBinding.tvEnd.setText(mTEndTime);
+            setData(mTStartTime, mTEndTime);
+            SPUtils.saveSpData(this,"mTStartTime","");
+            SPUtils.saveSpData(this,"mTEndTime","");
+        }else {
+            detailBinding.tvStart.setText(curDate);
+            detailBinding.tvEnd.setText(curDate);
+        }
+
         detailBinding.ivSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               if(detailBinding.tvStart.getText().toString().isEmpty()||
-                       detailBinding.tvEnd.getText().toString().isEmpty()){
-                    OthersUtil.ToastMsg(HistoryDetailActivity.this,"请选择日期");
-               }else{
-                   mStartDate = detailBinding.tvStart.getText().toString();
-                   mEndDate = detailBinding.tvEnd.getText().toString();
-                   setData(mStartDate,mEndDate);
-               }
+                if (detailBinding.tvStart.getText().toString().isEmpty() ||
+                        detailBinding.tvEnd.getText().toString().isEmpty()) {
+                    OthersUtil.ToastMsg(HistoryDetailActivity.this, "请选择日期");
+                } else {
+                    mStartDate = detailBinding.tvStart.getText().toString();
+                    mEndDate = detailBinding.tvEnd.getText().toString();
+                    setData(mStartDate, mEndDate);
+                }
 
             }
         });
@@ -130,7 +141,7 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
         pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.ivStart:
                         detailBinding.tvStart.setText(MyUtils.getTime(date));
                         break;
@@ -147,15 +158,15 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
 
             }
         }).setType(new boolean[]{true, true, true, false, false, false})
-          .build();
+                .build();
     }
 
-    private void setData(String mStartDate,String mEndDate) {
+    private void setData(String mStartDate, String mEndDate) {
         OthersUtil.showLoadDialog(mDialog);
         //设备数据
         RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
-                "spappYunEquTerminalModuleChannelLineData", "sMobileNo="+mMobileNo+",iUserModuleChannelId="
-                +channelId+",dStartDate="+mStartDate+",dEndDate="+mEndDate,
+                "spappYunEquTerminalModuleChannelLineData", "sMobileNo=" + mMobileNo + ",iUserModuleChannelId="
+                        + channelId + ",dStartDate=" + mStartDate + ",dEndDate=" + mEndDate,
                 HistoryDetailBean.class.getName(), true, "", new SimpleHsWeb() {
                     @Override
                     public void success(HsWebInfo hsWebInfo) {
@@ -163,12 +174,12 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
                         yValues.clear();
                         lineDataSets.clear();
                         List<WsEntity> entities = hsWebInfo.wsData.LISTWSDATA;
-                        List<HistoryDetailBean> data =  new ArrayList<>();
-                         for (int i = 0; i < entities.size(); i++) {
-                          HistoryDetailBean historyDetailBean = (HistoryDetailBean) entities.get(i);
-                             data.add(historyDetailBean);
-                             xValues.add(historyDetailBean.COLLECTTIME);
-                             yValues.add(new Entry(Float.valueOf(historyDetailBean.CHANNELVALUE),i));
+                        List<HistoryDetailBean> data = new ArrayList<>();
+                        for (int i = 0; i < entities.size(); i++) {
+                            HistoryDetailBean historyDetailBean = (HistoryDetailBean) entities.get(i);
+                            data.add(historyDetailBean);
+                            xValues.add(historyDetailBean.COLLECTTIME);
+                            yValues.add(new Entry(Float.valueOf(historyDetailBean.CHANNELVALUE), i));
                         }
                         LineDataSet lineDataSet = new LineDataSet(yValues, channelName);
                         lineDataSets.add(lineDataSet);
@@ -180,7 +191,7 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
                         lineData.notifyDataChanged();
                         lineChart.notifyDataSetChanged();
                         lineChart.invalidate();
-                        lineChart.animateXY(3000,2000);
+                        lineChart.animateXY(3000, 2000);
                     }
 
                     @Override

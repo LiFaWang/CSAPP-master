@@ -34,8 +34,12 @@ import static net.huansi.csapp.utils.Constants.CHANNEL_NAME;
 
 public class HistoryFragmentAdapter extends HsBaseAdapter<List<HistoryDataMapBean>> {
 
+
+
     public HistoryFragmentAdapter(List<List<HistoryDataMapBean>> list, Context context) {
         super(list, context);
+
+
     }
 
     @Override

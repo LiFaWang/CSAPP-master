@@ -2,7 +2,6 @@ package net.huansi.csapp.fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.PopupWindow;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import net.huansi.csapp.R;
-import net.huansi.csapp.activity.HistoryDetailActivity;
 import net.huansi.csapp.adapter.HistoryFragmentAdapter;
 import net.huansi.csapp.adapter.PopAreaAdapter;
 import net.huansi.csapp.adapter.PopEquAdapter;
@@ -73,6 +71,7 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
         this.mtStartTime = mtStartTime;
     }
 
+
     private String mtStartTime="";
 
     public void setMtEndTime(String mtEndTime) {
@@ -109,13 +108,6 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
         setData();
         adapter = new HistoryFragmentAdapter(data,getContext());
         fragmentHistoryBinding.gvChart.setAdapter(adapter);
-        fragmentHistoryBinding.gvChart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), HistoryDetailActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
         fragmentHistoryBinding.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
