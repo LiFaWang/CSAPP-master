@@ -138,7 +138,7 @@ public class ProductionFragment extends BaseFragment {
                 }
             }
         });
-        mFragmentProductionBinding.tvDateSearch.setOnClickListener(new View.OnClickListener() {
+        mFragmentProductionBinding.btnDateSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mFragmentProductionBinding.tvArea.getText().toString().equals("(区域)")|| mFragmentProductionBinding.tvFactory.getText().toString().equals("(工厂)")){
@@ -155,7 +155,7 @@ public class ProductionFragment extends BaseFragment {
                 }
             }
         });
-        mFragmentProductionBinding.tvOrderSearch.setOnClickListener(new View.OnClickListener() {
+        mFragmentProductionBinding.btnOrderSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mFragmentProductionBinding.tvArea.getText().toString().equals("(区域)")|| mFragmentProductionBinding.tvFactory.getText().toString().equals("(工厂)")){
@@ -182,12 +182,11 @@ public class ProductionFragment extends BaseFragment {
                 Intent intent=new Intent(getContext(),ProductionActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putString("SORDERNO",bean.SORDERNO);
-                bundle.putString("SORDERNO",bean.SORDERNO);
                 bundle.putString("mFactoryId",mFactoryId);
-                bundle.putString("mTStartTime",mTStartTime);
-                bundle.putString("mTEndTime",mTEndTime);
-                SPUtils.saveSpData(getContext(),"mTStartTime",mTStartTime);
-                SPUtils.saveSpData(getContext(),"mTEndTime",mTEndTime);
+                bundle.putString("mTStartTime",bean.TSTARTTIME);
+                bundle.putString("mTEndTime",bean.TENDTIME);
+                SPUtils.saveSpData(getContext(),"mTStartTime",bean.TSTARTTIME);
+                SPUtils.saveSpData(getContext(),"mTEndTime",bean.TENDTIME);
                 intent.putExtras(bundle);
                startActivityForResult(intent,1);
 
@@ -231,7 +230,7 @@ public class ProductionFragment extends BaseFragment {
                                 "spappYunGetProductSum"
                                 , "iFactoryId=" + factoryId + ",tStartTime=" +tStartTime + ",tEndTime=" + tEndTime
                                 +",sOrderNo="+etOrderNo,
-                                ProductionFragmentBean.class.getName(), true, "没有发现异常信息！");
+                                ProductionFragmentBean.class.getName(), true, "没有返回数据！");
                     }
                 }), getContext(), dialog, new SimpleHsWeb() {
             @Override
