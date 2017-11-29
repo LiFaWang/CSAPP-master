@@ -1,6 +1,67 @@
 <resources>
+    <!--登录activity-->
     <string name="app_name">长胜</string>
-
+    <string name="login_number">手机号:</string>
+    <string name="login_psw">密　码:</string>
+    <string name="register_number">注册账号</string>
+    <string name="find_psw">找回密码</string>
+    <string name="login_btn">登  录</string>
+    <!--设备homeFragment-->
+    <string name="china">中国</string>
+    <string name="thailand">泰国</string>
+    <string name="vietnam">越南</string>
+    <string name="malaysia">马来西亚</string>
+    <string name="taiwan">台湾</string>
+    <string name="factory">工厂</string>
+    <string name="area">区域</string>
+    <string name="device">设备数</string>
+    <string name="unusual">异常</string>
+    <!--实时realFragment-->
+    <string name="tv_area">(区域)</string>
+    <string name="tv_factory">(工厂)</string>
+    <string name="btn_search">查询</string>
+    <string name="tv_device">设备</string>
+    <string name="acquisition_total_points">采集总点数</string>
+    <string name="unusual_points">异常点数</string>
+    <string name="real_status">状态</string>
+    <!--历史historyFragment-->
+    <string name="history_device">(设备)</string>
+    <string name="history_module">模块1</string>
+    <!--异常abnormalFragment-->
+    <string name="start_date">开始日期:</string>
+    <string name="end_date">截止日期:</string>
+    <string name="error_point">异常点</string>
+    <string name="error_count">异常次数</string>
+    <!--产量productionFragment-->
+    <string name="btn_selector_by_order">按单</string>
+    <string name="btn_selector_by_date">按日期</string>
+    <string name="tv_order">订单号:</string>
+    <string name="order">订单号</string>
+    <string name="customer">客户</string>
+    <string name="product">产品</string>
+    <string name="product_count">生产数量</string>
+    <string name="current_machine">当前机台</string>
+    <!--确认密码confirmActivity-->
+    <string name="confirm_code">验证码:</string>
+    <string name="get_confirm_code">获取验证码</string>
+    <string name="commit">提  交</string>
+    <!--mainActivity equrouletteActivity -->
+    <string name="main_home">设备</string>
+    <string name="main_real">实时</string>
+    <string name="main_history">历史</string>
+    <string name="main_error">异常</string>
+    <string name="main_production">产量</string>
+    <string name="main_my">我的</string>
+    <!--historyCurveActivity-->
+    <string name="start_time">开始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="abnormal_value">异常值</string>
+    <string name="abnormal_type">异常类型</string>
+    <!--productionActivity-->
+    <string name="tv_back">返回</string>
+    <!--resetPSWActivity-->
+    <string name="pwd_change">密码修改</string>
+    <string name="new_pwd">新密码:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="(区域)"
+            android:text="@string/tv_area"
             android:id="@+id/tvArea"
             android:background="@drawable/spinner_drawable"
             style="@style/HomeFragment"
@@ -21,7 +21,7 @@
 
 
         <TextView
-            android:text="(工厂)"
+            android:text="@string/tv_factory"
             android:background="@drawable/spinner_drawable"
             android:id="@+id/tvFactory"
             style="@style/HomeFragment"
@@ -31,7 +31,7 @@
             android:layout_marginTop="5dp" />
        <Button
            android:id="@+id/btnSelector"
-           android:text="按单"
+           android:text="@string/btn_selector_by_order"
            android:textColor="@color/colorTitle"
            android:layout_marginBottom="5dp"
            android:layout_marginRight="5dp"
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="订单号:"
+            android:text="@string/tv_order"
             android:layout_marginLeft="5dp"
             android:layout_centerVertical="true"
             android:gravity="center"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/btnOrderSearch"
-            android:text="查询"
+            android:text="@string/btn_search"
             android:textColor="@color/colorTitle"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="5dp"
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:text="开始日期:"
+                android:text="@string/start_date"
                 android:textColor="@color/colorTitle"
                 android:textSize="12sp"/>
 
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:text="截止日期:"
+                android:text="@string/end_date"
                 android:textColor="@color/colorTitle"
                 android:textSize="12sp"/>
 
@@ -160,7 +160,7 @@
         </LinearLayout>
         <Button
             android:id="@+id/btnDateSearch"
-            android:text="查询"
+            android:text="@string/btn_search"
             android:textColor="@color/colorTitle"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="5dp"
@@ -178,35 +178,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="订单号"
+            android:text="@string/order"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:textColor="@color/colorTitle"
             android:gravity="center"
             android:layout_height="wrap_content"/>
         <TextView
-            android:text="客户"
+            android:text="@string/customer"
             android:gravity="center"
             android:layout_weight="1"
             android:textColor="@color/colorTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <TextView
-            android:text="产品"
+            android:text="@string/product"
             android:textColor="@color/colorTitle"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <TextView
-            android:text="生产数量"
+            android:text="@string/product_count"
             android:gravity="center"
             android:textColor="@color/colorTitle"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <TextView
-            android:text="当前机台"
+            android:text="@string/current_machine"
             android:textColor="@color/colorTitle"
             android:gravity="center"
             android:layout_weight="1"

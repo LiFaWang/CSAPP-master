@@ -14,7 +14,7 @@
                 android:id="@+id/tvArea"
                 android:background="@drawable/spinner_drawable"
                 style="@style/HomeFragment"
-                android:text="(区域)"
+                android:text="@string/tv_area"
                 android:drawableRight="@drawable/arrow"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp" />
@@ -23,7 +23,7 @@
             <TextView
                 android:background="@drawable/spinner_drawable"
                 android:id="@+id/tvFactory"
-                android:text="(工厂)"
+                android:text="@string/tv_factory"
                 style="@style/HomeFragment"
                 android:drawableRight="@drawable/arrow"
                 android:layout_marginBottom="5dp"
@@ -37,7 +37,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/button_seclect"
-                android:text="查询" />
+                android:text="@string/btn_search" />
         </LinearLayout>
         <include layout="@layout/underline_black"></include>
 
@@ -63,19 +63,19 @@
 
             <TextView
                 style="@style/HomeFragment"
-                android:text="设备" />
+                android:text="@string/tv_device" />
 
             <TextView
                 style="@style/HomeFragment"
-                android:text="采集总点数" />
+                android:text="@string/acquisition_total_points" />
 
             <TextView
                 style="@style/HomeFragment"
-                android:text="异常点数" />
+                android:text="@string/unusual_points" />
 
             <TextView
                 style="@style/HomeFragment"
-                android:text="状态" />
+                android:text="@string/real_status" />
         </LinearLayout>
         <include layout="@layout/underline_black"></include>
         <in.srain.cube.views.ptr.PtrFrameLayout

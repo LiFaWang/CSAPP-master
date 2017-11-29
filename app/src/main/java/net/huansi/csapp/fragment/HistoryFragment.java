@@ -72,6 +72,14 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
     }
 
 
+    public String getMtStartTime() {
+        return mtStartTime;
+    }
+
+    public String getMtEndTime() {
+        return mtEndTime;
+    }
+
     private String mtStartTime="";
 
     public void setMtEndTime(String mtEndTime) {
@@ -130,11 +138,15 @@ public class HistoryFragment extends BaseFragment implements AbsListView.OnScrol
         fragmentHistoryBinding.prtHistory.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
+                 mtEndTime = getMtEndTime();
+                mtStartTime = getMtStartTime();
                 getEquData(false);
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                mtEndTime = getMtEndTime();
+                mtStartTime = getMtStartTime();
                 getEquData(true);
             }
         });

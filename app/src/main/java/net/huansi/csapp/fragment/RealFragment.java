@@ -132,9 +132,9 @@ public class RealFragment extends BaseFragment {
                 String factory = fragmentRealBinding.tvFactory.getText().toString();
                 if(factory.equals("无")){
                     OthersUtil.ToastMsg(getContext(),"该区域无数据");
-                }else if(factory.equals("(区域)")){
+                }else if(factory.equals(getString(R.string.tv_area))){
                     OthersUtil.ToastMsg(getContext(),"请选择区域");
-                }else if(factory.equals("(工厂)")){
+                }else if(factory.equals(getString(R.string.tv_factory))){
                     OthersUtil.ToastMsg(getContext(),"请选择工厂");
                 }else{
 //                    OthersUtil.ToastMsg(getContext(),"查询完成");
@@ -187,7 +187,7 @@ public class RealFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 adapterFactory = new PopFactoryAdapter(factoryData,getContext());
-                if(fragmentRealBinding.tvArea.getText().equals("(区域)")){
+                if(fragmentRealBinding.tvArea.getText().equals(getString(R.string.tv_area))){
                     OthersUtil.ToastMsg(getContext(),"请选择区域");
                 }else{
                     showPop(view);

@@ -120,6 +120,7 @@ public class HistoryFragmentAdapter extends HsBaseAdapter<List<HistoryDataMapBea
                 HistoryDataMapBean bean= finalSubList.get(0);
                 String name = bean.showName;
                 String id = bean.IUSERMODULECHANNELID;
+
 //                for (String s : strings1) {
 //                    name = s;
 //                    List<HistoryDataMapBean> historyDataMapBeen1 = stringListMap.get(s);

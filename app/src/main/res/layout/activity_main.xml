@@ -23,34 +23,34 @@
             style="@style/HomeRG"
             android:checked="true"
             android:drawableTop="@drawable/home_select"
-            android:text="设备"/>
+            android:text="@string/main_home"/>
         <RadioButton
             android:id="@+id/mainReal"
             style="@style/HomeRG"
             android:drawableTop="@drawable/real_select"
-            android:text="实时"/>
+            android:text="@string/main_real"/>
         <RadioButton
             android:id="@+id/mainHistory"
             style="@style/HomeRG"
             android:drawableTop="@drawable/history_select"
-            android:text="历史"/>
+            android:text="@string/main_history"/>
         <RadioButton
             android:id="@+id/mainErro"
             style="@style/HomeRG"
             android:drawableTop="@drawable/history_select"
-            android:text="异常"
+            android:text="@string/main_error"
            />
         <RadioButton
             android:id="@+id/mainProduction"
             style="@style/HomeRG"
             android:drawableTop="@drawable/history_select"
-            android:text="产量"
+            android:text="@string/main_production"
             />
         <RadioButton
             android:id="@+id/mainMy"
             android:drawableTop="@drawable/mine_select"
             style="@style/HomeRG"
-            android:text="我的"/>
+            android:text="@string/main_my"/>
     </RadioGroup>
 </LinearLayout>
 </layout>

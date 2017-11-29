@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:text="开始日期:"
+                    android:text="@string/start_date"
                     android:textColor="@color/colorTitle"
                     android:textSize="12sp"/>
 
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:text="截止日期:"
+                    android:text="@string/end_date"
                     android:textColor="@color/colorTitle"
                     android:textSize="12sp"/>
 
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:gravity="right"
-                android:text="查询"
+                android:text="@string/btn_search"
                 android:textColor="@color/colorTitle"/>
         </LinearLayout>
 
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:gravity="left"
-                android:text="异 常 点"
+                android:text="@string/error_point"
                 android:textColor="@color/colorTitle"/>
 
             <TextView
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="开始时间"
+                android:text="@string/start_time"
                 android:textColor="@color/colorTitle"/>
 
             <TextView
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="结束时间"
+                android:text="@string/end_time"
                 android:textColor="@color/colorTitle"/>
 
 
@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginRight="3dp"
-                android:text="异常值"
+                android:text="@string/abnormal_value"
                 android:textColor="@color/colorTitle"/>
 
             <TextView
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:gravity="center"
-                android:text="异常类型"
+                android:text="@string/abnormal_type"
                 android:textColor="@color/colorTitle"/>
         </LinearLayout>
 

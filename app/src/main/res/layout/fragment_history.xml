@@ -9,7 +9,7 @@
             android:layout_height="50dp">
 
             <TextView
-                android:text="(区域)"
+                android:text="@string/area"
                 android:id="@+id/tvArea"
                 android:background="@drawable/spinner_drawable"
                 style="@style/HomeFragment"
@@ -19,7 +19,7 @@
 
 
             <TextView
-                android:text="(工厂)"
+                android:text="@string/factory"
                 android:background="@drawable/spinner_drawable"
                 android:id="@+id/tvFactory"
                 style="@style/HomeFragment"
@@ -28,7 +28,7 @@
                 android:layout_marginTop="5dp" />
 
             <TextView
-                android:text="(设备)"
+                android:text="@string/history_device"
                 android:id="@+id/tvEquipment"
                 style="@style/HomeFragment"
                 android:layout_marginBottom="5dp"
@@ -50,7 +50,7 @@
             android:id="@+id/tvModule"
             android:layout_margin="5dp"
             android:layout_width="wrap_content"
-            android:text="模块1"
+            android:text="@string/history_module"
             android:textSize="18sp"
             android:textColor="@color/colorTitle"
             android:layout_height="wrap_content" />

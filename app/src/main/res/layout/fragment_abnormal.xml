@@ -18,7 +18,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/spinner_drawable"
                 android:drawableRight="@drawable/arrow"
-                android:text="(区域)"/>
+                android:text="@string/tv_area"/>
 
 
             <TextView
@@ -28,7 +28,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/spinner_drawable"
                 android:drawableRight="@drawable/arrow"
-                android:text="(工厂)"/>
+                android:text="@string/tv_factory"/>
 
             <TextView
                 android:id="@+id/tvEquipment"
@@ -37,7 +37,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/spinner_drawable"
                 android:drawableRight="@drawable/arrow"
-                android:text="(设备)"/>
+                android:text="@string/history_device"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:text="开始日期:"
+                    android:text="@string/start_date"
                     android:textColor="@color/colorTitle"
                     android:textSize="12sp"/>
 
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
-                    android:text="截止日期:"
+                    android:text="@string/end_date"
                     android:textColor="@color/colorTitle"
                     android:textSize="12sp"/>
 
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:gravity="right"
-                android:text="查询"
+                android:text="@string/btn_search"
                 android:textColor="@color/colorTitle"/>
         </LinearLayout>
 
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="异常点"/>
+                android:text="@string/error_point"/>
 
             <TextView
                 android:id="@+id/tvErrorCount"
@@ -150,8 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-
-                android:text="异常次数"/>
+                android:text="@string/error_count"/>
 
         </LinearLayout>
 

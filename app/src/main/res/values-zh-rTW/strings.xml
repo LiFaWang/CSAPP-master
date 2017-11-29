@@ -1,0 +1,67 @@
+<resources>
+    <!--登錄activity-->
+    <string name="app_name">長勝</string>
+    <string name="login_number">手機號:</string>
+    <string name="login_psw">密　碼:</string>
+    <string name="register_number">註冊賬號</string>
+    <string name="find_psw">找回密碼</string>
+    <string name="login_btn">登  錄</string>
+    <!--設備homeFragment-->
+    <string name="china">中國</string>
+    <string name="thailand">泰國</string>
+    <string name="vietnam">越南</string>
+    <string name="malaysia">馬來西亞</string>
+    <string name="taiwan">臺灣</string>
+    <string name="factory">工廠</string>
+    <string name="area">區域</string>
+    <string name="device">設備數</string>
+    <string name="unusual">異常</string>
+    <!--實時realFragment-->
+    <string name="tv_area">(區域)</string>
+    <string name="tv_factory">(工廠)</string>
+    <string name="btn_search">查詢</string>
+    <string name="tv_device">設備</string>
+    <string name="acquisition_total_points">采集總點數</string>
+    <string name="unusual_points">異常點數</string>
+    <string name="real_status">狀態</string>
+    <!--歷史historyFragment-->
+    <string name="history_device">(設備)</string>
+    <string name="history_module">模塊1</string>
+    <!--異常abnormalFragment-->
+    <string name="start_date">開始日期:</string>
+    <string name="end_date">截止日期:</string>
+    <string name="error_point">異常點</string>
+    <string name="error_count">異常次數</string>
+    <!--產量productionFragment-->
+    <string name="btn_selector_by_order">按單</string>
+    <string name="btn_selector_by_date">按日期</string>
+    <string name="tv_order">訂單號:</string>
+    <string name="order">訂單號</string>
+    <string name="customer">客戶</string>
+    <string name="product">產品</string>
+    <string name="product_count">生產數量</string>
+    <string name="current_machine">當前機臺</string>
+    <!--確認密碼confirmActivity-->
+    <string name="confirm_code">驗證碼:</string>
+    <string name="get_confirm_code">獲取驗證碼</string>
+    <string name="commit">提  交</string>
+    <!--mainActivity equrouletteActivity -->
+    <string name="main_home">設備</string>
+    <string name="main_real">實時</string>
+    <string name="main_history">歷史</string>
+    <string name="main_error">異常</string>
+    <string name="main_production">產量</string>
+    <string name="main_my">我的</string>
+    <!--historyCurveActivity-->
+    <string name="start_time">開始時間</string>
+    <string name="end_time">結束時間</string>
+    <string name="abnormal_value">異常值</string>
+    <string name="abnormal_type">異常類型</string>
+    <!--productionActivity-->
+    <string name="tv_back">返回</string>
+    <!--resetPSWActivity-->
+    <string name="pwd_change">密碼修改</string>
+    <string name="new_pwd">新密碼:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

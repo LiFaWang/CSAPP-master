@@ -33,7 +33,6 @@ public class ProductionActivity extends NotWebBaseActivity {
     private LoadProgressDialog dialog;
     private List<ProductionActivityBean> mProductionActivityBeanList;
     private ProductionActivityAdapter adapter;
-    private Intent mIntent;
 
     @Override
     protected int getLayoutId() {
@@ -46,8 +45,8 @@ public class ProductionActivity extends NotWebBaseActivity {
         dialog=new LoadProgressDialog(this);
         mProductionActivityBeanList = new ArrayList<>();
 
-        mIntent = getIntent();
-        Bundle bundle = mIntent.getExtras();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
         String sorderno = bundle.getString("SORDERNO");
         String mTStartTime = bundle.getString("mTStartTime");
         String mTEndTime = bundle.getString("mTEndTime");
@@ -112,11 +111,14 @@ public class ProductionActivity extends NotWebBaseActivity {
         adapter.setOnCabinetNameClickListener(new ProductionActivityAdapter.OnCabinetNameClickListener() {
             @Override
             public void onCabinetNameClick(ProductionActivityBean bean) {
-                Bundle bundle = mIntent.getExtras();
+                Intent intent = getIntent();
+                Bundle bundle = intent.getExtras();
                 bundle.putString("ITERMINAL",bean.ITERMINAL);
                 bundle.putString("STERMINALNAME",bean.STERMINALNAME);
-                mIntent.putExtras(bundle);
-                setResult(RESULT_PRODUCTION,mIntent);  //结果码和请求码互不影响，设值任意
+                bundle.putString("mTStartTime",bean.TSTARTTIME);
+                bundle.putString("mTEndTime",bean.TENDTIME);
+                intent.putExtras(bundle);
+                setResult(RESULT_PRODUCTION,intent);  //结果码和请求码互不影响，设值任意
                 finish();
 
             }

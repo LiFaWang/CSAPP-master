@@ -100,8 +100,8 @@ public class HistoryDetailActivity extends NotWebBaseActivity {
             detailBinding.tvStart.setText(mTStartTime);
             detailBinding.tvEnd.setText(mTEndTime);
             setData(mTStartTime, mTEndTime);
-            SPUtils.saveSpData(this,"mTStartTime","");
-            SPUtils.saveSpData(this,"mTEndTime","");
+//            SPUtils.saveSpData(this,"mTStartTime","");
+//            SPUtils.saveSpData(this,"mTEndTime","");
         }else {
             detailBinding.tvStart.setText(curDate);
             detailBinding.tvEnd.setText(curDate);
