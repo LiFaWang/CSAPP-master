@@ -37,13 +37,13 @@
         <RadioButton
             android:id="@+id/mainErro"
             style="@style/HomeRG"
-            android:drawableTop="@drawable/history_select"
+            android:drawableTop="@drawable/exception_select"
             android:text="@string/main_error"
            />
         <RadioButton
             android:id="@+id/mainProduction"
             style="@style/HomeRG"
-            android:drawableTop="@drawable/history_select"
+            android:drawableTop="@drawable/production_select"
             android:text="@string/main_production"
             />
         <RadioButton

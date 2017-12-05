@@ -62,6 +62,19 @@
     <!--resetPSWActivity-->
     <string name="pwd_change">密碼修改</string>
     <string name="new_pwd">新密碼:</string>
+    <!--mineFragment-->
+    <string name="account_number">賬號</string>
+    <string name="user_name">用戶名</string>
+    <string name="status">狀態</string>
+    <string name="company">公司</string>
+    <string name="department">部門</string>
+    <string name="language_setting">語言設置</string>
+    <string name="version_updating">版本更新</string>
+    <string name="logout">註銷</string>
+    <string name="valid">有效</string>
+
+
+    <string name="setting_language_auto">跟隨系統</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

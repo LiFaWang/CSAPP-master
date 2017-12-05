@@ -43,7 +43,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/button_seclect"
-                android:text="查询" />
+                android:text="@string/btn_search" />
         </LinearLayout>
         <include layout="@layout/underline_black"></include>
         <TextView

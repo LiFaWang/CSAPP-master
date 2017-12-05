@@ -1,0 +1,141 @@
+<resources>you want to convert
+        <!-- Login activity-->
+        
+    <string name="app_name"> long wins </string>
+        
+    <string name="login_number"> phone number: </string>
+        
+    <string name="login_psw"> password: </string>
+        
+    <string name="register_number"> register account </string>
+        
+    <string name="find_psw"> retrieve password </string>
+        
+    <string name="login_btn"> login </string>
+        <!-- device homeFragment -->
+        
+    <string name="china"> China </string>
+        
+    <string name="thailand"> Thailand </string>
+        
+    <string name="vietnam"> Vietnam </string>
+        
+    <string name="malaysia"> Malaysia </string>
+        
+    <string name="taiwan"> taiwan </string>
+        
+    <string name="factory"> factory </string>
+        
+    <string name="area"> area </string>
+        
+    <string name="device"> number of devices </string>
+        
+    <string name="unusual"> Exceptions </string>
+        <!-- Real-time realFragment -->
+        
+    <string name="tv_area"> (area) </string>
+        
+    <string name="tv_factory"> (factory) </string>
+        
+    <string name="btn_search"> query </string>
+        
+    <string name="tv_device"> device </string>
+        
+    <string name="acquisition_total_points"> total points collected </string>
+        
+    <string name="unusual_points"> Abnormal points </string>
+        
+    <string name="real_status"> status </string>
+        <!-- History historyFragment-->
+        
+    <string name="history_device"> (device) </string>
+        
+    <string name="history_module"> Module 1 </string>
+        <!-- exception abnormalFragment -->
+        
+    <string name="start_date"> start date: </string>
+        
+    <string name="end_date"> Due date: </string>
+        
+    <string name="error_point"> outlier </string>
+        
+    <string name="error_count"> number of anomalies </string>
+    <!--production productionFragment-->
+        
+    <string name="btn_selector_by_order"> by order </string>
+        
+    <string name="btn_selector_by_date"> by date </string>
+        
+    <string name="tv_order"> order number: </string>
+        
+    <string name="order"> order number </string>
+        
+    <string name="customer"> client </string>
+        
+    <string name="product"> product </string>
+        
+    <string name="product_count"> production quantity </string>
+        
+    <string name="current_machine"> current machine </string>
+    <!--Confirm password confirmActivity-->
+        
+    <string name="confirm_code"> CAPTCHA: </string>
+        
+    <string name="get_confirm_code"> get verification code </string>
+        
+    <string name="commit"> submit </string>
+    <!--mainActivity equrouletteActivity-->
+        
+    <string name="main_home"> device </string>
+        
+    <string name="main_real"> real-time </string>
+        
+    <string name="main_history"> history </string>
+        
+    <string name="main_error"> exception </string>
+        
+    <string name="main_production"> yield </string>
+        
+    <string name="main_my"> my </string>
+        <!-- historyCurveActivity -->
+        
+    <string name="start_time"> start time </string>
+        
+    <string name="end_time"> end time </string>
+        
+    <string name="abnormal_value"> outlier </string>
+        
+    <string name="abnormal_type"> exception type </string>
+        <!-- productionActivity -->
+        
+    <string name="tv_back"> returns </string>
+        <!-- resetPSWActivity -->
+        
+    <string name="pwd_change"> password change </string>
+        
+    <string name="new_pwd"> new password: </string>
+        <!-- mineFragment -->
+        
+    <string name="account_number"> account </string>
+        
+    <string name="user_name"> username </string>
+        
+    <string name="status"> status </string>
+        
+    <string name="company"> company </string>
+        
+    <string name="department"> department </string>
+        
+    <string name="language_setting"> language setting </string>
+        
+    <string name="version_updating"> version update </string>
+        
+    <string name="logout"> logout </string>
+        
+    <string name="valid"> valid </string>
+
+    <string name="setting_language_auto">Follow System</string>
+        <!-- TODO: Remove or change this placeholder text -->
+        
+    <string name="hello_blank_fragment"> Hello blank fragment </string>
+</resources>
