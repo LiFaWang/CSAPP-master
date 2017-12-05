@@ -57,6 +57,9 @@
     <string name="end_time">結束時間</string>
     <string name="abnormal_value">異常值</string>
     <string name="abnormal_type">異常類型</string>
+
+    <string name="machine">機台</string>
+    <string name="operator">操作人員</string>
     <!--productionActivity-->
     <string name="tv_back">返回</string>
     <!--resetPSWActivity-->

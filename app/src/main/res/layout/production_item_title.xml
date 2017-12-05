@@ -16,7 +16,7 @@
 
             <TextView
                 style="@style/ProductionStyle"
-                android:text="产量"/>
+                android:text="@string/main_production"/>
 
             <TextView
                 style="@style/ProductionStyle"
@@ -24,11 +24,11 @@
 
             <TextView
                 style="@style/ProductionStyle"
-                android:text="开始时间"/>
+                android:text="@string/start_time"/>
 
             <TextView
                 style="@style/ProductionStyle"
-                android:text="结束时间"/>
+                android:text="@string/end_time"/>
 
             <TextView
                 style="@style/ProductionStyle"

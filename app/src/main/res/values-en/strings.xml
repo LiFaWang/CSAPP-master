@@ -106,6 +106,9 @@
     <string name="abnormal_value"> outlier </string>
         
     <string name="abnormal_type"> exception type </string>
+
+    <string name="machine">machine</string>
+    <string name="operator">operator</string>
         <!-- productionActivity -->
         
     <string name="tv_back"> returns </string>

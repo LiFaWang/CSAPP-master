@@ -264,9 +264,9 @@ public class RealFragment extends BaseFragment {
                             xData[i] = data.get(i).STERMINALNAME;
                         }
 
-                        allPointsName = new BarDataSet(allPoints, "采集总点数");
+                        allPointsName = new BarDataSet(allPoints, getResources().getString(R.string.acquisition_total_points));
                         allPointsName.setColor(Color.rgb(104, 241, 175));
-                        errorPointsName = new BarDataSet(errorPoints, "异常点数");
+                        errorPointsName = new BarDataSet(errorPoints, getResources().getString(R.string.unusual_points));
                         errorPointsName.setColor(Color.rgb(255, 102, 0));
                         barChart.add(allPointsName);
                         barChart.add(errorPointsName);
