@@ -120,7 +120,7 @@
                 android:layout_marginRight="10dp"
                 android:gravity="right"
                 android:text="@string/btn_search"
-                android:textColor="@color/colorTitle"/>
+                android:textColor="@color/colorPrimary"/>
         </LinearLayout>
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"

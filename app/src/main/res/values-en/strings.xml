@@ -22,15 +22,15 @@
         
     <string name="malaysia"> Malaysia </string>
         
-    <string name="taiwan"> taiwan </string>
+    <string name="taiwan"> Taiwan </string>
         
     <string name="factory"> factory </string>
         
     <string name="area"> area </string>
         
-    <string name="device"> number of devices </string>
+    <string name="device">devices</string>
         
-    <string name="unusual"> Exceptions </string>
+    <string name="unusual"> exceptions </string>
         <!-- Real-time realFragment -->
         
     <string name="tv_area"> (area) </string>
@@ -41,11 +41,12 @@
         
     <string name="tv_device"> device </string>
         
-    <string name="acquisition_total_points"> total points collected </string>
+    <string name="acquisition_total_points"> total collected </string>
         
-    <string name="unusual_points"> Abnormal points </string>
+    <string name="unusual_points"> unusual</string>
         
     <string name="real_status"> status </string>
+    <string name="no_date"> no date show </string>
         <!-- History historyFragment-->
         
     <string name="history_device"> (device) </string>
@@ -53,13 +54,13 @@
     <string name="history_module"> Module 1 </string>
         <!-- exception abnormalFragment -->
         
-    <string name="start_date"> start date: </string>
+    <string name="start_date"> start: </string>
         
-    <string name="end_date"> Due date: </string>
+    <string name="end_date"> end: </string>
         
     <string name="error_point"> outlier </string>
         
-    <string name="error_count"> number of anomalies </string>
+    <string name="error_count"> anomalies number </string>
     <!--production productionFragment-->
         
     <string name="btn_selector_by_order"> by order </string>
@@ -92,7 +93,7 @@
         
     <string name="main_history"> history </string>
         
-    <string name="main_error"> exception </string>
+    <string name="main_error"> abnormal </string>
         
     <string name="main_production"> yield </string>
         
@@ -105,10 +106,11 @@
         
     <string name="abnormal_value"> outlier </string>
         
-    <string name="abnormal_type"> exception type </string>
+    <string name="abnormal_type"> abnormal type </string>
 
     <string name="machine">machine</string>
     <string name="operator">operator</string>
+    <string name="planned_date">planned date</string>
         <!-- productionActivity -->
         
     <string name="tv_back"> returns </string>

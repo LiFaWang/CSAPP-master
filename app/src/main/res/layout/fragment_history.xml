@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
             <TextView
-                android:text="@string/area"
                 android:id="@+id/tvArea"
-                android:background="@drawable/spinner_drawable"
                 style="@style/HomeFragment"
-                android:drawableRight="@drawable/arrow"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:background="@drawable/spinner_drawable"
+                android:drawableRight="@drawable/arrow"
+                android:text="@string/tv_area"/>
 
 
             <TextView
-                android:text="@string/factory"
-                android:background="@drawable/spinner_drawable"
                 android:id="@+id/tvFactory"
                 style="@style/HomeFragment"
-                android:drawableRight="@drawable/arrow"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:background="@drawable/spinner_drawable"
+                android:drawableRight="@drawable/arrow"
+                android:text="@string/tv_factory"/>
 
             <TextView
-                android:text="@string/history_device"
                 android:id="@+id/tvEquipment"
                 style="@style/HomeFragment"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:drawableRight="@drawable/arrow"
                 android:background="@drawable/spinner_drawable"
-                 />
+                android:drawableRight="@drawable/arrow"
+                android:text="@string/history_device"
+                />
+
             <Button
                 android:id="@+id/btnSearch"
                 style="@style/HomeFragment"
@@ -43,31 +46,35 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/button_seclect"
-                android:text="@string/btn_search" />
+                android:text="@string/btn_search"/>
         </LinearLayout>
+
         <include layout="@layout/underline_black"></include>
+
         <TextView
             android:id="@+id/tvModule"
-            android:layout_margin="5dp"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:text="@string/history_module"
-            android:textSize="18sp"
             android:textColor="@color/colorTitle"
-            android:layout_height="wrap_content" />
-        <include layout="@layout/underline_black"></include>
-    <in.srain.cube.views.ptr.PtrClassicFrameLayout
-        android:id="@+id/prtHistory"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+            android:textSize="18sp"/>
 
-        <GridView
-            android:id="@+id/gvChart"
-            android:focusable="true"
+        <include layout="@layout/underline_black"></include>
+
+        <in.srain.cube.views.ptr.PtrClassicFrameLayout
+            android:id="@+id/prtHistory"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="2">
-        </GridView>
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <GridView
+                android:id="@+id/gvChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:numColumns="2">
+            </GridView>
         </in.srain.cube.views.ptr.PtrClassicFrameLayout>
     </LinearLayout>
 </layout>

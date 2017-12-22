@@ -12,7 +12,7 @@
 
             <TextView
                 style="@style/ProductionStyle"
-                android:text="机台"/>
+                android:text="@string/machine"/>
 
             <TextView
                 style="@style/ProductionStyle"
@@ -20,7 +20,7 @@
 
             <TextView
                 style="@style/ProductionStyle"
-                android:text="操作人员"/>
+                android:text="@string/operator"/>
 
             <TextView
                 style="@style/ProductionStyle"
@@ -33,7 +33,7 @@
             <TextView
                 style="@style/ProductionStyle"
 
-                android:text="计划日期"/>
+                android:text="@string/planned_date"/>
         </LinearLayout>
 
         <ListView

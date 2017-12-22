@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -70,18 +69,19 @@ public class MultiLanguageUtil {
     private Locale getLanguageLocale() {
         int languageType = CommSharedUtil.getInstance(mContext).getInt(MultiLanguageUtil.SAVE_LANGUAGE, 0);
         if (languageType == LanguageType.LANGUAGE_FOLLOW_SYSTEM) {
-            Locale sysType = getSysLocale();
-            if (sysType.equals(Locale.ENGLISH)) {
-                return Locale.ENGLISH;
-            } else if (sysType.equals(Locale.TRADITIONAL_CHINESE)) {
-                return Locale.TRADITIONAL_CHINESE;
-            } else if (TextUtils.equals(sysType.getLanguage(), Locale.CHINA.getLanguage())) { //zh
-                if (TextUtils.equals(sysType.getCountry(), Locale.CHINA.getCountry())) {  //适配华为mate9  zh_CN_#Hans
-                    return Locale.SIMPLIFIED_CHINESE;
-                }
-            } else {
-                return Locale.SIMPLIFIED_CHINESE;
-            }
+//            Locale sysType = getSysLocale();
+//            if (sysType.equals(Locale.ENGLISH)) {
+//                return Locale.ENGLISH;
+//            } else if (sysType.equals(Locale.TRADITIONAL_CHINESE)) {
+//                return Locale.TRADITIONAL_CHINESE;
+//            } else if (TextUtils.equals(sysType.getLanguage(), Locale.CHINA.getLanguage())) { //zh
+//                if (TextUtils.equals(sysType.getCountry(), Locale.CHINA.getCountry())) {  //适配华为mate9  zh_CN_#Hans
+//                    return Locale.SIMPLIFIED_CHINESE;
+//                }
+//            } else {
+//                return Locale.SIMPLIFIED_CHINESE;
+//            }
+            Locale.getDefault();
         } else if (languageType == LanguageType.LANGUAGE_EN) {
             return Locale.ENGLISH;
         } else if (languageType == LanguageType.LANGUAGE_CHINESE_SIMPLIFIED) {
@@ -91,7 +91,8 @@ public class MultiLanguageUtil {
         }
         Log.e(TAG, "getLanguageLocale" + languageType + languageType);
         getSystemLanguage(getSysLocale());
-        return Locale.SIMPLIFIED_CHINESE;
+//        return Locale.SIMPLIFIED_CHINESE;
+        return  Locale.getDefault();
     }
 
     private String getSystemLanguage(Locale locale) {

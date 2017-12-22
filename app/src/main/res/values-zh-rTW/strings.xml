@@ -24,6 +24,7 @@
     <string name="acquisition_total_points">采集總點數</string>
     <string name="unusual_points">異常點數</string>
     <string name="real_status">狀態</string>
+    <string name="no_date">沒有數據</string>
     <!--歷史historyFragment-->
     <string name="history_device">(設備)</string>
     <string name="history_module">模塊1</string>
@@ -60,6 +61,7 @@
 
     <string name="machine">機台</string>
     <string name="operator">操作人員</string>
+    <string name="planned_date">操作人員</string>
     <!--productionActivity-->
     <string name="tv_back">返回</string>
     <!--resetPSWActivity-->

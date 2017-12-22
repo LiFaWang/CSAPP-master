@@ -37,7 +37,7 @@
            android:layout_marginRight="5dp"
            android:layout_marginTop="5dp"
            android:background="@drawable/button_seclect"
-           android:layout_width="60dp"
+           android:layout_width="70dp"
            android:layout_height="40dp"/>
 
     </LinearLayout>
@@ -48,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tvOrder"
             android:text="@string/tv_order"
             android:layout_marginLeft="5dp"
             android:layout_centerVertical="true"
@@ -59,7 +60,7 @@
             android:layout_height="wrap_content"/>
         <EditText
             android:id="@+id/etOrderNo"
-            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@id/tvOrder"
             android:gravity="center"
             android:layout_centerVertical="true"
             android:textColor="@color/colorTitle"
@@ -76,7 +77,7 @@
             android:layout_marginTop="5dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/button_seclect"
-            android:layout_width="60dp"
+            android:layout_width="70dp"
             android:layout_height="40dp"/>
 
     </RelativeLayout>
@@ -166,7 +167,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/button_seclect"
-            android:layout_width="40dp"
+            android:layout_width="70dp"
             android:layout_height="40dp"/>
 
     </LinearLayout>

@@ -125,7 +125,7 @@ public class RealFragment extends BaseFragment {
         xAxis.setDrawGridLines(false);
         yAxis = fragmentRealBinding.barChart.getAxisLeft();
         yAxis.setDrawGridLines(false);
-        fragmentRealBinding.barChart.setNoDataText("没有数据");
+        fragmentRealBinding.barChart.setNoDataText(getString(R.string.no_date));
         fragmentRealBinding.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
