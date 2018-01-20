@@ -2,6 +2,7 @@ package net.huansi.csapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import net.huansi.csapp.MainActivity;
@@ -9,6 +10,8 @@ import net.huansi.csapp.R;
 import net.huansi.csapp.bean.ResetPSWBean;
 import net.huansi.csapp.databinding.ActivityResetPswBinding;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import huansi.net.qianjingapp.base.NotWebBaseActivity;
@@ -56,12 +59,39 @@ public class ResetPSWActivity extends NotWebBaseActivity {
         mPassWord = mResetPswBinding.etPassword.getText().toString();
         getLoginMes(mPhoneNum,mPassWord);
     }
+    /**
+     * md5加密
+     * @param string
+     * @return
+     */
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        }
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            String result = "";
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result += temp;
+            }
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
 
     private void getLoginMes(final String mPhoneNum, final String mPassWord) {
         RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
                 "spappYunEquUpdatePwd"
-                , "sMobileNo="+mPhoneNum+",sPassword="+mPassWord,
+                , "sMobileNo="+mPhoneNum+",sPassword="+md5(mPassWord),
                 ResetPSWBean.class.getName(), true, "", new SimpleHsWeb() {
 
                     private String mSmessage;

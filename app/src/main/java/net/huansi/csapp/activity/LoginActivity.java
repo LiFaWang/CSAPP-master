@@ -78,7 +78,7 @@ public class LoginActivity extends NotWebBaseActivity {
             }
         });
         String mobileNo = SPUtils.getMobileNo(this);
-        String psw = SPUtils.getSpData(this, USER_PWD, "8");
+        String psw = SPUtils.getSpData(this, USER_PWD, "");
 
         activityLoginBinding.etPhoneNum.setText(mobileNo);
         activityLoginBinding.etPassword.setText(psw);
@@ -126,16 +126,15 @@ public class LoginActivity extends NotWebBaseActivity {
         String phoneNum = activityLoginBinding.etPhoneNum.getText().toString();
         String password = activityLoginBinding.etPassword.getText().toString();
         String mobileNo = SPUtils.getMobileNo(this);
-        String psw = SPUtils.getSpData(this, USER_PWD, "8");
+        String psw = SPUtils.getSpData(this, USER_PWD, "");
         if (TextUtils.isEmpty(password) || TextUtils.isEmpty(phoneNum)) {
             OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不能为空！");
         } else if ( phoneNum.equals(mobileNo)&&psw.equals(password)&&isLogin.equals("true")) {
-            getLogin(phoneNum,md5(password));
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         } else if (isLogin.equals("false")) {
-            getLogin(phoneNum,md5(password));
+            getLogin(phoneNum,password);
         } else {
             OthersUtil.ToastMsg(LoginActivity.this, "账号或者密码不正确！");
         }
@@ -178,7 +177,7 @@ public class LoginActivity extends NotWebBaseActivity {
 
     RxjavaWebUtils.requestByGetJsonData(this, CUS_SERVICE,
             "spappYunEquUserLogin"
-            , "sMobileNo=" + phoneNum + ",sPassword=" + password,
+            , "sMobileNo=" + phoneNum + ",sPassword=" + md5(password),
             LoginBean.class.getName(), true, "", new SimpleHsWeb() {
                 @Override
                 public void success(HsWebInfo hsWebInfo) {
