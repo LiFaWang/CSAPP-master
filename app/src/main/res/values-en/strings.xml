@@ -1,6 +1,8 @@
 <resources>you want to convert
         <!-- Login activity-->
-        
+      
+    <string name="pref_language_label">Language</string>
+    <string name="dialog_cancel">Cancel</string>
     <string name="app_name"> long wins </string>
         
     <string name="login_number"> phone number: </string>

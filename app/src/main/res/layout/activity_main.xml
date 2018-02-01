@@ -9,10 +9,9 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1">
-
   </FrameLayout>
 
-    <include layout="@layout/underline_black"></include>
+    <include layout="@layout/underline_black"/>
     <RadioGroup
         android:id="@+id/mainRG"
         android:layout_width="match_parent"

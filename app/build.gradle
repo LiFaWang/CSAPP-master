@@ -43,4 +43,6 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     testCompile 'junit:junit:4.12'
 //    compile 'in.srain.cube:ptr-load-more:1.0.6'
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:design:25.4.0'
 }

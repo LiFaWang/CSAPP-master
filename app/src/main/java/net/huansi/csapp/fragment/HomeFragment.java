@@ -11,8 +11,6 @@ import net.huansi.csapp.adapter.HomeFragmentAdapter;
 import net.huansi.csapp.bean.HomeInfoBean;
 import net.huansi.csapp.databinding.FragmentHomeBinding;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +50,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void init() {
-        EventBus.getDefault().register(getContext());
         fragmentHomeBinding = (FragmentHomeBinding) viewDataBinding;
         fragmentHomeBinding.ivAr.setImageResource(R.drawable.cn);
         fragmentHomeBinding.homeListView.setAdapter(adapter);
@@ -119,16 +116,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         return fliterData;
 
 
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (EventBus.getDefault().isRegistered(getContext())) {
-            EventBus.getDefault().unregister(getContext());
-        }
-        ;
     }
 
     @Override

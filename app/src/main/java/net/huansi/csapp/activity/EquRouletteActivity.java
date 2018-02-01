@@ -2,7 +2,6 @@ package net.huansi.csapp.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.IdRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -145,7 +144,7 @@ public class EquRouletteActivity extends NotWebBaseActivity implements RadioGrou
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
         Intent intent=new Intent();
         switch (checkedId){
             case R.id.mainHome:

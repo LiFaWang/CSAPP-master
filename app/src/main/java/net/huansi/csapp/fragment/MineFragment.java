@@ -29,6 +29,7 @@ import static net.huansi.csapp.utils.Constants.USER_SECTION;
 
 public class MineFragment extends BaseFragment {
 
+
     private List<MineBean> data;
 
     @Override
@@ -82,10 +83,12 @@ public class MineFragment extends BaseFragment {
                }
                if (i==5){
                    startActivity(new Intent(getActivity(), SetLanguageActivity.class));
-//                   getActivity().finish();
+                   getActivity().finish();
+//                   getActivity().startActivityForResult(new Intent(getActivity(), LanguagesActivity.class),CHANGE_LANGUAGE_REQUEST_CODE);
                }
 
            }
        });
     }
+
 }

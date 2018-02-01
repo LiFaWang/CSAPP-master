@@ -1,7 +1,6 @@
 package net.huansi.csapp;
 
 import android.content.Intent;
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,13 +17,13 @@ import net.huansi.csapp.fragment.MineFragment;
 import net.huansi.csapp.fragment.ProductionFragment;
 import net.huansi.csapp.fragment.RealFragment;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import huansi.net.qianjingapp.base.NotWebBaseActivity;
 
 public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnCheckedChangeListener{
-
     public ActivityMainBinding activityMainBinding;
     private HomeFragment homeFragment;
     private RealFragment realFragment;
@@ -50,7 +49,7 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
 
     @Override
     public void init() {
-
+        if(!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         activityMainBinding = (ActivityMainBinding) viewDataBinding;
         activityMainBinding.mainRG.setOnCheckedChangeListener(this);
 
@@ -105,11 +104,11 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
 
 
     @Override
-    public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
         changeFragment(i);
     }
 
-    private void changeFragment(@IdRes int i) {
+    private void changeFragment( int i) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         hideFragments(ft);
         switch (i){
@@ -145,10 +144,10 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
          ft.show(realFragment);
          activityMainBinding.mainReal.setChecked(true);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         switch (resultCode) { //resultCode为回传的标记，我在B中回传的是RESULT_OK
             case RESULT_OK:
                 int idFt = data.getIntExtra("id_ft", R.id.mainHome);
@@ -163,5 +162,11 @@ public class MainActivity extends NotWebBaseActivity implements RadioGroup.OnChe
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(EventBus.getDefault().isRegistered(this)) EventBus.getDefault().unregister(this);
     }
 }
