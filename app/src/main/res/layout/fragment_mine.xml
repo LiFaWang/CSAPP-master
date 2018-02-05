@@ -12,7 +12,7 @@
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:background="@drawable/logo"
+                android:background="@drawable/changsheng"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
